@@ -1,3 +1,4 @@
+import 'package:easymanage/Ui/optionscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -187,35 +188,37 @@ class _LoginPageState extends State<LoginPage> {
                     height: 69.h,
                     padding: EdgeInsets.only(
                         left: 113.w, top: 16.h, bottom: 15.h, right: 114.w),
-                    child: Container(
-                      width: 91.w,
-                      height: 38.h,
-                      decoration: BoxDecoration(
-                          color: Color(0xffFF0000),
-                          borderRadius: BorderRadius.circular(7.r)),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 11.w,
-                          ),
-                          Text('Log In',
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                    height: 24 / 16.sp,
-                                    color: Colors.white,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: -0.3.sp),
-                              )),
-                          SizedBox(
-                            width: 1.19.w,
-                          ),
-                          SizedBox(
-                            width: 17.81.w,
-                            height: 16.77.h,
-                            child: Image.asset("assets/loginicon.png"),
-                          )
-                        ],
+                    child: GestureDetector(onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (_)=>OptionScreen())),
+                      child: Container(
+                        width: 91.w,
+                        height: 38.h,
+                        decoration: BoxDecoration(
+                            color: Color(0xffFF0000),
+                            borderRadius: BorderRadius.circular(7.r)),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 11.w,
+                            ),
+                            Text('Log In',
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      height: 24 / 16.sp,
+                                      color: Colors.white,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: -0.3.sp),
+                                )),
+                            SizedBox(
+                              width: 1.19.w,
+                            ),
+                            SizedBox(
+                              width: 17.81.w,
+                              height: 16.77.h,
+                              child: Image.asset("assets/loginicon.png"),
+                            )
+                          ],
+                        ),
                       ),
                     )),
               ],
