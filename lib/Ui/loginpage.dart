@@ -248,46 +248,6 @@ class _LoginPageState extends State<LoginPage> {
                                   )
                                 ]),
                               )),
-                          // Padding(
-                          //   padding: EdgeInsets.only(right: 21.w, left: 21.w),
-                          //   child: Container(
-                          //     width: 276.w,
-                          //     height: 60.h,
-                          //     decoration: BoxDecoration(
-                          //       borderRadius: BorderRadius.circular(8.r),
-                          //       border: Border.all(
-                          //           width: 1.w, color: Color(0xffE4E4E4)),
-                          //     ),
-                          //     child: TextFormField(
-                          //       decoration: InputDecoration(
-                          //         hintText: 'Password',
-                          //         hintStyle: GoogleFonts.poppins(
-                          //           textStyle: TextStyle(
-                          //             height: 27 / 18.sp,
-                          //             color: Colors.red,
-                          //             fontSize: 18.sp,
-                          //             fontWeight: FontWeight.w400,
-                          //           ),
-                          //         ),
-                          //         prefixIcon: Padding(
-                          //           padding: EdgeInsets.only(
-                          //             left: 21.w,
-                          //             top: 17.h,
-                          //             bottom: 17.h,
-                          //             right: 8.w,
-                          //           ),
-                          //           child: SvgPicture.asset(
-                          //             'assets/lock.svg',
-                          //             // Set the desired height
-                          //           ),
-                          //         ),
-                          //         focusedBorder: InputBorder.none,
-                          //         errorBorder: InputBorder.none,
-                          //         enabledBorder: InputBorder.none,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                           SizedBox(
                             height: 38.h,
                           ),
