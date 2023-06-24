@@ -1,3 +1,4 @@
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +11,8 @@ class AmountCollection extends StatefulWidget {
 }
 
 class _AmountCollectionState extends State<AmountCollection> {
+  bool isExpanded = false;
+bool isExpanded1=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,9 +97,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-
-                                            top: 16.22.h,
-                                            bottom: 14.35.h),
+                                            top: 16.22.h, bottom: 14.35.h),
                                         child: SizedBox(
                                             width: 160.39.w,
                                             height: 32.43.h,
@@ -115,6 +116,148 @@ class _AmountCollectionState extends State<AmountCollection> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 16.h,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      decoration: ShapeDecoration(
+                                        color: Color(0xFFEC1C24),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.r)),
+                                      ),
+                                      width: 144.w,
+                                      // Replace with your desired width
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          SizedBox(
+                                            height: 36.h,
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  isExpanded = !isExpanded;
+                                                });
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.only(left: 16.w),
+                                                    child: SizedBox(
+                                                      width: 86.w,
+                                                      height: 26.h,
+                                                      child: Text(
+                                                        "From Date",
+                                                        style: GoogleFonts.poppins(
+                                                          textStyle: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 17.sp,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            letterSpacing: -0.30.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 6.w,
+                                                          right: 9.77.w),
+                                                      child: SizedBox(
+                                                          height: 10.8.h,
+                                                          width: 10.8.w,
+                                                          child: Image.asset(isExpanded
+                                                              ? 'assets/arrowdown.png'
+                                                              : 'assets/arrowforward.png'))),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          if (isExpanded)
+                                            Container(
+                                              width: 200,
+                                              height: 60,
+                                              color: Colors.blue,
+                                            ),
+                                        ],
+                                      ),
+                                    ),SizedBox(width: 11.w,),Container(
+                                      decoration: ShapeDecoration(
+                                        color: Color(0xFFEC1C24),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(7.r)),
+                                      ),
+                                      width: 144.w,
+                                      // Replace with your desired width
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                        children: [
+                                          SizedBox(
+                                            height: 36.h,
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  isExpanded1 = !isExpanded1;
+                                                });
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                    EdgeInsets.only(left: 31.w),
+                                                    child: SizedBox(
+                                                      width: 64.w,
+                                                      height: 26.h,
+                                                      child: Text(
+                                                        "To Date",
+                                                        style: GoogleFonts.poppins(
+                                                          textStyle: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 17.sp,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            letterSpacing: -0.30.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 17.w,
+                                                          right: 9.77.w),
+                                                      child: SizedBox(
+                                                          height: 10.8.h,
+                                                          width: 10.8.w,
+                                                          child: Image.asset(isExpanded1
+                                                              ? 'assets/arrowdown.png'
+                                                              : 'assets/arrowforward.png'))),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          if (isExpanded1)
+                                            Container(
+                                              width: 200,
+                                              height: 60,
+                                              color: Colors.blue,
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           )
