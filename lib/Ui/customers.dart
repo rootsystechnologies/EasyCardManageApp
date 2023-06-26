@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'customercollectamount.dart';
+
 class Customers extends StatefulWidget {
   const Customers({Key? key}) : super(key: key);
 
@@ -290,10 +292,12 @@ class _CustomersState extends State<Customers> {
                             SizedBox(
                               width: 29.w,
                             ),
-                            SizedBox(
-                              height: 30.h,
-                              width: 30.w,
-                              child: Image.asset('assets/customer1.png'),
+                            GestureDetector(onTap:()=>Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CustomerCollectAmount())),
+                              child: SizedBox(
+                                height: 30.h,
+                                width: 30.w,
+                                child: Image.asset('assets/customer1.png'),
+                              ),
                             ), SizedBox(
                               width: 20.29.w,
                             ),SizedBox(
