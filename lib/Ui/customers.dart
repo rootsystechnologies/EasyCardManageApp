@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'customercollectamount.dart';
+import 'customerwalletrecharge.dart';
 
 class Customers extends StatefulWidget {
   const Customers({Key? key}) : super(key: key);
@@ -300,10 +301,12 @@ class _CustomersState extends State<Customers> {
                               ),
                             ), SizedBox(
                               width: 20.29.w,
-                            ),SizedBox(
-                              height: 30.h,
-                              width: 30.w,
-                              child: Image.asset('assets/customer2.png'),
+                            ),GestureDetector(onTap:()=>Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CustomerWalletRecharge())),
+                              child: SizedBox(
+                                height: 30.h,
+                                width: 30.w,
+                                child: Image.asset('assets/customer2.png'),
+                              ),
                             )
                           ],
                         );
