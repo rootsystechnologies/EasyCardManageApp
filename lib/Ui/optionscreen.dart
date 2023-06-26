@@ -1,3 +1,4 @@
+import 'package:easymanage/Ui/profile.dart';
 import 'package:easymanage/Ui/wallethistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -279,7 +280,10 @@ class _OptionScreenState extends State<OptionScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 27.w, right: 27.w),
-                            child: GestureDetector(onTap:()=>Navigator.of(context).push(MaterialPageRoute(builder: (_)=>WalletHistory())),
+                            child: GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (_) => WalletHistory())),
                               child: DottedBorder(
                                 dashPattern: [4.sp, 4.sp],
                                 borderType: BorderType.RRect,
@@ -297,8 +301,8 @@ class _OptionScreenState extends State<OptionScreen> {
                                       SizedBox(
                                           width: 28.w,
                                           height: 28.h,
-                                          child:
-                                              Image.asset('assets/option4.png')),
+                                          child: Image.asset(
+                                              'assets/option4.png')),
                                       SizedBox(
                                         width: 9.w,
                                       ),
@@ -320,7 +324,9 @@ class _OptionScreenState extends State<OptionScreen> {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            top: 15.h, bottom: 25.h, right: 14.w),
+                                            top: 15.h,
+                                            bottom: 25.h,
+                                            right: 14.w),
                                         child: Icon(
                                           Icons.arrow_forward,
                                           color: Color(0xffEC1C24),
@@ -337,53 +343,57 @@ class _OptionScreenState extends State<OptionScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 27.w, right: 27.w),
-                            child: DottedBorder(
-                              dashPattern: [4.sp, 4.sp],
-                              borderType: BorderType.RRect,
-                              color: Color(0xffEC1C24),
-                              radius: Radius.circular(8.r),
-                              strokeWidth: 1.sp,
-                              child: Container(
-                                width: 264.w,
-                                height: 54.h,
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 14.w,
-                                    ),
-                                    SizedBox(
-                                        width: 28.w,
-                                        height: 28.h,
-                                        child:
-                                            Image.asset('assets/option5.png')),
-                                    SizedBox(
-                                      width: 9.w,
-                                    ),
-                                    SizedBox(
-                                      height: 26.h,
-                                      width: 74.w,
-                                      child: Text('Profile',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                              letterSpacing: -0.3.sp,
-                                              color: Color(0xffEC1C24),
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          )),
-                                    ),
-                                    SizedBox(
-                                      width: 97.w,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 15.h, bottom: 25.h, right: 14.w),
-                                      child: Icon(
-                                        Icons.arrow_forward,
-                                        color: Color(0xffEC1C24),
+                            child: GestureDetector( onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (_) => Profile())),
+                              child: DottedBorder(
+                                dashPattern: [4.sp, 4.sp],
+                                borderType: BorderType.RRect,
+                                color: Color(0xffEC1C24),
+                                radius: Radius.circular(8.r),
+                                strokeWidth: 1.sp,
+                                child: Container(
+                                  width: 264.w,
+                                  height: 54.h,
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 14.w,
                                       ),
-                                    )
-                                  ],
+                                      SizedBox(
+                                          width: 28.w,
+                                          height: 28.h,
+                                          child:
+                                              Image.asset('assets/option5.png')),
+                                      SizedBox(
+                                        width: 9.w,
+                                      ),
+                                      SizedBox(
+                                        height: 26.h,
+                                        width: 74.w,
+                                        child: Text('Profile',
+                                            style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                letterSpacing: -0.3.sp,
+                                                color: Color(0xffEC1C24),
+                                                fontSize: 15.sp,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        width: 97.w,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 15.h, bottom: 25.h, right: 14.w),
+                                        child: Icon(
+                                          Icons.arrow_forward,
+                                          color: Color(0xffEC1C24),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
