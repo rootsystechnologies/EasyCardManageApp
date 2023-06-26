@@ -9,48 +9,50 @@ class AddNewCustomer extends StatefulWidget {
   State<AddNewCustomer> createState() => _AddNewCustomerState();
 }
 
-final FocusNode _focusNode1 = FocusNode();
+late FocusNode _focusNode1;
 bool _isFocused1 = false;
-final FocusNode _focusNode2 = FocusNode();
+late FocusNode _focusNode2;
 bool _isFocused2 = false;
-final FocusNode _focusNode3 = FocusNode();
+late FocusNode _focusNode3;
 bool _isFocused3 = false;
-final FocusNode _focusNode4 = FocusNode();
+late FocusNode _focusNode4;
 bool _isFocused4 = false;
-final FocusNode _focusNode5 = FocusNode();
+late FocusNode _focusNode5;
 bool _isFocused5 = false;
-final FocusNode _focusNode6 = FocusNode();
+late FocusNode _focusNode6;
 bool _isFocused6 = false;
 
 class _AddNewCustomerState extends State<AddNewCustomer> {
   @override
   void initState() {
     super.initState();
+    _focusNode1 = FocusNode();
     _focusNode1.addListener(() {
       setState(() {
         _isFocused1 = _focusNode1.hasFocus;
       });
     });
+    _focusNode2 = FocusNode();
     _focusNode2.addListener(() {
       setState(() {
         _isFocused2 = _focusNode2.hasFocus;
       });
-    });
+    });  _focusNode3 = FocusNode();
     _focusNode3.addListener(() {
       setState(() {
         _isFocused3 = _focusNode3.hasFocus;
       });
-    });
+    });  _focusNode4 = FocusNode();
     _focusNode4.addListener(() {
       setState(() {
         _isFocused4 = _focusNode4.hasFocus;
       });
-    });
+    });  _focusNode5 = FocusNode();
     _focusNode5.addListener(() {
       setState(() {
         _isFocused5 = _focusNode5.hasFocus;
       });
-    });
+    });  _focusNode6 = FocusNode();
     _focusNode6.addListener(() {
       setState(() {
         _isFocused6 = _focusNode6.hasFocus;

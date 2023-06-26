@@ -9,21 +9,22 @@ class AmountCollection1 extends StatefulWidget {
   State<AmountCollection1> createState() => _AmountCollection1State();
 }
 
-final FocusNode _focusNode1 = FocusNode();
+late  FocusNode _focusNode1 ;
 bool _isFocused1 = false;
-final FocusNode _focusNode2 = FocusNode();
+late FocusNode _focusNode2;
 bool _isFocused2 = false;
 bool isExpanded = false;
-
 class _AmountCollection1State extends State<AmountCollection1> {
   @override
   void initState() {
     super.initState();
+    _focusNode1 = FocusNode();
     _focusNode1.addListener(() {
       setState(() {
         _isFocused1 = _focusNode1.hasFocus;
       });
     });
+    _focusNode2 = FocusNode();
     _focusNode2.addListener(() {
       setState(() {
         _isFocused2 = _focusNode2.hasFocus;
