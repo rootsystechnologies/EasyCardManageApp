@@ -299,7 +299,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   width: 14.w,
                                   child: Image.asset('assets/saver.png'),
                                 ),
-                              ),SizedBox(
+                              ),
+                              SizedBox(
                                   width: 41.w,
                                   height: 25.h,
                                   child: Text(

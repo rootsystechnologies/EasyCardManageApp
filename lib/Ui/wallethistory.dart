@@ -344,6 +344,13 @@ class _WalletHistoryState extends State<WalletHistory> {
                                       color: Colors.white,
                                       border: Border.all(color: Colors.grey),
                                     ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+
+                                      ],
+                                    ),
                                   ),
                               ],
                             ),
@@ -618,9 +625,9 @@ class _WalletHistoryState extends State<WalletHistory> {
                             left: 71.w, right: 73.w, top: 15.h, bottom: 13.h),
                         child: GestureDetector(
                           onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (_) =>
-                                  WalletHistoryWalletRecharge())),
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      WalletHistoryWalletRecharge())),
                           child: Container(
                             width: 183.w,
                             height: 43.h,

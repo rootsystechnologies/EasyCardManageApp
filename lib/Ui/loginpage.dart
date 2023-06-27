@@ -1,8 +1,12 @@
 import 'package:easymanage/Ui/optionscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Bloc/Login/login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,6 +17,8 @@ class LoginPage extends StatefulWidget {
 
 bool move = true;
 bool move1 = true;
+TextEditingController email=TextEditingController();
+TextEditingController password=TextEditingController();
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -107,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                                                   // Set the desired height
                                                 )),
                                             Text(
-                                              "Username",
+                                              "Email",
                                               style: GoogleFonts.poppins(
                                                 textStyle: TextStyle(
                                                   height: 27 / 18.sp,
@@ -135,21 +141,28 @@ class _LoginPageState extends State<LoginPage> {
                                         height: 60.h,
                                         child: Padding(
                                           padding: EdgeInsets.only(
-                                              left: 20.w,
-                                              top: 19.h,),
-                                          child: SizedBox( width: 250.w,
+                                            left: 20.w,
+                                            top: 19.h,
+                                          ),
+                                          child: SizedBox(
+                                            width: 250.w,
                                             height: 60.h,
-                                            child: TextFormField(autofocus: true,
+                                            child: TextFormField(controller: email,
+                                              autofocus: true,
                                               decoration: InputDecoration(
-                                                  focusedBorder: InputBorder.none,
-                                                  enabledBorder: InputBorder.none,
-                                                  hintText: 'Username',
-                                                  hintStyle: GoogleFonts.poppins(
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                  enabledBorder:
+                                                      InputBorder.none,
+                                                  hintText: 'Email',
+                                                  hintStyle:
+                                                      GoogleFonts.poppins(
                                                     textStyle: TextStyle(
                                                       height: 27 / 18.sp,
                                                       color: Color(0xffD9D9D9),
                                                       fontSize: 18.sp,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                   )),
                                             ),
@@ -160,7 +173,8 @@ class _LoginPageState extends State<LoginPage> {
                               )),
                           SizedBox(
                             height: 17.h,
-                          ),Padding(
+                          ),
+                          Padding(
                               padding: EdgeInsets.only(right: 21.w, left: 21.w),
                               child: GestureDetector(
                                 onTap: () {
@@ -179,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                                           height: 60.h,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(8.r),
+                                                BorderRadius.circular(8.r),
                                             border: Border.all(
                                                 width: 1.w,
                                                 color: Color(0xffE4E4E4)),
@@ -216,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                                         decoration: BoxDecoration(
                                           color: Colors.transparent,
                                           borderRadius:
-                                          BorderRadius.circular(8.r),
+                                              BorderRadius.circular(8.r),
                                           border: Border.all(
                                               width: 1.w,
                                               color: Color(0xffE4E4E4)),
@@ -226,20 +240,27 @@ class _LoginPageState extends State<LoginPage> {
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                             left: 20.w,
-                                            top: 19.h,),
-                                          child: SizedBox( width: 250.w,
+                                            top: 19.h,
+                                          ),
+                                          child: SizedBox(
+                                            width: 250.w,
                                             height: 60.h,
-                                            child: TextFormField(autofocus: true,
+                                            child: TextFormField(controller: password,
+                                              autofocus: true,
                                               decoration: InputDecoration(
-                                                  focusedBorder: InputBorder.none,
-                                                  enabledBorder: InputBorder.none,
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                  enabledBorder:
+                                                      InputBorder.none,
                                                   hintText: 'Password',
-                                                  hintStyle: GoogleFonts.poppins(
+                                                  hintStyle:
+                                                      GoogleFonts.poppins(
                                                     textStyle: TextStyle(
                                                       height: 27 / 18.sp,
                                                       color: Color(0xffD9D9D9),
                                                       fontSize: 18.sp,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                   )),
                                             ),
@@ -286,43 +307,77 @@ class _LoginPageState extends State<LoginPage> {
                                   top: 16.h,
                                   bottom: 15.h,
                                   right: 114.w),
-                              child: GestureDetector(
-                                onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (_) => OptionScreen())),
-                                child: Container(
-                                  width: 91.w,
-                                  height: 38.h,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffFF0000),
-                                      borderRadius: BorderRadius.circular(7.r)),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 11.w,
-                                      ),
-                                      Text('Log In',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                                height: 24 / 16.sp,
-                                                color: Colors.white,
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w500,
-                                                letterSpacing: -0.3.sp),
-                                          )),
-                                      SizedBox(
-                                        width: 1.19.w,
-                                      ),
-                                      SizedBox(
-                                        width: 17.81.w,
-                                        height: 16.77.h,
-                                        child:
-                                            Image.asset("assets/loginicon.png"),
-                                      )
-                                    ],
+                              child: BlocListener<LoginBloc, LoginState>(
+                                listener: (context, state) {
+                                  if (state is LoginblocLoaded) {
+                                    String tokens =
+                                        BlocProvider.of<LoginBloc>(context)
+                                            .loginModel
+                                            .token
+                                            .toString();
+                                    userInfo(tokens);
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const OptionScreen()),
+                                        (route) => false);
+                                  }
+                                  if (state is LoginblocLoading) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext a) => const Center(
+                                            child:
+                                                CircularProgressIndicator()));
+                                  }
+                                  if (state is LoginblocError) {
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                                child: GestureDetector(
+                                  onTap: () {
+                                    BlocProvider.of<LoginBloc>(context).add(FetchLogin(email: email.text, password: password.text));
+                                  },
+                                  child: Container(
+                                    width: 91.w,
+                                    height: 38.h,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xffFF0000),
+                                        borderRadius:
+                                            BorderRadius.circular(7.r)),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 11.w,
+                                        ),
+                                        Text('Log In',
+                                            style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  height: 24 / 16.sp,
+                                                  color: Colors.white,
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing: -0.3.sp),
+                                            )),
+                                        SizedBox(
+                                          width: 1.19.w,
+                                        ),
+                                        SizedBox(
+                                          width: 17.81.w,
+                                          height: 16.77.h,
+                                          child: Image.asset(
+                                              "assets/loginicon.png"),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ))
                         ])))));
+  }
+
+  void userInfo(String token) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setString('Token', token);
   }
 }
