@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'Ui/loginpage.dart';
-
+String basePath='';
 void main() {
   runApp(const MyApp());
 }
