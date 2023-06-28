@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../Bloc/GetAllPermission/get_all_permission_bloc.dart';
+import '../Repository/modelclass/GetAllPermission.dart';
 
 class AddCustomerFeature extends StatefulWidget {
   const AddCustomerFeature({Key? key}) : super(key: key);
@@ -9,8 +13,9 @@ class AddCustomerFeature extends StatefulWidget {
   State<AddCustomerFeature> createState() => _AddCustomerFeatureState();
 }
 
-List<bool> values = [false, false, false, false, false];
+List<bool> values = [];
 int? selectedRadio;
+late GetAllPermission permisson;
 
 void setSelectedRadio(int? value) {
   if (selectedRadio == value) {
@@ -23,6 +28,13 @@ void setSelectedRadio(int? value) {
 }
 
 class _AddCustomerFeatureState extends State<AddCustomerFeature> {
+  @override
+  void initState() {
+    BlocProvider.of<
+        GetAllPermissionBloc>(context)
+        .add(FetchGetAllPermission());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,50 +132,92 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                 ],
                               ),
                             ),
-                            Container(
-                              width: 326.w,
-                              height: 519.h,
-                              child: ListView.separated(
-                                itemCount: 5,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    height: 29.67.h,
-                                    child: Row(
-                                      children: [
-                                        Checkbox(
-                                          activeColor: Colors.white,
-                                          checkColor: Color(0xffEC1C24),
-                                          value: values[index],
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              values[index] = value!;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          'Data Card',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                              letterSpacing: -0.3.sp,
-                                              color: values[index] == false
-                                                  ? Color(0xffD9D9D9)
-                                                  : Colors.red,
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                            BlocBuilder<GetAllPermissionBloc,
+                                GetAllPermissionState>(
+                              builder: (context, state) {
+                                if (state is GetAllPermissionblocLoading) {
+                                  return CircularProgressIndicator();
+                                }
+                                if (state is GetAllPermissionblocError) {
+                                  return RefreshIndicator(
+                                    onRefresh: () async {
+                                      return BlocProvider.of<
+                                              GetAllPermissionBloc>(context)
+                                          .add(FetchGetAllPermission());
+                                    },
+                                    child: SingleChildScrollView(
+                                      physics: const BouncingScrollPhysics(),
+                                      child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .9,
+                                          // color: Colors.red,
+                                          child: Center(child: Text("Error"))),
                                     ),
                                   );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 19.7.h,
+                                }
+                                if (state is GetAllPermissionblocLoaded) {
+                                  permisson =
+                                      BlocProvider.of<GetAllPermissionBloc>(
+                                              context)
+                                          .getAllPermission;
+                                  for(int i=0;i<=permisson.perms!.length;i++){
+                                    values.add(false);
+                                  }
+                                  return Container(
+                                    width: 326.w,
+                                    height: 519.h,
+                                    child: ListView.separated(
+                                      itemCount: permisson.perms!.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          height: 29.67.h,
+                                          child: Row(
+                                            children: [
+                                              Checkbox(
+                                                activeColor: Colors.white,
+                                                checkColor: Color(0xffEC1C24),
+                                                value: values[index],
+                                                onChanged: (bool? value) {
+                                                  setState(() {
+                                                    values[index] = value!;
+                                                  });
+                                                },
+                                              ),
+                                              Container(width:273.w,
+                                                child: Text(
+                                                  permisson.perms![index].code.toString(),
+                                                  style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                      letterSpacing: -0.3.sp,
+                                                      color:
+                                                          values[index] == false
+                                                              ? Color(0xffD9D9D9)
+                                                              : Colors.red,
+                                                      fontSize: 18.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        return SizedBox(
+                                          height: 19.7.h,
+                                        );
+                                      },
+                                    ),
                                   );
-                                },
-                              ),
+                                } else {
+                                  return SizedBox();
+                                }
+                              },
                             ),
                             Container(
                               width: 326.w,
@@ -226,14 +280,20 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                         ),
                                         SizedBox(
                                           width: 14.w,
-                                          height: 13.43,child: Image.asset('assets/saver.png'),
-                                        ),SizedBox(width: 5.w,),SizedBox(
+                                          height: 13.43,
+                                          child:
+                                              Image.asset('assets/saver.png'),
+                                        ),
+                                        SizedBox(
+                                          width: 5.w,
+                                        ),
+                                        SizedBox(
                                           width: 41.w,
                                           height: 25.83.h,
                                           child: Text(
                                             'SAVE',
                                             style: GoogleFonts.poppins(
-                                              textStyle:TextStyle(
+                                                textStyle: TextStyle(
                                               color: Colors.white,
                                               fontSize: 16.sp,
                                               fontFamily: 'Poppins',

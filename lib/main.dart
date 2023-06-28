@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'Bloc/GetAllCustomers/get_all_customers_bloc.dart';
+import 'Bloc/GetAllPermission/get_all_permission_bloc.dart';
 import 'Bloc/Login/login_bloc.dart';
 import 'Ui/loginpage.dart';
 
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => GetAllCustomersBloc(),
+              ),BlocProvider(
+                create: (context) => GetAllPermissionBloc(),
               ),
             ],
             child: MaterialApp(
