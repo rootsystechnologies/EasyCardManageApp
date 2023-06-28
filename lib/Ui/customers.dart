@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
+import '../Repository/modelclass/getallcustomers.dart';
 import 'customercollectamount.dart';
 import 'customerwalletrecharge.dart';
 
@@ -13,8 +16,12 @@ class Customers extends StatefulWidget {
 }
 
 bool move = true;
-
-class _CustomersState extends State<Customers> {
+late Getallcustomers customers;
+class _CustomersState extends State<Customers> {@override
+  void initState() {
+  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -252,72 +259,118 @@ class _CustomersState extends State<Customers> {
                       ],
                     ),
                   ),
-                  Container(
-                    width: 326.w,
-                    height: 407.5.h,
-                    child: ListView.separated(
-                      itemCount: 8,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          children: [
-                            SizedBox(
-                              width: 11.w,
-                            ),
-                            SizedBox(
-                              height: 21,
-                              width: 75,
-                              child: Center(
-                                child: Text("Customer 1",
-                                    style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                            color: Color(0xffA4A4A4),
-                                            fontSize: 14.sp,
-                                            letterSpacing: -0.3.sp))),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 50.w,
-                            ),
-                            SizedBox(
-                              width: 62.w,
-                              height: 21.h,
-                              child: Center(
-                                child: Text("Amount 1",
-                                    style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                            color: Color(0xffA4A4A4),
-                                            fontSize: 14.sp,
-                                            letterSpacing: -0.3.sp))),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 29.w,
-                            ),
-                            GestureDetector(onTap:()=>Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CustomerCollectAmount())),
-                              child: SizedBox(
-                                height: 30.h,
-                                width: 30.w,
-                                child: Image.asset('assets/customer1.png'),
-                              ),
-                            ), SizedBox(
-                              width: 20.29.w,
-                            ),GestureDetector(onTap:()=>Navigator.of(context).push(MaterialPageRoute(builder: (_)=>CustomerWalletRecharge())),
-                              child: SizedBox(
-                                height: 30.h,
-                                width: 30.w,
-                                child: Image.asset('assets/customer2.png'),
-                              ),
-                            )
-                          ],
+                  BlocBuilder<GetAllCustomersBloc, GetAllCustomersState>(
+                    builder: (context, state) {
+                      if (state is GetAllCustomersblocLoading) {
+                        return CircularProgressIndicator();
+                      }
+                      if (state is GetAllCustomersblocError) {
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            return BlocProvider.of<GetAllCustomersBloc>(context)
+                                .add(FetchGetAllCustomers());
+                          },
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Container(
+                                height: MediaQuery.of(context).size.height * .9,
+                                // color: Colors.red,
+                                child: Center(child: Text("Error"))),
+                          ),
                         );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding:EdgeInsets.only(left: 11.w,right: 9.w,top: 10.48.h,),
-                          child: Divider(color: Color(0xffD9D9D9),),
+                      }
+                      if (state is GetAllCustomersblocLoaded) {
+                        customers = BlocProvider.of<GetAllCustomersBloc>(context).getallcustomers;
+                        return Container(
+                          width: 326.w,
+                          height: 407.5.h,
+                          child: ListView.separated(
+                            itemCount: customers.customers!.data!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Row(
+                                children: [
+                                  SizedBox(
+                                    width: 11.w,
+                                  ),
+                                  SizedBox(
+                                    height: 21,
+                                    width: 75,
+                                    child: Center(
+                                      child: Text(customers.customers!.data![index].name.toString(),
+                                          style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  color: Color(0xffA4A4A4),
+                                                  fontSize: 14.sp,
+                                                  letterSpacing: -0.3.sp))),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 50.w,
+                                  ),
+                                  SizedBox(
+                                    width: 62.w,
+                                    height: 21.h,
+                                    child: Center(
+                                      child: Text(customers.customers!.data![index].wallet!.balance.toString(),
+                                          style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  color: Color(0xffA4A4A4),
+                                                  fontSize: 14.sp,
+                                                  letterSpacing: -0.3.sp))),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 29.w,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                CustomerCollectAmount())),
+                                    child: SizedBox(
+                                      height: 30.h,
+                                      width: 30.w,
+                                      child:
+                                          Image.asset('assets/customer1.png'),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 20.29.w,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                CustomerWalletRecharge())),
+                                    child: SizedBox(
+                                      height: 30.h,
+                                      width: 30.w,
+                                      child:
+                                          Image.asset('assets/customer2.png'),
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  left: 11.w,
+                                  right: 9.w,
+                                  top: 10.48.h,
+                                ),
+                                child: Divider(
+                                  color: Color(0xffD9D9D9),
+                                ),
+                              );
+                            },
+                          ),
                         );
-                      },
-                    ),
+                      } else {
+                        return SizedBox();
+                      }
+                    },
                   ),
                   SizedBox(
                     height: 10.52.h,

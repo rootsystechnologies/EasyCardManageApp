@@ -2,10 +2,9 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../main.dart';
 class PatchMethodApiClient {
-  static const String basepath =
-  // "http://192.168.1.9:3010/api";
-      "http://fursancart.rootsys.in/api";
 
   Future<http.Response> invokeApi({
     //required List<XFile>? filepath,
@@ -18,11 +17,11 @@ class PatchMethodApiClient {
     final token = preferences.getString('Token');
     Map<String, String> headerParams = {"authorization": "Bearer $token"};
 
-    print(basepath + Path);
-    var request = http.MultipartRequest(method, Uri.parse(basepath + Path));
+    print(basePath + Path);
+    var request = http.MultipartRequest(method, Uri.parse(basePath + Path));
     request.headers.addAll(headerParams);
-    print(basepath + Path);
-    print("request : $basepath$Path");
+    print(basePath + Path);
+    print("request : $basePath$Path");
     List<http.MultipartFile> newList = [];
     // if (filepath != null) {
     //   for (int i = 0; filepath!.length > i; i++) {

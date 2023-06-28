@@ -11,7 +11,7 @@ import 'apiexception.dart';
 
 
 class ApiClient {
-  Future<Response> invokeAPI(String path, String method, Object? body) async {
+  Future<Response> invokeAPI(String path, String method, Object? body,) async {
     final preferences = await SharedPreferences.getInstance();
 
     final token = preferences.getString('Token');
@@ -28,7 +28,6 @@ class ApiClient {
         response = await post(Uri.parse(url),
             headers: {
               'content-Type': 'application/x-www-form-urlencoded',
-              'authorization': 'Bearer $token',
             },
             body: body);
 

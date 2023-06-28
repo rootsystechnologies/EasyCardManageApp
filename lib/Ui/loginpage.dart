@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 transform:
-                    GradientRotation(190.64 * (3.1415926535897932 / 180.0).sp),
+                GradientRotation(190.64 * (3.1415926535897932 / 180.0).sp),
                 stops: [0.0057.sp, 0.969.sp],
                 colors: [
                   Color(0xffD70000),
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                                           height: 60.h,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(8.r),
+                                            BorderRadius.circular(8.r),
                                             border: Border.all(
                                                 width: 1.w,
                                                 color: Color(0xffE4E4E4)),
@@ -132,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                                         decoration: BoxDecoration(
                                           color: Colors.transparent,
                                           borderRadius:
-                                              BorderRadius.circular(8.r),
+                                          BorderRadius.circular(8.r),
                                           border: Border.all(
                                               width: 1.w,
                                               color: Color(0xffE4E4E4)),
@@ -151,18 +151,18 @@ class _LoginPageState extends State<LoginPage> {
                                               autofocus: true,
                                               decoration: InputDecoration(
                                                   focusedBorder:
-                                                      InputBorder.none,
+                                                  InputBorder.none,
                                                   enabledBorder:
-                                                      InputBorder.none,
+                                                  InputBorder.none,
                                                   hintText: 'Email',
                                                   hintStyle:
-                                                      GoogleFonts.poppins(
+                                                  GoogleFonts.poppins(
                                                     textStyle: TextStyle(
                                                       height: 27 / 18.sp,
                                                       color: Color(0xffD9D9D9),
                                                       fontSize: 18.sp,
                                                       fontWeight:
-                                                          FontWeight.w400,
+                                                      FontWeight.w400,
                                                     ),
                                                   )),
                                             ),
@@ -193,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                                           height: 60.h,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(8.r),
+                                            BorderRadius.circular(8.r),
                                             border: Border.all(
                                                 width: 1.w,
                                                 color: Color(0xffE4E4E4)),
@@ -230,7 +230,7 @@ class _LoginPageState extends State<LoginPage> {
                                         decoration: BoxDecoration(
                                           color: Colors.transparent,
                                           borderRadius:
-                                              BorderRadius.circular(8.r),
+                                          BorderRadius.circular(8.r),
                                           border: Border.all(
                                               width: 1.w,
                                               color: Color(0xffE4E4E4)),
@@ -249,18 +249,18 @@ class _LoginPageState extends State<LoginPage> {
                                               autofocus: true,
                                               decoration: InputDecoration(
                                                   focusedBorder:
-                                                      InputBorder.none,
+                                                  InputBorder.none,
                                                   enabledBorder:
-                                                      InputBorder.none,
+                                                  InputBorder.none,
                                                   hintText: 'Password',
                                                   hintStyle:
-                                                      GoogleFonts.poppins(
+                                                  GoogleFonts.poppins(
                                                     textStyle: TextStyle(
                                                       height: 27 / 18.sp,
                                                       color: Color(0xffD9D9D9),
                                                       fontSize: 18.sp,
                                                       fontWeight:
-                                                          FontWeight.w400,
+                                                      FontWeight.w400,
                                                     ),
                                                   )),
                                             ),
@@ -310,25 +310,23 @@ class _LoginPageState extends State<LoginPage> {
                               child: BlocListener<LoginBloc, LoginState>(
                                 listener: (context, state) {
                                   if (state is LoginblocLoaded) {
-                                    String tokens =
-                                        BlocProvider.of<LoginBloc>(context)
-                                            .loginModel
-                                            .token
-                                            .toString();
-                                    userInfo(tokens);
+
+                                    userInfo(BlocProvider.of<LoginBloc>(context)
+                                        .loginModel
+                                        .toString());
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const OptionScreen()),
-                                        (route) => false);
+                                            const OptionScreen()),
+                                            (route) => false);
                                   }
                                   if (state is LoginblocLoading) {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext a) => const Center(
                                             child:
-                                                CircularProgressIndicator()));
+                                            CircularProgressIndicator()));
                                   }
                                   if (state is LoginblocError) {
                                     Navigator.of(context).pop();
@@ -344,7 +342,7 @@ class _LoginPageState extends State<LoginPage> {
                                     decoration: BoxDecoration(
                                         color: Color(0xffFF0000),
                                         borderRadius:
-                                            BorderRadius.circular(7.r)),
+                                        BorderRadius.circular(7.r)),
                                     child: Row(
                                       children: [
                                         SizedBox(
