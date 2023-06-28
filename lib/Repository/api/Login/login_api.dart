@@ -11,13 +11,13 @@ class LoginApi {
   ApiClient apiClient = ApiClient();
   String trendingpath = '/login/collector';
 
-  Future<String> postuserdata(String email, String password) async {
+  Future<LoginModel> postuserdata(String email, String password) async {
     var body = {'email':email, 'password': password};
     Response response = await  apiClient.invokeAPI(trendingpath, 'POST', body);
 
     print(response.body); // Print the response body
 
-    return response.body;
+    return LoginModel.fromJson(jsonDecode(response.body));
   }
 
 }

@@ -311,9 +311,7 @@ class _LoginPageState extends State<LoginPage> {
                                 listener: (context, state) {
                                   if (state is LoginblocLoaded) {
 
-                                    userInfo(BlocProvider.of<LoginBloc>(context)
-                                        .loginModel
-                                        .toString());
+                                    userInfo(BlocProvider.of<LoginBloc>(context).loginModel.token.toString());
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(

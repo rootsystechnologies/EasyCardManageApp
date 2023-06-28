@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'addcustomerfeature.dart';
+
 class AddNewCustomer extends StatefulWidget {
   const AddNewCustomer({Key? key}) : super(key: key);
 
@@ -434,46 +436,50 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                   SizedBox(
                                     width: 56.w,
                                   ),
-                                  Container(
-                                    width: 105.w,
-                                    height: 36.h,
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xFF0492E2),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(7.r)),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 9.w, top: 6.h, bottom: 8.h),
-                                          child: SizedBox(
-                                            width: 24.w,
-                                            height: 22.h,
-                                            child: Image.asset(
-                                                'assets/features.png'),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5.w,
-                                        ),
-                                        SizedBox(
-                                          width: 55.w,
-                                          height: 18.h,
-                                          child: Text(
-                                            'Features',
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: -0.3.sp),
+                                  GestureDetector(onTap: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder:(_)=>const AddCustomerFeature()));
+                                  },
+                                    child: Container(
+                                      width: 105.w,
+                                      height: 36.h,
+                                      decoration: ShapeDecoration(
+                                        color: Color(0xFF0492E2),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.r)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 9.w, top: 6.h, bottom: 8.h),
+                                            child: SizedBox(
+                                              width: 24.w,
+                                              height: 22.h,
+                                              child: Image.asset(
+                                                  'assets/features.png'),
                                             ),
-                                            textAlign: TextAlign.center,
                                           ),
-                                        )
-                                      ],
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          SizedBox(
+                                            width: 55.w,
+                                            height: 18.h,
+                                            child: Text(
+                                              'Features',
+                                              style: GoogleFonts.poppins(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 13.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: -0.3.sp),
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
