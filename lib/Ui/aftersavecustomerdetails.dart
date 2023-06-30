@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'addcustomerfeature.dart';
+import 'afftercustomersaveeditdetails.dart';
+
 class AfterSaveCustomer extends StatefulWidget {
   const AfterSaveCustomer({super.key});
 
@@ -510,91 +513,104 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                       bottomRight: Radius.circular(25.r))),
                               child: Row(
                                 children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: 42.w,
-                                        top: 20.h,
-                                        bottom: 20.h,
-                                        right: 23.w),
-                                    width: 105.w,
-                                    height: 36.h,
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xFF0492E2),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(7.r)),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 9.w, top: 6.h, bottom: 8.h),
-                                          child: SizedBox(
-                                            width: 24.w,
-                                            height: 22.h,
-                                            child:
-                                                Image.asset('assets/features.png'),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 5.w,
-                                        ),
-                                        SizedBox(
-                                          width: 55.w,
-                                          height: 18.h,
-                                          child: Text(
-                                            'Features',
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: -0.3.sp),
+                                  GestureDetector(onTap:()=> Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (_) => AddCustomerFeature())),
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          left: 42.w,
+                                          top: 20.h,
+                                          bottom: 20.h,
+                                          right: 23.w),
+                                      width: 105.w,
+                                      height: 36.h,
+                                      decoration: ShapeDecoration(
+                                        color: Color(0xFF0492E2),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.r)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 9.w, top: 6.h, bottom: 8.h),
+                                            child: SizedBox(
+                                              width: 24.w,
+                                              height: 22.h,
+                                              child: Image.asset(
+                                                  'assets/features.png'),
                                             ),
-                                            textAlign: TextAlign.center,
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ),Container(
-                                    margin: EdgeInsets.only(
-                                        top: 20.h,
-                                        bottom: 20.h,
-                                        right: 20.w),
-                                    width: 136.w,
-                                    height: 36.h,
-                                    decoration: ShapeDecoration(
-                                      color: Color(0xFFFF0000),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(7.r)),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 9.w, top: 8.h, bottom: 9.h,right: 6.w),
-                                          child: SizedBox(
-                                            width: 19.w,
-                                            height: 19.h,
-                                            child:
-                                            Image.asset('assets/up1.png'),
+                                          SizedBox(
+                                            width: 5.w,
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 94.w,
-                                          height: 18.h,
-                                          child: Text(
-                                            'Update Details',
-                                            style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 13.sp,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: -0.3.sp),
+                                          SizedBox(
+                                            width: 55.w,
+                                            height: 18.h,
+                                            child: Text(
+                                              'Features',
+                                              style: GoogleFonts.poppins(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 13.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: -0.3.sp),
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                            textAlign: TextAlign.center,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) => EditCustomer())),
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          top: 20.h, bottom: 20.h, right: 20.w),
+                                      width: 136.w,
+                                      height: 36.h,
+                                      decoration: ShapeDecoration(
+                                        color: Color(0xFFFF0000),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7.r)),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 9.w,
+                                                top: 8.h,
+                                                bottom: 9.h,
+                                                right: 6.w),
+                                            child: SizedBox(
+                                              width: 19.w,
+                                              height: 19.h,
+                                              child:
+                                                  Image.asset('assets/up1.png'),
+                                            ),
                                           ),
-                                        )
-                                      ],
+                                          SizedBox(
+                                            width: 94.w,
+                                            height: 18.h,
+                                            child: Text(
+                                              'Update Details',
+                                              style: GoogleFonts.poppins(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 13.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: -0.3.sp),
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
