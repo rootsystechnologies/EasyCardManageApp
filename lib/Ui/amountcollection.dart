@@ -12,6 +12,8 @@ class AmountCollection extends StatefulWidget {
   State<AmountCollection> createState() => _AmountCollectionState();
 }
 
+bool move = true;
+
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
@@ -19,7 +21,8 @@ class _AmountCollectionState extends State<AmountCollection> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(resizeToAvoidBottomInset: false,
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -344,6 +347,181 @@ class _AmountCollectionState extends State<AmountCollection> {
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         border: Border.all(color: Colors.grey),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                move = !move;
+                                                print(move);
+                                              });
+                                            },
+                                            child: Stack(
+                                              children: [
+                                                Visibility(
+                                                  visible: move ? true : false,
+                                                  child: AnimatedPositioned(
+                                                    duration:
+                                                        Duration(seconds: 1),
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(
+                                                          left: 51.w,
+                                                          right: 50.w,
+                                                          top: 8.h),
+                                                      width: 198.w,
+                                                      height: 32.h,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.r),
+                                                          border: Border.all(
+                                                              color: Color(
+                                                                  0xffD9D9D9))),
+                                                      child: Row(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: 16.w,
+                                                          ),
+                                                          SizedBox(
+                                                              width: 13.52.w,
+                                                              height: 12.55.h,
+                                                              child: Image.asset(
+                                                                  'assets/search.png')),
+                                                          SizedBox(
+                                                            height: 17.5.h,
+                                                            child:
+                                                                VerticalDivider(
+                                                              color: Color(
+                                                                  0xffEC1C24),
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 9.w,
+                                                          ),
+                                                          SizedBox(
+                                                              width: 85.82.w,
+                                                              height: 16.94.h,
+                                                              child: Text(
+                                                                "Search",
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .poppins(
+                                                                  textStyle:
+                                                                      TextStyle(
+                                                                    letterSpacing:
+                                                                        -0.3.sp,
+                                                                    color: Color(
+                                                                        0xffEC1C24),
+                                                                    fontSize:
+                                                                        10.sp,
+                                                                  ),
+                                                                ),
+                                                              ))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Visibility(
+                                                  visible: move == false
+                                                      ? true
+                                                      : false,
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 51.w,
+                                                        right: 50.w,
+                                                        top: 8.h),
+                                                    width: 198.w,
+                                                    height: 32.h,
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Colors.transparent,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.r),
+                                                        border: Border.all(
+                                                            color: Color(
+                                                                0xffD9D9D9))),
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(
+                                                        left: 17.w,
+                                                      ),
+                                                      child: SizedBox(
+                                                        width: 198.w,
+                                                        height: 32.h,
+                                                        child: TextFormField(
+                                                          autofocus: true,
+                                                          decoration:
+                                                              InputDecoration(
+                                                                  focusedBorder:
+                                                                      InputBorder
+                                                                          .none,
+                                                                  enabledBorder:
+                                                                      InputBorder
+                                                                          .none,
+                                                                  hintText:
+                                                                      'Search',
+                                                                  hintStyle:
+                                                                      GoogleFonts
+                                                                          .poppins(
+                                                                    textStyle: TextStyle(
+                                                                        color: Color(
+                                                                            0xffD9D9D9),
+                                                                        fontSize: 10
+                                                                            .sp,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w300,
+                                                                        letterSpacing:
+                                                                            -0.3.sp),
+                                                                  )),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                              child: ListView.separated(
+                                            itemCount: 9,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return Padding(
+                                                padding: EdgeInsets.only(left:17.w),
+                                                child: SizedBox(
+                                                  height: 24.h,
+                                                  width: 120.w,
+                                                  child: Text(
+                                                    'Johnadam',
+                                                    style: GoogleFonts.poppins(
+                                                        textStyle: TextStyle(
+                                                      color: Color(0xFFA3A3A3),
+                                                      fontSize: 16.sp,
+                                                      fontFamily: 'Poppins',
+                                                      fontWeight: FontWeight.w400,
+                                                      letterSpacing: -0.30,
+                                                    )),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return SizedBox(
+                                                height: 2.h,
+                                              );
+                                            },
+                                          ))
+                                        ],
                                       ),
                                     ),
                                 ],
