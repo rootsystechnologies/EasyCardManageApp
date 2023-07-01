@@ -9,7 +9,7 @@ class CreateCustomerApi {
   ApiClient apiClient = ApiClient();
   String trendingpath = '/collector/customer/create';
 
-  Future<CreateCustomerModel> createCustomer(
+  Future<void> createCustomer(
       String name,
       String mobile,
       String email,
@@ -26,12 +26,11 @@ class CreateCustomerApi {
       'cred_limit':creditLimit,
       'password':password,
       'password_confirmation':passwordConfirmation,
-      'allowed_perms':jsonEncode(allowedperms)
+      'allowed_perms':allowedperms
     };
     Response response = await apiClient.invokeAPI(trendingpath, 'POST_', body);
 
     print(response.body); // Print the response body
 
-    return CreateCustomerModel.fromJson(jsonDecode(response.body));
   }
 }
