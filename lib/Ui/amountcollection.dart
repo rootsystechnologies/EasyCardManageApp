@@ -1,8 +1,11 @@
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Bloc/GetAllColection/get_all_collection_bloc.dart';
+import '../Repository/modelclass/GetAllCollectionModel.dart';
 import 'amountcollectioncollectamount.dart';
 
 class AmountCollection extends StatefulWidget {
@@ -13,12 +16,21 @@ class AmountCollection extends StatefulWidget {
 }
 
 bool move = true;
-
+TextEditingController search = TextEditingController();
+TextEditingController toDate = TextEditingController();
+TextEditingController fromDate = TextEditingController();
+late GetAllCollectionModel collections;
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
   bool isExpanded2 = false;
-
+@override
+  void initState() {
+  BlocProvider.of<GetAllCollectionBloc>(
+      context)
+      .add(FetchGetAllCollection(search: search.text, toDate: toDate.text, fromDate: fromDate.text));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -456,6 +468,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                         width: 198.w,
                                                         height: 32.h,
                                                         child: TextFormField(
+                                                          controller: search,
                                                           autofocus: true,
                                                           decoration:
                                                               InputDecoration(
@@ -495,7 +508,8 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             itemBuilder: (BuildContext context,
                                                 int index) {
                                               return Padding(
-                                                padding: EdgeInsets.only(left:17.w),
+                                                padding:
+                                                    EdgeInsets.only(left: 17.w),
                                                 child: SizedBox(
                                                   height: 24.h,
                                                   width: 120.w,
@@ -506,7 +520,8 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                       color: Color(0xFFA3A3A3),
                                                       fontSize: 16.sp,
                                                       fontFamily: 'Poppins',
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       letterSpacing: -0.30,
                                                     )),
                                                   ),
@@ -599,69 +614,103 @@ class _AmountCollectionState extends State<AmountCollection> {
                             color: Color(0xffEC1C24),
                             thickness: 1.3.sp,
                           ),
-                          SizedBox(
-                            height: 318.h,
-                            width: 337.w,
-                            child: ListView.separated(
-                              itemCount: 10,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 93.w,
-                                      height: 21.h,
-                                      child: Text(' Customer 01',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                            color: Color(0xFFA3A3A3),
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: -0.30.sp,
-                                          ))),
-                                    ),
-                                    SizedBox(
-                                      width: 24.w,
-                                    ),
-                                    SizedBox(
-                                      width: 93.w,
-                                      height: 21.h,
-                                      child: Text('DD-YY-MM',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                            color: Color(0xFFA3A3A3),
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: -0.30.sp,
-                                          ))),
-                                    ),
-                                    SizedBox(
-                                      width: 44.w,
-                                    ),
-                                    SizedBox(
-                                      width: 62.w,
-                                      height: 21.h,
-                                      child: Text('1234 Sar',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                            color: Color(0xFFA3A3A3),
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: -0.30.sp,
-                                          ))),
-                                    )
-                                  ],
+                          BlocBuilder<GetAllCollectionBloc,
+                              GetAllCollectionState>(
+                            builder: (context, state) {
+                              if (state is GetAllCollectionblocLoading) {
+                                return CircularProgressIndicator();
+                              }
+                              if (state is GetAllCollectionblocError) {
+                                return RefreshIndicator(
+                                  onRefresh: () async {
+                                    return BlocProvider.of<GetAllCollectionBloc>(
+                                            context)
+                                        .add(FetchGetAllCollection(search: search.text, toDate: toDate.text, fromDate: fromDate.text));
+                                  },
+                                  child: SingleChildScrollView(
+                                    physics: const BouncingScrollPhysics(),
+                                    child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                .9,
+                                        // color: Colors.red,
+                                        child: Center(child: Text("Error"))),
+                                  ),
                                 );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return Divider(
-                                  color: Color(0xffD9D9D9),
+                              }
+                              if (state is GetAllCollectionblocLoaded) {
+                                collections =
+                                    BlocProvider.of<GetAllCollectionBloc>(
+                                            context).getAllCollectionModel;
+                                return SizedBox(
+                                  height: 318.h,
+                                  width: 337.w,
+                                  child: ListView.separated(
+                                    itemCount: collections.collections!.data!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 93.w,
+                                            height: 21.h,
+                                            child: Text(collections.collections!.data![index].userId.toString(),
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                  color: Color(0xFFA3A3A3),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: -0.30.sp,
+                                                ))),
+                                          ),
+                                          SizedBox(
+                                            width: 24.w,
+                                          ),
+                                          SizedBox(
+                                            width: 93.w,
+                                            height: 21.h,
+                                            child: Text('DD-YY-MM',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                  color: Color(0xFFA3A3A3),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: -0.30.sp,
+                                                ))),
+                                          ),
+                                          SizedBox(
+                                            width: 44.w,
+                                          ),
+                                          SizedBox(
+                                            width: 62.w,
+                                            height: 21.h,
+                                            child: Text(collections.collections!.data![index].collectedAmount.toString(),
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                  color: Color(0xFFA3A3A3),
+                                                  fontSize: 14.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: -0.30.sp,
+                                                ))),
+                                          )
+                                        ],
+                                      );
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return Divider(
+                                        color: Color(0xffD9D9D9),
+                                      );
+                                    },
+                                  ),
                                 );
-                              },
-                            ),
+                              } else {
+                                return SizedBox();
+                              }
+                            },
                           ),
                           SizedBox(
                             height: 18.h,
