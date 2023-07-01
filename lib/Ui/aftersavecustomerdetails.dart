@@ -6,7 +6,25 @@ import 'addcustomerfeature.dart';
 import 'afftercustomersaveeditdetails.dart';
 
 class AfterSaveCustomer extends StatefulWidget {
-  const AfterSaveCustomer({super.key});
+  final String name;
+  final String mobile;
+  final String email;
+  final String opbalance;
+  final String creditLimit;
+  final String password;
+  final String passwordConfirmation;
+  final List<String> allowedPerms;
+
+  const AfterSaveCustomer(
+      {super.key,
+      required this.password,
+      required this.mobile,
+      required this.email,
+      required this.opbalance,
+      required this.creditLimit,
+      required this.passwordConfirmation,
+      required this.name,
+      required this.allowedPerms});
 
   @override
   State<AfterSaveCustomer> createState() => _AfterSaveCustomerState();
@@ -513,9 +531,20 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                       bottomRight: Radius.circular(25.r))),
                               child: Row(
                                 children: [
-                                  GestureDetector(onTap:()=> Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (_) => AddCustomerFeature())),
+                                  GestureDetector(
+                                    onTap: () => Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (_) => AddCustomerFeature(
+                                                  opbalance: widget.opbalance,
+                                                  email: widget.email,
+                                                  mobile: widget.mobile,
+                                                  password: widget.password,
+                                                  name: widget.name,
+                                                  passwordConfirmation: widget
+                                                      .passwordConfirmation,
+                                                  creditLimit:
+                                                      widget.creditLimit,
+                                                ))),
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           left: 42.w,
@@ -534,7 +563,9 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                         children: [
                                           Padding(
                                             padding: EdgeInsets.only(
-                                                left: 9.w, top: 6.h, bottom: 8.h),
+                                                left: 9.w,
+                                                top: 6.h,
+                                                bottom: 8.h),
                                             child: SizedBox(
                                               width: 24.w,
                                               height: 22.h,

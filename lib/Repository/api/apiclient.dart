@@ -29,7 +29,7 @@ class ApiClient {
             headers: {
               'content-Type': 'application/x-www-form-urlencoded',
             },
-            body: body);
+            body: body,);
 
         break;
       case "PUT":
@@ -51,7 +51,6 @@ class ApiClient {
           Uri.parse(url),
           headers: {
             'authorization': 'Bearer $token',
-            'content-Type': 'application/json'
           },
           body: body,
         );

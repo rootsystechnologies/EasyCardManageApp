@@ -23,6 +23,15 @@ late FocusNode _focusNode5;
 bool _isFocused5 = false;
 late FocusNode _focusNode6;
 bool _isFocused6 = false;
+late FocusNode _focusNode7;
+bool _isFocused7 = false;
+TextEditingController name = TextEditingController();
+TextEditingController mobile = TextEditingController();
+TextEditingController email = TextEditingController();
+TextEditingController opbalance = TextEditingController();
+TextEditingController creditlimit = TextEditingController();
+TextEditingController password = TextEditingController();
+TextEditingController passwordconfirmation = TextEditingController();
 
 class _AddNewCustomerState extends State<AddNewCustomer> {
   @override
@@ -39,25 +48,35 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
       setState(() {
         _isFocused2 = _focusNode2.hasFocus;
       });
-    });  _focusNode3 = FocusNode();
+    });
+    _focusNode3 = FocusNode();
     _focusNode3.addListener(() {
       setState(() {
         _isFocused3 = _focusNode3.hasFocus;
       });
-    });  _focusNode4 = FocusNode();
+    });
+    _focusNode4 = FocusNode();
     _focusNode4.addListener(() {
       setState(() {
         _isFocused4 = _focusNode4.hasFocus;
       });
-    });  _focusNode5 = FocusNode();
+    });
+    _focusNode5 = FocusNode();
     _focusNode5.addListener(() {
       setState(() {
         _isFocused5 = _focusNode5.hasFocus;
       });
-    });  _focusNode6 = FocusNode();
+    });
+    _focusNode6 = FocusNode();
     _focusNode6.addListener(() {
       setState(() {
         _isFocused6 = _focusNode6.hasFocus;
+      });
+    });
+    _focusNode7 = FocusNode();
+    _focusNode7.addListener(() {
+      setState(() {
+        _isFocused7 = _focusNode7.hasFocus;
       });
     });
   }
@@ -70,6 +89,14 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
     _focusNode4.dispose();
     _focusNode5.dispose();
     _focusNode6.dispose();
+    _focusNode7.dispose();
+    name.dispose();
+    mobile.dispose();
+    email.dispose();
+    opbalance.dispose();
+    creditlimit.dispose();
+    password.dispose();
+    passwordconfirmation.dispose();
     super.dispose();
   }
 
@@ -197,6 +224,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                           child: TextField(
+                                            controller: name,
                                             focusNode: _focusNode1,
                                             decoration: InputDecoration(
                                               hintText: 'Customer Name',
@@ -235,6 +263,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                           child: TextField(
+                                            controller: mobile,
                                             focusNode: _focusNode2,
                                             decoration: InputDecoration(
                                               hintText: 'Mobile Number',
@@ -273,6 +302,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                           child: TextField(
+                                            controller: email,
                                             focusNode: _focusNode3,
                                             decoration: InputDecoration(
                                               hintText: 'Email id',
@@ -311,10 +341,10 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                           child: TextField(
+                                            controller: opbalance,
                                             focusNode: _focusNode4,
                                             decoration: InputDecoration(
-                                              hintText:
-                                                  'Current Balance - 2556 Sar',
+                                              hintText: 'Opening Balance',
                                               hintStyle: TextStyle(
                                                 color: _isFocused4 == false
                                                     ? Color(0xffEC1C24)
@@ -350,10 +380,10 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                           child: TextField(
+                                            controller: creditlimit,
                                             focusNode: _focusNode5,
                                             decoration: InputDecoration(
-                                              hintText:
-                                                  'Credit Limit - 2556 Sar',
+                                              hintText: 'Credit Limit',
                                               hintStyle: TextStyle(
                                                 color: _isFocused5 == false
                                                     ? Color(0xffEC1C24)
@@ -389,10 +419,10 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                                 BorderRadius.circular(8.0),
                                           ),
                                           child: TextField(
+                                            controller: password,
                                             focusNode: _focusNode6,
                                             decoration: InputDecoration(
-                                              hintText:
-                                                  'Current Credit - 2556 Sar',
+                                              hintText: 'Password',
                                               hintStyle: TextStyle(
                                                 color: _isFocused6 == false
                                                     ? Color(0xffEC1C24)
@@ -411,6 +441,45 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                       SizedBox(
                                         height: 27.h,
                                       ),
+                                      FocusScope(
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              left: 16.w, right: 17.w),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 16.0.h),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: _isFocused7 == false
+                                                  ? Color(0xffD9D9D9)
+                                                  : Color(
+                                                      0xffFF0000), // Change border color based on focus
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: TextField(
+                                            controller: passwordconfirmation,
+                                            focusNode: _focusNode7,
+                                            decoration: InputDecoration(
+                                              hintText: 'Password Confirmation',
+                                              hintStyle: TextStyle(
+                                                color: _isFocused7 == false
+                                                    ? Color(0xffEC1C24)
+                                                    : Color(0xffA4A4A4),
+                                                letterSpacing: -0.3.sp,
+                                                fontSize: _isFocused7 == false
+                                                    ? 15.0.sp
+                                                    : 13.0
+                                                        .sp, // Change hint text size based on focus
+                                              ),
+                                              border: InputBorder.none,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 27.h,
+                                      )
                                     ],
                                   ),
                                 ),
@@ -431,94 +500,64 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(25.r),
                                       bottomRight: Radius.circular(25.r))),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 56.w,
-                                  ),
-                                  GestureDetector(onTap: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder:(_)=>const AddCustomerFeature()));
-                                  },
-                                    child: Container(
-                                      width: 105.w,
-                                      height: 36.h,
-                                      decoration: ShapeDecoration(
-                                        color: Color(0xFF0492E2),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(7.r)),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 9.w, top: 6.h, bottom: 8.h),
-                                            child: SizedBox(
-                                              width: 24.w,
-                                              height: 22.h,
-                                              child: Image.asset(
-                                                  'assets/features.png'),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 5.w,
-                                          ),
-                                          SizedBox(
-                                            width: 55.w,
-                                            height: 18.h,
-                                            child: Text(
-                                              'Features',
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 13.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    letterSpacing: -0.3.sp),
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 28.w,
-                                  ),
-                                  Container(
-                                    width: 82.w,
-                                    height: 34.h,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (_) => AddCustomerFeature(
+                                            opbalance: opbalance.text,
+                                            email: email.text,
+                                            mobile: mobile.text,
+                                            password: password.text,
+                                            name: name.text,
+                                            passwordConfirmation:
+                                                passwordconfirmation.text,
+                                            creditLimit: creditlimit.text,
+                                          )));
+                                },
+                                child: Center(
+                                  child: Container(
+                                    width: 105.w,
+                                    height: 36.h,
                                     decoration: ShapeDecoration(
-                                      color: Color(0xFFEC1C24),
+                                      color: Color(0xFF0492E2),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.r),
-                                      ),
+                                          borderRadius:
+                                              BorderRadius.circular(7.r)),
                                     ),
                                     child: Row(
                                       children: [
-                                        SizedBox(
-                                          width: 12.w,
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 9.w, top: 6.h, bottom: 8.h),
+                                          child: SizedBox(
+                                            width: 24.w,
+                                            height: 22.h,
+                                            child: Image.asset(
+                                                'assets/features.png'),
+                                          ),
                                         ),
                                         SizedBox(
-                                            width: 14.w,
-                                            height: 13.h,
-                                            child:
-                                                Image.asset('assets/saver.png')),SizedBox(width: 4.w,),
+                                          width: 5.w,
+                                        ),
                                         SizedBox(
-                                          width: 41.w,
-                                          height: 25.h,child: Text('SAVE',style:GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: -0.3.sp),
-                                        ),),
+                                          width: 55.w,
+                                          height: 18.h,
+                                          child: Text(
+                                            'Features',
+                                            style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 13.sp,
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing: -0.3.sp),
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
                                         )
                                       ],
                                     ),
-                                  )
-                                ],
+                                  ),
+                                ),
                               ),
                             )
                           ],

@@ -1,3 +1,4 @@
+import 'package:easymanage/Bloc/CreateCustomer/create_customer_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,10 +6,28 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../Bloc/GetAllPermission/get_all_permission_bloc.dart';
 import '../Repository/modelclass/GetAllPermission.dart';
+import 'Widget/toastmessage.dart';
 import 'aftersavecustomerdetails.dart';
 
 class AddCustomerFeature extends StatefulWidget {
-  const AddCustomerFeature({Key? key}) : super(key: key);
+  final String name;
+  final String mobile;
+  final String email;
+  final String opbalance;
+  final String creditLimit;
+  final String password;
+  final String passwordConfirmation;
+
+  const AddCustomerFeature(
+      {Key? key,
+      required this.opbalance,
+      required this.email,
+      required this.mobile,
+      required this.password,
+      required this.name,
+      required this.passwordConfirmation,
+      required this.creditLimit})
+      : super(key: key);
 
   @override
   State<AddCustomerFeature> createState() => _AddCustomerFeatureState();
@@ -16,6 +35,7 @@ class AddCustomerFeature extends StatefulWidget {
 
 List<bool> values = [];
 bool allowall = false;
+List<String> allowedPerms = [];
 late GetAllPermission permisson;
 
 class _AddCustomerFeatureState extends State<AddCustomerFeature> {
@@ -152,8 +172,12 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                       BlocProvider.of<GetAllPermissionBloc>(
                                               context)
                                           .getAllPermission;
-                                  List<bool>.generate(permisson.perms!.length,
-                                      (index) => false);
+                                  for (int i = 0;
+                                      i <= permisson.perms!.length;
+                                      i++) {
+                                    values.add(false);
+                                  }
+
                                   return Container(
                                     width: 326.w,
                                     height: 519.h,
@@ -161,6 +185,8 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                       itemCount: permisson.perms!.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
+
+                                        print(allowedPerms);
                                         return Container(
                                           height: 29.67.h,
                                           child: Row(
@@ -187,6 +213,16 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                                 onChanged: (bool? value) {
                                                   setState(() {
                                                     values[index] = value!;
+                                                    if (values[index] == true) {
+                                                      allowedPerms.add(permisson
+                                                          .perms![index].id
+                                                          .toString());
+                                                    }
+                                                    if(values[index]==false){
+                                                      allowedPerms.remove(permisson
+                                                          .perms![index].id
+                                                          .toString());
+                                                    }
                                                   });
                                                 },
                                               ),
@@ -253,6 +289,7 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                               values = List<bool>.generate(
                                                   permisson.perms!.length,
                                                   (index) => true);
+
                                             } else {
                                               values = List<bool>.generate(
                                                   permisson.perms!.length,
@@ -284,50 +321,95 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                   SizedBox(
                                     width: 71.w,
                                   ),
-                                  GestureDetector(
-                                    onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                AfterSaveCustomer())),
-                                    child: Container(
-                                      width: 82.w,
-                                      height: 35.13.h,
-                                      decoration: ShapeDecoration(
-                                        color: Color(0xFFEC1C24),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 12.w,
-                                          ),
-                                          SizedBox(
-                                            width: 14.w,
-                                            height: 13.43,
-                                            child:
-                                                Image.asset('assets/saver.png'),
-                                          ),
-                                          SizedBox(
-                                            width: 5.w,
-                                          ),
-                                          SizedBox(
-                                            width: 41.w,
-                                            height: 25.83.h,
-                                            child: Text(
-                                              'SAVE',
-                                              style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16.sp,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w400,
-                                                letterSpacing: -0.30,
-                                              )),
+                                  BlocListener<CreateCustomerBloc,
+                                      CreateCustomerState>(
+                                    listener: (context, state) {
+                                      if (state is createCustomerblocLoaded) {
+                                        Navigator.of(context).pop();
+                                        ToastMessage().toastmessage(message: "New Customer Created SuccessFully");
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    AfterSaveCustomer(
+                                                      password: widget.password,
+                                                      mobile: widget.mobile,
+                                                      email: widget.email,
+                                                      opbalance:
+                                                          widget.opbalance,
+                                                      creditLimit:
+                                                          widget.creditLimit,
+                                                      passwordConfirmation: widget
+                                                          .passwordConfirmation,
+                                                      name: widget.name,
+                                                      allowedPerms:
+                                                          allowedPerms,
+                                                    )));
+                                      }
+                                      if (state is createCustomerblocLoading) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext a) =>
+                                                const Center(
+                                                    child:
+                                                        CircularProgressIndicator()));
+                                      }
+                                      if (state is createCustomerblocError) {
+                                        Navigator.of(context).pop();
+                                      }
+                                    },
+                                    child: GestureDetector(
+                                      onTap: () => BlocProvider.of<
+                                              CreateCustomerBloc>(context)
+                                          .add(FecthCreateCustomer(
+                                              passwordConfirmation:
+                                                  widget.passwordConfirmation,
+                                              password: widget.password,
+                                              creditLimit: widget.creditLimit,
+                                              mobile: widget.mobile,
+                                              email: widget.email,
+                                              name: widget.name,
+                                              allowedPerms: allowedPerms,
+                                              opbalance: widget.opbalance)),
+                                      child: Container(
+                                        width: 82.w,
+                                        height: 35.13.h,
+                                        decoration: ShapeDecoration(
+                                          color: Color(0xFFEC1C24),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 12.w,
                                             ),
-                                          )
-                                        ],
+                                            SizedBox(
+                                              width: 14.w,
+                                              height: 13.43,
+                                              child: Image.asset(
+                                                  'assets/saver.png'),
+                                            ),
+                                            SizedBox(
+                                              width: 5.w,
+                                            ),
+                                            SizedBox(
+                                              width: 41.w,
+                                              height: 25.83.h,
+                                              child: Text(
+                                                'SAVE',
+                                                style: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: -0.30,
+                                                )),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   )
