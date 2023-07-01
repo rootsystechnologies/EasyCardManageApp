@@ -12,6 +12,7 @@ class FecthCreateCustomer extends CreateCustomerEvent {
   final String password;
   final String passwordConfirmation;
   final List<String> allowedPerms;
+  final String place;
 
   FecthCreateCustomer(
       {required this.passwordConfirmation,
@@ -21,5 +22,5 @@ class FecthCreateCustomer extends CreateCustomerEvent {
       required this.email,
       required this.name,
       required this.allowedPerms,
-      required this.opbalance});
+      required this.opbalance,required this.place});
 }

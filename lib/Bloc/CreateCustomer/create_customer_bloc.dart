@@ -26,7 +26,7 @@ class CreateCustomerBloc
             event.creditLimit,
             event.password,
             event.passwordConfirmation,
-            event.allowedPerms);
+            event.allowedPerms,event.place);
         emit(createCustomerblocLoaded());
       } catch (e) {
         ToastMessage().toastmessage(message: e.toString());

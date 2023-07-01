@@ -17,6 +17,7 @@ class AddCustomerFeature extends StatefulWidget {
   final String creditLimit;
   final String password;
   final String passwordConfirmation;
+  final String place;
 
   const AddCustomerFeature(
       {Key? key,
@@ -26,7 +27,7 @@ class AddCustomerFeature extends StatefulWidget {
       required this.password,
       required this.name,
       required this.passwordConfirmation,
-      required this.creditLimit})
+      required this.creditLimit,required this.place})
       : super(key: key);
 
   @override
@@ -342,7 +343,7 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                                           .passwordConfirmation,
                                                       name: widget.name,
                                                       allowedPerms:
-                                                          allowedPerms,
+                                                          allowedPerms, place: widget.place,
                                                     )));
                                       }
                                       if (state is createCustomerblocLoading) {
@@ -369,7 +370,7 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                               email: widget.email,
                                               name: widget.name,
                                               allowedPerms: allowedPerms,
-                                              opbalance: widget.opbalance)),
+                                              opbalance: widget.opbalance, place:widget.place)),
                                       child: Container(
                                         width: 82.w,
                                         height: 35.13.h,

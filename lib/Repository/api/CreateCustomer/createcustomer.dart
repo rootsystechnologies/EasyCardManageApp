@@ -17,7 +17,7 @@ class CreateCustomerApi {
       String creditLimit,
       String password,
       String passwordConfirmation,
-      List<String> allowedperms) async {
+      List<String> allowedperms,String place) async {
 
     var body = {
       'name': name,
@@ -27,6 +27,7 @@ class CreateCustomerApi {
       'cred_limit': creditLimit,
       'password': password,
       'password_confirmation': passwordConfirmation,
+      'place':place,
       'allowed_perms': jsonEncode(allowedperms) // Convert the list to JSON string
     };
 

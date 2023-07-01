@@ -14,7 +14,7 @@ class AfterSaveCustomer extends StatefulWidget {
   final String password;
   final String passwordConfirmation;
   final List<String> allowedPerms;
-
+  final String place;
   const AfterSaveCustomer(
       {super.key,
       required this.password,
@@ -24,7 +24,7 @@ class AfterSaveCustomer extends StatefulWidget {
       required this.creditLimit,
       required this.passwordConfirmation,
       required this.name,
-      required this.allowedPerms});
+      required this.allowedPerms,required this.place});
 
   @override
   State<AfterSaveCustomer> createState() => _AfterSaveCustomerState();
@@ -543,7 +543,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                                   passwordConfirmation: widget
                                                       .passwordConfirmation,
                                                   creditLimit:
-                                                      widget.creditLimit,
+                                                      widget.creditLimit, place: widget.place,
                                                 ))),
                                     child: Container(
                                       margin: EdgeInsets.only(

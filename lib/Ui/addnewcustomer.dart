@@ -25,6 +25,8 @@ late FocusNode _focusNode6;
 bool _isFocused6 = false;
 late FocusNode _focusNode7;
 bool _isFocused7 = false;
+late FocusNode _focusNode8;
+bool _isFocused8 = false;
 TextEditingController name = TextEditingController();
 TextEditingController mobile = TextEditingController();
 TextEditingController email = TextEditingController();
@@ -32,7 +34,7 @@ TextEditingController opbalance = TextEditingController();
 TextEditingController creditlimit = TextEditingController();
 TextEditingController password = TextEditingController();
 TextEditingController passwordconfirmation = TextEditingController();
-
+TextEditingController place = TextEditingController();
 class _AddNewCustomerState extends State<AddNewCustomer> {
   @override
   void initState() {
@@ -79,6 +81,12 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
         _isFocused7 = _focusNode7.hasFocus;
       });
     });
+    _focusNode8 = FocusNode();
+    _focusNode8.addListener(() {
+      setState(() {
+        _isFocused8 = _focusNode8.hasFocus;
+      });
+    });
   }
 
   @override
@@ -90,6 +98,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
     _focusNode5.dispose();
     _focusNode6.dispose();
     _focusNode7.dispose();
+    _focusNode8.dispose();
     // name.dispose();
     // mobile.dispose();
     // email.dispose();
@@ -401,6 +410,44 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                       ),
                                       SizedBox(
                                         height: 27.h,
+                                      ), FocusScope(
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              left: 16.w, right: 17.w),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 16.0.h),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: _isFocused8 == false
+                                                  ? Color(0xffD9D9D9)
+                                                  : Color(
+                                                  0xffFF0000), // Change border color based on focus
+                                            ),
+                                            borderRadius:
+                                            BorderRadius.circular(8.0),
+                                          ),
+                                          child: TextField(
+                                            controller: place,
+                                            focusNode: _focusNode8,
+                                            decoration: InputDecoration(
+                                              hintText: 'Place',
+                                              hintStyle: TextStyle(
+                                                color: _isFocused8 == false
+                                                    ? Color(0xffEC1C24)
+                                                    : Color(0xffA4A4A4),
+                                                letterSpacing: -0.3.sp,
+                                                fontSize: _isFocused8 == false
+                                                    ? 15.0.sp
+                                                    : 13.0
+                                                    .sp, // Change hint text size based on focus
+                                              ),
+                                              border: InputBorder.none,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 27.h,
                                       ),
                                       FocusScope(
                                         child: Container(
@@ -511,7 +558,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                             name: name.text,
                                             passwordConfirmation:
                                                 passwordconfirmation.text,
-                                            creditLimit: creditlimit.text,
+                                            creditLimit: creditlimit.text, place: place.text,
                                           )));
                                 },
                                 child: Center(
