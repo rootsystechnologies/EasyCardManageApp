@@ -9,7 +9,7 @@ class CreateCustomerApi {
   ApiClient apiClient = ApiClient();
   String trendingpath = '/collector/customer/create';
 
-  Future<void> createCustomer(
+  Future<CreateCustomerModel> createCustomer(
       String name,
       String mobile,
       String email,
@@ -18,19 +18,22 @@ class CreateCustomerApi {
       String password,
       String passwordConfirmation,
       List<String> allowedperms) async {
+
     var body = {
-      'name':name,
-      'mobile':mobile,
-      'email':email,
-      'op_balance':opBalance,
-      'cred_limit':creditLimit,
-      'password':password,
-      'password_confirmation':passwordConfirmation,
-      'allowed_perms':allowedperms
+      'name': name,
+      'mobile': mobile,
+      'email': email,
+      'op_balance': opBalance,
+      'cred_limit': creditLimit,
+      'password': password,
+      'password_confirmation': passwordConfirmation,
+      'allowed_perms': jsonEncode(allowedperms) // Convert the list to JSON string
     };
+
     Response response = await apiClient.invokeAPI(trendingpath, 'POST_', body);
 
     print(response.body); // Print the response body
+      return CreateCustomerModel.fromJson(jsonDecode(response.body));
 
   }
 }

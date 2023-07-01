@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'Bloc/CollectAmount/collect_amount_bloc.dart';
 import 'Bloc/CreateCustomer/create_customer_bloc.dart';
 import 'Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import 'Bloc/GetAllPermission/get_all_permission_bloc.dart';
@@ -34,6 +35,8 @@ class MyApp extends StatelessWidget {
                 create: (context) => GetAllPermissionBloc(),
               ),BlocProvider(
                 create: (context) => CreateCustomerBloc(),
+              ),BlocProvider(
+                create: (context) => CollectAmountBloc(),
               ),
             ],
             child: MaterialApp(

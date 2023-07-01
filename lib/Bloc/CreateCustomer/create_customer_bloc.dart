@@ -18,7 +18,7 @@ class CreateCustomerBloc
     on<FecthCreateCustomer>((event, emit) async {
       emit(createCustomerblocLoading());
       try {
-         createCustomerApi.createCustomer(
+        createCustomerModel = await createCustomerApi.createCustomer(
             event.name,
             event.mobile,
             event.email,

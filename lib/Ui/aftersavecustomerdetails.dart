@@ -70,12 +70,12 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                             )),
                       ),
                       SizedBox(
-                        height: 60.h,
+                        height: 80.h,
                       ),
                       Container(
                           margin: EdgeInsets.only(left: 17.w, right: 17.w),
                           width: 326.w,
-                          height: 585.5.h,
+                          height: 469.h,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(25.r),
@@ -167,7 +167,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   width: 73.w,
                                   height: 20.h,
                                   child: Text(
-                                    'John Adam',
+                                    widget.name,
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         color: Color(0xFFA3A3A3),
@@ -220,7 +220,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   width: 84.w,
                                   height: 20.h,
                                   child: Text(
-                                    '789 369 4556',
+                                    widget.mobile,
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         color: Color(0xFFA3A3A3),
@@ -273,7 +273,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   width: 150.w,
                                   height: 20.h,
                                   child: Text(
-                                    'Johnadam@gmail.com',
+                                    widget.email,
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         color: Color(0xFFA3A3A3),
@@ -304,13 +304,13 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                             Row(
                               children: [
                                 SizedBox(
-                                  width: 20.w,
+                                  width: 15.w,
                                 ),
                                 SizedBox(
-                                  width: 127.w,
+                                  width: 150.w,
                                   height: 24.h,
                                   child: Text(
-                                    'Current Balance  :',
+                                    'Opening Balance  :',
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         color: Color(0xFFFF0000),
@@ -329,7 +329,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   width: 54.w,
                                   height: 20.h,
                                   child: Text(
-                                    '2556 sar',
+                                    '${widget.opbalance} sar',
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         color: Color(0xFFA3A3A3),
@@ -385,7 +385,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   width: 54.w,
                                   height: 20.h,
                                   child: Text(
-                                    '2556 sar',
+                                    '${widget.creditLimit} sar',
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         color: Color(0xFFA3A3A3),
@@ -402,115 +402,115 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                             SizedBox(
                               height: 13.h,
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(left: 11.w, right: 12.93.w),
-                              child: Divider(
-                                color: Color(0xffE5E5E5),
-                                thickness: 1.5.sp,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 11.h,
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                SizedBox(
-                                  width: 127.w,
-                                  height: 24.h,
-                                  child: Text(
-                                    'Current Credit      :',
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                        color: Color(0xFFFF0000),
-                                        fontSize: 14.sp,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: -0.30,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 3.w,
-                                ),
-                                SizedBox(
-                                  width: 54.w,
-                                  height: 20.h,
-                                  child: Text(
-                                    '2556 sar',
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                        color: Color(0xFFA3A3A3),
-                                        fontSize: 13.sp,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: -0.30,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 11.h,
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(left: 11.w, right: 12.93.w),
-                              child: Divider(
-                                color: Color(0xffE5E5E5),
-                                thickness: 1.5.sp,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 12.h,
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                SizedBox(
-                                  width: 127.w,
-                                  height: 24.h,
-                                  child: Text(
-                                    'Credit Balance     :',
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                        color: Color(0xFFFF0000),
-                                        fontSize: 14.sp,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: -0.30,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 3.w,
-                                ),
-                                SizedBox(
-                                  width: 54.w,
-                                  height: 20.h,
-                                  child: Text(
-                                    '2556 sar',
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                        color: Color(0xFFA3A3A3),
-                                        fontSize: 13.sp,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: -0.30,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                            // Padding(
+                            //   padding:
+                            //       EdgeInsets.only(left: 11.w, right: 12.93.w),
+                            //   child: Divider(
+                            //     color: Color(0xffE5E5E5),
+                            //     thickness: 1.5.sp,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 11.h,
+                            // ),
+                            // Row(
+                            //   children: [
+                            //     SizedBox(
+                            //       width: 20.w,
+                            //     ),
+                            //     SizedBox(
+                            //       width: 127.w,
+                            //       height: 24.h,
+                            //       child: Text(
+                            //         'Current Credit      :',
+                            //         style: GoogleFonts.poppins(
+                            //           textStyle: TextStyle(
+                            //             color: Color(0xFFFF0000),
+                            //             fontSize: 14.sp,
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w500,
+                            //             letterSpacing: -0.30,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 3.w,
+                            //     ),
+                            //     SizedBox(
+                            //       width: 54.w,
+                            //       height: 20.h,
+                            //       child: Text(
+                            //         '2556 sar',
+                            //         style: GoogleFonts.poppins(
+                            //           textStyle: TextStyle(
+                            //             color: Color(0xFFA3A3A3),
+                            //             fontSize: 13.sp,
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w400,
+                            //             letterSpacing: -0.30,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     )
+                            //   ],
+                            // ),
+                            // SizedBox(
+                            //   height: 11.h,
+                            // ),
+                            // Padding(
+                            //   padding:
+                            //       EdgeInsets.only(left: 11.w, right: 12.93.w),
+                            //   child: Divider(
+                            //     color: Color(0xffE5E5E5),
+                            //     thickness: 1.5.sp,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 12.h,
+                            // ),
+                            // Row(
+                            //   children: [
+                            //     SizedBox(
+                            //       width: 20.w,
+                            //     ),
+                            //     SizedBox(
+                            //       width: 127.w,
+                            //       height: 24.h,
+                            //       child: Text(
+                            //         'Credit Balance     :',
+                            //         style: GoogleFonts.poppins(
+                            //           textStyle: TextStyle(
+                            //             color: Color(0xFFFF0000),
+                            //             fontSize: 14.sp,
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w500,
+                            //             letterSpacing: -0.30,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //     SizedBox(
+                            //       width: 3.w,
+                            //     ),
+                            //     SizedBox(
+                            //       width: 54.w,
+                            //       height: 20.h,
+                            //       child: Text(
+                            //         '2556 sar',
+                            //         style: GoogleFonts.poppins(
+                            //           textStyle: TextStyle(
+                            //             color: Color(0xFFA3A3A3),
+                            //             fontSize: 13.sp,
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w400,
+                            //             letterSpacing: -0.30,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     )
+                            //   ],
+                            // ),
                             SizedBox(
                               height: 18.h,
                             ),

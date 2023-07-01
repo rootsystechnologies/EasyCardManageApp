@@ -90,13 +90,13 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
     _focusNode5.dispose();
     _focusNode6.dispose();
     _focusNode7.dispose();
-    name.dispose();
-    mobile.dispose();
-    email.dispose();
-    opbalance.dispose();
-    creditlimit.dispose();
-    password.dispose();
-    passwordconfirmation.dispose();
+    // name.dispose();
+    // mobile.dispose();
+    // email.dispose();
+    // opbalance.dispose();
+    // creditlimit.dispose();
+    // password.dispose();
+    // passwordconfirmation.dispose();
     super.dispose();
   }
 
