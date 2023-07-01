@@ -17,11 +17,14 @@ class Customers extends StatefulWidget {
 
 bool move = true;
 late Getallcustomers customers;
-class _CustomersState extends State<Customers> {@override
+
+class _CustomersState extends State<Customers> {
+  @override
   void initState() {
-  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers());
+    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -280,7 +283,9 @@ class _CustomersState extends State<Customers> {@override
                         );
                       }
                       if (state is GetAllCustomersblocLoaded) {
-                        customers = BlocProvider.of<GetAllCustomersBloc>(context).getallcustomers;
+                        customers =
+                            BlocProvider.of<GetAllCustomersBloc>(context)
+                                .getallcustomers;
                         return Container(
                           width: 326.w,
                           height: 407.5.h,
@@ -296,7 +301,9 @@ class _CustomersState extends State<Customers> {@override
                                     height: 21,
                                     width: 75,
                                     child: Center(
-                                      child: Text(customers.customers!.data![index].name.toString(),
+                                      child: Text(
+                                          customers.customers!.data![index].name
+                                              .toString(),
                                           style: GoogleFonts.poppins(
                                               textStyle: TextStyle(
                                                   color: Color(0xffA4A4A4),
@@ -311,7 +318,10 @@ class _CustomersState extends State<Customers> {@override
                                     width: 62.w,
                                     height: 21.h,
                                     child: Center(
-                                      child: Text(customers.customers!.data![index].wallet!.balance.toString(),
+                                      child: Text(
+                                          customers.customers!.data![index]
+                                              .wallet!.balance
+                                              .toString(),
                                           style: GoogleFonts.poppins(
                                               textStyle: TextStyle(
                                                   color: Color(0xffA4A4A4),
@@ -326,7 +336,15 @@ class _CustomersState extends State<Customers> {@override
                                     onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                CustomerCollectAmount())),
+                                                CustomerCollectAmount(
+                                                  customerName: customers
+                                                      .customers!
+                                                      .data![index]
+                                                      .name
+                                                      .toString(), userId: customers
+                                                    .customers!
+                                                    .data![index].id.toString(),
+                                                ))),
                                     child: SizedBox(
                                       height: 30.h,
                                       width: 30.w,
@@ -367,8 +385,7 @@ class _CustomersState extends State<Customers> {@override
                             },
                           ),
                         );
-                      }
-                      else {
+                      } else {
                         return SizedBox();
                       }
                     },

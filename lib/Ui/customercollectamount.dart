@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Bloc/CollectAmount/collect_amount_bloc.dart';
+import 'Widget/toastmessage.dart';
+import 'optionscreen.dart';
+
 class CustomerCollectAmount extends StatefulWidget {
-  const CustomerCollectAmount({Key? key}) : super(key: key);
+  final String customerName;
+  final String userId;
+  const CustomerCollectAmount({Key? key, required this.customerName,required this.userId})
+      : super(key: key);
 
   @override
   State<CustomerCollectAmount> createState() => _CustomerCollectAmountState();
@@ -15,6 +23,7 @@ bool _isFocused1 = false;
 late FocusNode _focusNode2;
 bool _isFocused2 = false;
 bool isExpanded = false;
+TextEditingController amount = TextEditingController();
 
 class _CustomerCollectAmountState extends State<CustomerCollectAmount> {
   @override
@@ -145,27 +154,36 @@ class _CustomerCollectAmountState extends State<CustomerCollectAmount> {
                         ),
                         SizedBox(
                           height: 21.h,
-                        ),Padding(
-                              padding: EdgeInsets.only(left: 16.w,right: 17.w),
-                              child: Container(
-                                width: 293.w,
-                                height: 51.h,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffEC1C24),
-                                    borderRadius: BorderRadius.circular(9.r)),
-                                child: Padding(
-                                  padding: EdgeInsets.only(left:16.w ,top: 13.h,bottom: 11.h),
-                                  child: SizedBox(width: 273.w,height: 27.h,child: Text('Selected Customer Name',
-                                      style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: -0.30.sp,
-                                          ))),),
-                                ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.w, right: 17.w),
+                          child: Container(
+                            width: 293.w,
+                            height: 51.h,
+                            decoration: BoxDecoration(
+                                color: Color(0xffEC1C24),
+                                borderRadius: BorderRadius.circular(9.r)),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 16.w, top: 13.h, bottom: 11.h),
+                              child: SizedBox(
+                                width: 273.w,
+                                height: 27.h,
+                                child: Text(widget.customerName,
+                                    style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: -0.30.sp,
+                                    ))),
                               ),
-                            ),SizedBox(height: 27.h,),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 27.h,
+                        ),
                         FocusScope(
                           child: Container(
                             margin: EdgeInsets.only(left: 16.w, right: 17.w),
@@ -180,6 +198,7 @@ class _CustomerCollectAmountState extends State<CustomerCollectAmount> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: TextField(
+                              controller: amount,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(
                                 hintText: 'Amount',
@@ -295,17 +314,47 @@ class _CustomerCollectAmountState extends State<CustomerCollectAmount> {
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: 5.h, bottom: 5.h, left: 3.w),
-                                child: Container(
-                                  width: 58.w,
-                                  height: 26.h,
-                                  child: Text('Collect',
-                                      style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 17.sp,
-                                        fontWeight: FontWeight.w400,
-                                        letterSpacing: -0.30.sp,
-                                      ))),
+                                child: BlocListener<CollectAmountBloc,
+                                    CollectAmountState>(
+                                  listener: (context, state) {
+                                    if (state is CollectblocLoaded) {
+
+                                      Navigator.of(context).pop();
+                                      ToastMessage().toastmessage(message:"Amount Collected Successfully");
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                              const OptionScreen()),
+                                              (route) => false);
+                                    }
+                                    if (state is CollectblocLoading) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext a) => const Center(
+                                              child:
+                                              CircularProgressIndicator()));
+                                    }
+                                    if (state is CollectblocError) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<CollectAmountBloc>(context).add(FetchCollectAmount(amount:amount.text, userId: widget.userId));
+                                    },
+                                    child: Container(
+                                      width: 58.w,
+                                      height: 26.h,
+                                      child: Text('Collect',
+                                          style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: -0.30.sp,
+                                          ))),
+                                    ),
+                                  ),
                                 ),
                               )
                             ],
