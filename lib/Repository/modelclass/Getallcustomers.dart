@@ -127,6 +127,7 @@ class Data {
       this.name, 
       this.mobile, 
       this.email, 
+      this.place, 
       this.emailVerifiedAt, 
       this.addedBy, 
       this.createdAt, 
@@ -140,6 +141,7 @@ class Data {
     name = json['name'];
     mobile = json['mobile'];
     email = json['email'];
+    place = json['place'];
     emailVerifiedAt = json['email_verified_at'];
     addedBy = json['added_by'];
     createdAt = json['created_at'];
@@ -157,6 +159,7 @@ class Data {
   String? name;
   String? mobile;
   String? email;
+  dynamic place;
   dynamic emailVerifiedAt;
   int? addedBy;
   String? createdAt;
@@ -171,6 +174,7 @@ class Data {
     map['name'] = name;
     map['mobile'] = mobile;
     map['email'] = email;
+    map['place'] = place;
     map['email_verified_at'] = emailVerifiedAt;
     map['added_by'] = addedBy;
     map['created_at'] = createdAt;

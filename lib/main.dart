@@ -8,6 +8,7 @@ import 'Bloc/GetAllColection/get_all_collection_bloc.dart';
 import 'Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import 'Bloc/GetAllPermission/get_all_permission_bloc.dart';
 import 'Bloc/Login/login_bloc.dart';
+import 'Bloc/Recharge/recharge_bloc.dart';
 import 'Ui/loginpage.dart';
 
 String basePath = 'http://easycard.rootsys.in/api';
@@ -40,6 +41,8 @@ class MyApp extends StatelessWidget {
                 create: (context) => CollectAmountBloc(),
               ),BlocProvider(
                 create: (context) => GetAllCollectionBloc(),
+              ),BlocProvider(
+                create: (context) => RechargeBloc(),
               ),
             ],
             child: MaterialApp(

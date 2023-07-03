@@ -4,7 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../Repository/api/getallcustomers/getallcustomersapi.dart';
-import '../../Repository/modelclass/getallcustomers.dart';
+
+import '../../Repository/modelclass/Getallcustomers.dart';
 import '../../Ui/Widget/toastmessage.dart';
 
 part 'get_all_customers_event.dart';

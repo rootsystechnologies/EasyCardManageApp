@@ -52,6 +52,7 @@ class ApiClient {
           Uri.parse(url),
           headers: {
             'authorization': 'Bearer $token',
+            'Content-Type': 'application/json'
           },
           body: body,
         );

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
-import '../Repository/modelclass/getallcustomers.dart';
+import '../Repository/modelclass/Getallcustomers.dart';
 import 'customercollectamount.dart';
 import 'customerwalletrecharge.dart';
 
@@ -359,7 +359,13 @@ class _CustomersState extends State<Customers> {
                                     onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                CustomerWalletRecharge())),
+                                                CustomerWalletRecharge(userId: customers
+                                                    .customers!
+                                                    .data![index].id.toString(), customerName: customers
+                                                    .customers!
+                                                    .data![index]
+                                                    .name
+                                                    .toString(),))),
                                     child: SizedBox(
                                       height: 30.h,
                                       width: 30.w,

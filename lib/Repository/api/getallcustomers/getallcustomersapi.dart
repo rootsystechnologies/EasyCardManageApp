@@ -3,7 +3,7 @@ import 'package:http/http.dart';
 
 
 
-import '../../modelclass/getallcustomers.dart';
+import '../../modelclass/Getallcustomers.dart';
 import '../apiclient.dart';
 
 

@@ -1,18 +1,35 @@
+import 'dart:math';
+
+import 'package:easymanage/Bloc/Recharge/recharge_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'Widget/toastmessage.dart';
+import 'optionscreen.dart';
+
 class CustomerWalletRecharge extends StatefulWidget {
-  const CustomerWalletRecharge({Key? key}) : super(key: key);
+  final String customerName;
+  final String userId;
+
+  const CustomerWalletRecharge(
+      {Key? key, required this.userId, required this.customerName})
+      : super(key: key);
 
   @override
   State<CustomerWalletRecharge> createState() => _CustomerWalletRechargeState();
 }
+
 late FocusNode _focusNode1;
 
 bool _isFocused1 = false;
 late FocusNode _focusNode2;
 bool _isFocused2 = false;
 bool isExpanded = false;
+TextEditingController amount = TextEditingController();
+TextEditingController pin = TextEditingController();
+
 class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
   @override
   void initState() {
@@ -38,6 +55,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
     _focusNode1.dispose();
     _focusNode2.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +68,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 transform:
-                GradientRotation(190.64 * (3.1415926535897932 / 180.0).sp),
+                    GradientRotation(190.64 * (3.1415926535897932 / 180.0).sp),
                 stops: [0.0057.sp, 0.969.sp],
                 colors: [
                   Color(0xffD70000),
@@ -59,7 +77,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
               ),
             ),
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(
                 height: 41.h,
               ),
@@ -90,146 +108,157 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                       ),
                       child: SingleChildScrollView(
                           child: Column(children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(0, 0, 0, 0.25.sp),
-                                      offset: Offset(0, 1.sp),
-                                      blurRadius: 2.r,
-                                    ),
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(25.r),
-                                      topRight: Radius.circular(25.r))),
-                              width: 326.w,
-                              height: 63.h,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 68.w,
-                                        top: 14.h,
-                                        bottom: 13.94.h,
-                                        right: 2.w),
-                                    child: SizedBox(
-                                        width: 35.06.w,
-                                        height: 35.06.h,
-                                        child: Image.asset('assets/customer2.png')),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 16.22.h, bottom: 14.35.h, left: 10.w),
-                                    child: SizedBox(
-                                        width: 144.w,
-                                        height: 29.h,
-                                        child: Text(
-                                          'Wallet Recharge',
-                                          style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                              letterSpacing: -0.3.sp,
-                                              color: Color(0xffEC1C24),
-                                              fontSize: 17.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        )),
-                                  )
-                                ],
+                        Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromRGBO(0, 0, 0, 0.25.sp),
+                                  offset: Offset(0, 1.sp),
+                                  blurRadius: 2.r,
+                                ),
+                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25.r),
+                                  topRight: Radius.circular(25.r))),
+                          width: 326.w,
+                          height: 63.h,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 68.w,
+                                    top: 14.h,
+                                    bottom: 13.94.h,
+                                    right: 2.w),
+                                child: SizedBox(
+                                    width: 35.06.w,
+                                    height: 35.06.h,
+                                    child: Image.asset('assets/customer2.png')),
                               ),
-                            ),
-                            SizedBox(
-                              height: 21.h,
-                            ),Padding(
-                              padding: EdgeInsets.only(left: 16.w,right: 17.w),
-                              child: Container(
-                                width: 293.w,
-                                height: 51.h,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffEC1C24),
-                                    borderRadius: BorderRadius.circular(9.r)),
-                                child: Padding(
-                                  padding: EdgeInsets.only(left:16.w ,top: 13.h,bottom: 11.h),
-                                  child: SizedBox(width: 273.w,height: 27.h,child: Text('Selected Customer Name',
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: 16.22.h, bottom: 14.35.h, left: 10.w),
+                                child: SizedBox(
+                                    width: 144.w,
+                                    height: 29.h,
+                                    child: Text(
+                                      'Wallet Recharge',
                                       style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: -0.30.sp,
-                                          ))),),
-                                ),
-                              ),
-                            ),SizedBox(height: 27.h,),
-                            FocusScope(
-                              child: Container(
-                                margin: EdgeInsets.only(left: 16.w, right: 17.w),
-                                padding: EdgeInsets.symmetric(horizontal: 16.0.h),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: _isFocused1 == false
-                                        ? Color(0xffD9D9D9)
-                                        : Color(
-                                        0xffFF0000), // Change border color based on focus
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: TextField(
-                                  focusNode: _focusNode1,
-                                  decoration: InputDecoration(
-                                    hintText: 'Amount',
-                                    hintStyle: TextStyle(
-                                      color: _isFocused1 == false
-                                          ? Color(0xffEC1C24)
-                                          : Color(0xffA4A4A4),
-                                      letterSpacing: -0.3.sp,
-                                      fontSize: _isFocused1 == false
-                                          ? 15.0.sp
-                                          : 13.0
-                                          .sp, // Change hint text size based on focus
-                                    ),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
+                                        textStyle: TextStyle(
+                                          letterSpacing: -0.3.sp,
+                                          color: Color(0xffEC1C24),
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 21.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 16.w, right: 17.w),
+                          child: Container(
+                            width: 293.w,
+                            height: 51.h,
+                            decoration: BoxDecoration(
+                                color: Color(0xffEC1C24),
+                                borderRadius: BorderRadius.circular(9.r)),
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: 16.w, top: 13.h, bottom: 11.h),
+                              child: SizedBox(
+                                width: 273.w,
+                                height: 27.h,
+                                child: Text(widget.customerName,
+                                    style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: -0.30.sp,
+                                    ))),
                               ),
                             ),
-                            SizedBox(
-                              height: 28.h,
-                            ),
-                            FocusScope(
-                              child: Container(
-                                margin: EdgeInsets.only(left: 16.w, right: 17.w),
-                                padding: EdgeInsets.symmetric(horizontal: 16.0.h),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: _isFocused2 == false
-                                        ? Color(0xffD9D9D9)
-                                        : Color(
+                          ),
+                        ),
+                        SizedBox(
+                          height: 27.h,
+                        ),
+                        FocusScope(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 16.w, right: 17.w),
+                            padding: EdgeInsets.symmetric(horizontal: 16.0.h),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: _isFocused1 == false
+                                    ? Color(0xffD9D9D9)
+                                    : Color(
                                         0xffFF0000), // Change border color based on focus
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: TextField(
-                                  focusNode: _focusNode2,
-                                  decoration: InputDecoration(
-                                    hintText: 'Pin ',
-                                    hintStyle: TextStyle(
-                                      color: _isFocused2 == false
-                                          ? Color(0xffEC1C24)
-                                          : Color(0xffA4A4A4),
-                                      letterSpacing: -0.3.sp,
-                                      fontSize: _isFocused2 == false
-                                          ? 15.0.sp
-                                          : 13.0
-                                          .sp, // Change hint text size based on focus
-                                    ),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
                               ),
-                            )
-                          ]))),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: TextField(
+                              controller: amount,
+                              focusNode: _focusNode1,
+                              decoration: InputDecoration(
+                                hintText: 'Amount',
+                                hintStyle: TextStyle(
+                                  color: _isFocused1 == false
+                                      ? Color(0xffEC1C24)
+                                      : Color(0xffA4A4A4),
+                                  letterSpacing: -0.3.sp,
+                                  fontSize: _isFocused1 == false
+                                      ? 15.0.sp
+                                      : 13.0
+                                          .sp, // Change hint text size based on focus
+                                ),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 28.h,
+                        ),
+                        FocusScope(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 16.w, right: 17.w),
+                            padding: EdgeInsets.symmetric(horizontal: 16.0.h),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: _isFocused2 == false
+                                    ? Color(0xffD9D9D9)
+                                    : Color(
+                                        0xffFF0000), // Change border color based on focus
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: TextField(keyboardType: TextInputType.number,
+                              controller: pin,
+                              focusNode: _focusNode2,
+                              decoration: InputDecoration(
+                                hintText: 'Pin ',
+                                hintStyle: TextStyle(
+                                  color: _isFocused2 == false
+                                      ? Color(0xffEC1C24)
+                                      : Color(0xffA4A4A4),
+                                  letterSpacing: -0.3.sp,
+                                  fontSize: _isFocused2 == false
+                                      ? 15.0.sp
+                                      : 13.0
+                                          .sp, // Change hint text size based on focus
+                                ),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                        )
+                      ]))),
                   Positioned(
                     top: 324.h,
                     left: 21.w,
@@ -284,24 +313,59 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                                         width: 15.w,
                                         height: 18.h,
                                         child:
-                                        Image.asset('assets/recharge.png')),
+                                            Image.asset('assets/recharge.png')),
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: 5.h, bottom: 5.h, left: 3.w),
-                                child: Container(
-                                  width: 80.w,
-                                  height: 26.h,
-                                  child: Text('Recharge',
-                                      style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
+                                child:
+                                    BlocListener<RechargeBloc, RechargeState>(
+                                  listener: (context, state) {
+                                    if (state is RechargeblocLoaded) {
+                                      Navigator.of(context).pop();
+                                      ToastMessage().toastmessage(
+                                          message:
+                                              "Recharge Successfully Completed");
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const OptionScreen()),
+                                          (route) => false);
+                                    }
+                                    if (state is RechargeblocLoading) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext a) => const Center(
+                                              child:
+                                                  CircularProgressIndicator()));
+                                    }
+                                    if (state is RechargeblocError) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<RechargeBloc>(context)
+                                          .add(FetchRechargeAmount(
+                                              amount: amount.text,
+                                              userId: widget.userId,
+                                              pin: int.parse(pin.text)));
+                                    },
+                                    child: Container(
+                                      width: 80.w,
+                                      height: 26.h,
+                                      child: Text('Recharge',
+                                          style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
                                             color: Colors.white,
                                             fontSize: 17.sp,
                                             fontWeight: FontWeight.w400,
                                             letterSpacing: -0.30.sp,
                                           ))),
+                                    ),
+                                  ),
                                 ),
                               )
                             ],
