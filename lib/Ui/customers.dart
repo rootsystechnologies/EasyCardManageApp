@@ -17,11 +17,11 @@ class Customers extends StatefulWidget {
 
 bool move = true;
 late Getallcustomers customers;
-
+TextEditingController search = TextEditingController();
 class _CustomersState extends State<Customers> {
   @override
   void initState() {
-    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers());
+    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: ''));
     super.initState();
   }
 
@@ -197,7 +197,9 @@ class _CustomersState extends State<Customers> {
                               child: SizedBox(
                                 width: 250.w,
                                 height: 60.h,
-                                child: TextFormField(
+                                child: TextFormField(controller: search,textInputAction:  TextInputAction.done,onFieldSubmitted: (value){
+                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
+                                },
                                   autofocus: true,
                                   decoration: InputDecoration(
                                       focusedBorder: InputBorder.none,
@@ -271,7 +273,7 @@ class _CustomersState extends State<Customers> {
                         return RefreshIndicator(
                           onRefresh: () async {
                             return BlocProvider.of<GetAllCustomersBloc>(context)
-                                .add(FetchGetAllCustomers());
+                                .add(FetchGetAllCustomers(searchKey: ''));
                           },
                           child: SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),

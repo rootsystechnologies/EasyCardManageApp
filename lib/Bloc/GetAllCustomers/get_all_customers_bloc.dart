@@ -18,7 +18,7 @@ class GetAllCustomersBloc extends Bloc<GetAllCustomersEvent, GetAllCustomersStat
     on<FetchGetAllCustomers>((event, emit) async{
       emit(GetAllCustomersblocLoading());
       try{
-        getallcustomers = await getAllCustomersApi.getallcustomers();
+        getallcustomers = await getAllCustomersApi.getallcustomers(event.searchKey);
         emit(GetAllCustomersblocLoaded());
       } catch(e){
         ToastMessage().toastmessage(message:e.toString());
