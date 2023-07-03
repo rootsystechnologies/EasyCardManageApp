@@ -1,4 +1,4 @@
-import 'package:expansion_tile_card/expansion_tile_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +9,7 @@ import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import '../Repository/modelclass/GetAllCollectionModel.dart';
 import '../Repository/modelclass/Getallcustomers.dart';
 import 'amountcollectioncollectamount.dart';
-
+import 'package:intl/intl.dart';
 class AmountCollection extends StatefulWidget {
   const AmountCollection({Key? key}) : super(key: key);
 
@@ -21,22 +21,37 @@ late Getallcustomers customers;
 bool move = true;
 TextEditingController search = TextEditingController();
 TextEditingController toDate = TextEditingController();
-TextEditingController fromDate = TextEditingController();
 late GetAllCollectionModel collections;
-
+final DateFormat formatter = DateFormat('MM-dd-yyyy');
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
   bool isExpanded2 = false;
-
+  DateTime fromDate=DateTime.now();
   @override
   void initState() {
     BlocProvider.of<GetAllCollectionBloc>(context).add(FetchGetAllCollection(
-        search: search.text, toDate: toDate.text, fromDate: fromDate.text));
-    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
+        search: search.text, toDate: toDate.text, fromDate: formatter.format(fromDate)));
+    BlocProvider.of<GetAllCustomersBloc>(context)
+        .add(FetchGetAllCustomers(searchKey: search.text));
     super.initState();
   }
 
+
+  Future<void> _selectFromDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null && pickedDate != fromDate) {
+      setState(() {
+        fromDate = pickedDate;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,18 +191,22 @@ class _AmountCollectionState extends State<AmountCollection> {
                                               Padding(
                                                 padding:
                                                     EdgeInsets.only(left: 16.w),
-                                                child: SizedBox(
-                                                  width: 86.w,
-                                                  height: 26.h,
-                                                  child: Text(
-                                                    "From Date",
-                                                    style: GoogleFonts.poppins(
-                                                      textStyle: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 17.sp,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        letterSpacing: -0.30.sp,
+                                                child: GestureDetector(onTap: (){
+                                                  _selectFromDate(context);
+                                                },
+                                                  child: SizedBox(
+                                                    width: 86.w,
+                                                    height: 26.h,
+                                                    child: Text(
+                                                      "From Date",
+                                                      style: GoogleFonts.poppins(
+                                                        textStyle: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 17.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          letterSpacing: -0.30.sp,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -216,23 +235,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             border:
                                                 Border.all(color: Colors.grey),
                                           ),
-                                          child: TextField(
-                                              controller: fromDate,
-                                              autofocus: true,
-                                              onSubmitted: (value) {
-                                                BlocProvider.of<
-                                                            GetAllCollectionBloc>(
-                                                        context)
-                                                    .add(FetchGetAllCollection(
-                                                        search: search.text,
-                                                        toDate: toDate.text,
-                                                        fromDate:
-                                                            fromDate.text));
-                                              },
-                                              decoration: InputDecoration(
-                                                focusedBorder: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                              )),
+                                          child: Center(child: Text(formatter.format(fromDate)),),
                                         ),
                                     ],
                                   ),
@@ -317,7 +320,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                         search: search.text,
                                                         toDate: toDate.text,
                                                         fromDate:
-                                                            fromDate.text));
+                                                            fromDate.toString()));
                                               },
                                               controller: toDate,
                                               autofocus: true,
@@ -509,8 +512,14 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                         width: 198.w,
                                                         height: 32.h,
                                                         child: TextFormField(
-                                                          onChanged: (value){
-                                                            BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
+                                                          onChanged: (value) {
+                                                            BlocProvider.of<
+                                                                        GetAllCustomersBloc>(
+                                                                    context)
+                                                                .add(FetchGetAllCustomers(
+                                                                    searchKey:
+                                                                        search
+                                                                            .text));
                                                           },
                                                           controller: search,
                                                           autofocus: true,
@@ -586,7 +595,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                           GetAllCustomersBloc>(
                                                       context)
                                                   .getallcustomers;
-                                             return ListView.separated(
+                                              return ListView.separated(
                                                 itemCount: customers
                                                     .customers!.data!.length,
                                                 itemBuilder:
@@ -598,10 +607,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                     child: SizedBox(
                                                       height: 24.h,
                                                       width: 120.w,
-                                                      child: Text(customers
-                                                          .customers!
-                                                          .data![index]
-                                                          .name.toString(),
+                                                      child: Text(
+                                                        customers.customers!
+                                                            .data![index].name
+                                                            .toString(),
                                                         style:
                                                             GoogleFonts.poppins(
                                                                 textStyle:
@@ -722,7 +731,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         .add(FetchGetAllCollection(
                                             search: search.text,
                                             toDate: toDate.text,
-                                            fromDate: fromDate.text));
+                                            fromDate: fromDate.toString()));
                                   },
                                   child: SingleChildScrollView(
                                     physics: const BouncingScrollPhysics(),
@@ -898,4 +907,6 @@ class _AmountCollectionState extends State<AmountCollection> {
               ),
             ])));
   }
+
+
 }
