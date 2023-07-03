@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Bloc/GetAllColection/get_all_collection_bloc.dart';
+import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import '../Repository/modelclass/GetAllCollectionModel.dart';
+import '../Repository/modelclass/Getallcustomers.dart';
 import 'amountcollectioncollectamount.dart';
 
 class AmountCollection extends StatefulWidget {
@@ -15,22 +17,26 @@ class AmountCollection extends StatefulWidget {
   State<AmountCollection> createState() => _AmountCollectionState();
 }
 
+late Getallcustomers customers;
 bool move = true;
 TextEditingController search = TextEditingController();
 TextEditingController toDate = TextEditingController();
 TextEditingController fromDate = TextEditingController();
 late GetAllCollectionModel collections;
+
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
   bool isExpanded2 = false;
-@override
+
+  @override
   void initState() {
-  BlocProvider.of<GetAllCollectionBloc>(
-      context)
-      .add(FetchGetAllCollection(search: search.text, toDate: toDate.text, fromDate: fromDate.text));
+    BlocProvider.of<GetAllCollectionBloc>(context).add(FetchGetAllCollection(
+        search: search.text, toDate: toDate.text, fromDate: fromDate.text));
+    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,11 +210,29 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         Container(
                                           width: 200.w,
                                           height: 50.h,
+                                          padding: EdgeInsets.all(8.h),
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             border:
                                                 Border.all(color: Colors.grey),
                                           ),
+                                          child: TextField(
+                                              controller: fromDate,
+                                              autofocus: true,
+                                              onSubmitted: (value) {
+                                                BlocProvider.of<
+                                                            GetAllCollectionBloc>(
+                                                        context)
+                                                    .add(FetchGetAllCollection(
+                                                        search: search.text,
+                                                        toDate: toDate.text,
+                                                        fromDate:
+                                                            fromDate.text));
+                                              },
+                                              decoration: InputDecoration(
+                                                focusedBorder: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                              )),
                                         ),
                                     ],
                                   ),
@@ -284,6 +308,23 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             border:
                                                 Border.all(color: Colors.grey),
                                           ),
+                                          child: TextField(
+                                              onSubmitted: (value) {
+                                                BlocProvider.of<
+                                                            GetAllCollectionBloc>(
+                                                        context)
+                                                    .add(FetchGetAllCollection(
+                                                        search: search.text,
+                                                        toDate: toDate.text,
+                                                        fromDate:
+                                                            fromDate.text));
+                                              },
+                                              controller: toDate,
+                                              autofocus: true,
+                                              decoration: InputDecoration(
+                                                focusedBorder: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                              )),
                                         ),
                                     ],
                                   ),
@@ -468,6 +509,9 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                         width: 198.w,
                                                         height: 32.h,
                                                         child: TextFormField(
+                                                          onChanged: (value){
+                                                            BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
+                                                          },
                                                           controller: search,
                                                           autofocus: true,
                                                           decoration:
@@ -502,40 +546,90 @@ class _AmountCollectionState extends State<AmountCollection> {
                                               ],
                                             ),
                                           ),
-                                          Expanded(
-                                              child: ListView.separated(
-                                            itemCount: 9,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              return Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 17.w),
-                                                child: SizedBox(
-                                                  height: 24.h,
-                                                  width: 120.w,
-                                                  child: Text(
-                                                    'Johnadam',
-                                                    style: GoogleFonts.poppins(
-                                                        textStyle: TextStyle(
-                                                      color: Color(0xFFA3A3A3),
-                                                      fontSize: 16.sp,
-                                                      fontFamily: 'Poppins',
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      letterSpacing: -0.30,
-                                                    )),
-                                                  ),
+                                          Expanded(child: BlocBuilder<
+                                                  GetAllCustomersBloc,
+                                                  GetAllCustomersState>(
+                                              builder: (context, state) {
+                                            if (state
+                                                is GetAllCustomersblocLoading) {
+                                              return SizedBox();
+                                            }
+                                            if (state
+                                                is GetAllCustomersblocError) {
+                                              return RefreshIndicator(
+                                                onRefresh: () async {
+                                                  return BlocProvider.of<
+                                                              GetAllCustomersBloc>(
+                                                          context)
+                                                      .add(FetchGetAllCustomers(
+                                                          searchKey: ''));
+                                                },
+                                                child: SingleChildScrollView(
+                                                  physics:
+                                                      const BouncingScrollPhysics(),
+                                                  child: Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              .9,
+                                                      // color: Colors.red,
+                                                      child: Center(
+                                                          child:
+                                                              Text("Error"))),
                                                 ),
                                               );
-                                            },
-                                            separatorBuilder:
-                                                (BuildContext context,
-                                                    int index) {
-                                              return SizedBox(
-                                                height: 2.h,
+                                            }
+                                            if (state
+                                                is GetAllCustomersblocLoaded) {
+                                              customers = BlocProvider.of<
+                                                          GetAllCustomersBloc>(
+                                                      context)
+                                                  .getallcustomers;
+                                             return ListView.separated(
+                                                itemCount: customers
+                                                    .customers!.data!.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 17.w),
+                                                    child: SizedBox(
+                                                      height: 24.h,
+                                                      width: 120.w,
+                                                      child: Text(customers
+                                                          .customers!
+                                                          .data![index]
+                                                          .name.toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                textStyle:
+                                                                    TextStyle(
+                                                          color:
+                                                              Color(0xFFA3A3A3),
+                                                          fontSize: 16.sp,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          letterSpacing: -0.30,
+                                                        )),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                separatorBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return SizedBox(
+                                                    height: 2.h,
+                                                  );
+                                                },
                                               );
-                                            },
-                                          ))
+                                            } else {
+                                              return SizedBox();
+                                            }
+                                          }))
                                         ],
                                       ),
                                     ),
@@ -623,9 +717,12 @@ class _AmountCollectionState extends State<AmountCollection> {
                               if (state is GetAllCollectionblocError) {
                                 return RefreshIndicator(
                                   onRefresh: () async {
-                                    return BlocProvider.of<GetAllCollectionBloc>(
-                                            context)
-                                        .add(FetchGetAllCollection(search: search.text, toDate: toDate.text, fromDate: fromDate.text));
+                                    return BlocProvider.of<
+                                            GetAllCollectionBloc>(context)
+                                        .add(FetchGetAllCollection(
+                                            search: search.text,
+                                            toDate: toDate.text,
+                                            fromDate: fromDate.text));
                                   },
                                   child: SingleChildScrollView(
                                     physics: const BouncingScrollPhysics(),
@@ -641,12 +738,14 @@ class _AmountCollectionState extends State<AmountCollection> {
                               if (state is GetAllCollectionblocLoaded) {
                                 collections =
                                     BlocProvider.of<GetAllCollectionBloc>(
-                                            context).getAllCollectionModel;
+                                            context)
+                                        .getAllCollectionModel;
                                 return SizedBox(
                                   height: 318.h,
                                   width: 337.w,
                                   child: ListView.separated(
-                                    itemCount: collections.collections!.data!.length,
+                                    itemCount:
+                                        collections.collections!.data!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Row(
@@ -654,7 +753,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                           SizedBox(
                                             width: 93.w,
                                             height: 21.h,
-                                            child: Text(collections.collections!.data![index].userId.toString(),
+                                            child: Text(
+                                                collections.collections!
+                                                    .data![index].userId
+                                                    .toString(),
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.poppins(
                                                     textStyle: TextStyle(
@@ -686,7 +788,12 @@ class _AmountCollectionState extends State<AmountCollection> {
                                           SizedBox(
                                             width: 62.w,
                                             height: 21.h,
-                                            child: Text(collections.collections!.data![index].collectedAmount.toString(),
+                                            child: Text(
+                                                collections
+                                                    .collections!
+                                                    .data![index]
+                                                    .collectedAmount
+                                                    .toString(),
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.poppins(
                                                     textStyle: TextStyle(
