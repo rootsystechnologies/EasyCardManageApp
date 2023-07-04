@@ -1,6 +1,12 @@
+import 'package:easymanage/Bloc/ChangePassword/change_password_bloc.dart';
+import 'package:easymanage/Ui/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'Widget/toastmessage.dart';
+import 'optionscreen.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -17,6 +23,9 @@ bool _isFocused2 = false;
 bool isExpanded = false;
 late FocusNode _focusNode3;
 bool _isFocused3 = false;
+TextEditingController userName = TextEditingController();
+TextEditingController email = TextEditingController();
+TextEditingController password = TextEditingController();
 
 class _ChangePasswordState extends State<ChangePassword> {
   @override
@@ -169,9 +178,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: TextField(
+                              controller: userName,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(
-                                hintText: 'Old Password',
+                                hintText: 'User Name',
                                 hintStyle: TextStyle(
                                   color: _isFocused1 == false
                                       ? Color(0xffEC1C24)
@@ -204,9 +214,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: TextField(
+                              controller: email,
                               focusNode: _focusNode2,
                               decoration: InputDecoration(
-                                hintText: 'New Password',
+                                hintText: 'Email',
                                 hintStyle: TextStyle(
                                   color: _isFocused2 == false
                                       ? Color(0xffEC1C24)
@@ -239,9 +250,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: TextField(
+                              controller: password,
                               focusNode: _focusNode3,
                               decoration: InputDecoration(
-                                hintText: 'Confirm Password',
+                                hintText: 'New Password',
                                 hintStyle: TextStyle(
                                   color: _isFocused3 == false
                                       ? Color(0xffEC1C24)
@@ -278,45 +290,110 @@ class _ChangePasswordState extends State<ChangePassword> {
                               bottomLeft: Radius.circular(25.r),
                               bottomRight: Radius.circular(25.r))),
                       child: Center(
-                        child: Container(
-                          width: 82.w,
-                          height: 34.h,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFEC1C24),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: 12.w,
-                                    top: 10.h,
-                                    bottom: 11.h,
-                                    right: 4.w),
-                                child: SizedBox(
-                                  height: 13.h,
-                                  width: 14.w,
-                                  child: Image.asset('assets/saver.png'),
+                        child:  BlocListener<ChangePasswordBloc,
+                            ChangePasswordState>(
+                            listener: (context, state) {
+                              if (state is ChangePasswordblocLoaded) {
+                                Navigator.of(context).pop();
+                                ToastMessage().toastmessage(message:'Password Changed SuccessFully');
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const Profile()),
+                                        (route) => false);
+                              }
+                              if (state is ChangePasswordblocLoading) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext a) => const Center(
+                                        child:
+                                        CircularProgressIndicator()));
+                              }
+                              if (state is ChangePasswordblocError) {
+                                Navigator.of(context).pop();
+                              }
+                            },
+  child: GestureDetector( onTap: () {
+                          BlocProvider.of<ChangePasswordBloc>(context)
+                              .add(FetchChangePassword(
+                              email: email.text,
+                              name: userName.text,
+                              password: password.text));
+                        },
+                          child: Container(
+                            width: 82.w,
+                            height: 34.h,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFFEC1C24),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5)),
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 12.w,
+                                      top: 10.h,
+                                      bottom: 11.h,
+                                      right: 4.w),
+                                  child: SizedBox(
+                                    height: 13.h,
+                                    width: 14.w,
+                                    child: Image.asset('assets/saver.png'),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                  width: 41.w,
-                                  height: 25.h,
-                                  child: Text(
-                                    'SAVE',
-                                    style: GoogleFonts.poppins(
-                                      textStyle: TextStyle(
-                                        letterSpacing: -0.3.sp,
-                                        color: Colors.white,
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  )),
-                            ],
+                                BlocListener<ChangePasswordBloc,
+                                    ChangePasswordState>(
+                                  listener: (context, state) {
+                                    if (state is ChangePasswordblocLoaded) {
+                                      Navigator.of(context).pop();
+                                      ToastMessage().toastmessage(message:'Password Changed SuccessFully');
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Profile()),
+                                          (route) => false);
+                                    }
+                                    if (state is ChangePasswordblocLoading) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext a) => const Center(
+                                              child:
+                                                  CircularProgressIndicator()));
+                                    }
+                                    if (state is ChangePasswordblocError) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<ChangePasswordBloc>(context)
+                                          .add(FetchChangePassword(
+                                              email: email.text,
+                                              name: userName.text,
+                                              password: password.text));
+                                    },
+                                    child: SizedBox(
+                                        width: 41.w,
+                                        height: 25.h,
+                                        child: Text(
+                                          'SAVE',
+                                          style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                              letterSpacing: -0.3.sp,
+                                              color: Colors.white,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+),
                       ),
                     ),
                   )

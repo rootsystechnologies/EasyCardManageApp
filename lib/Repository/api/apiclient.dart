@@ -35,7 +35,7 @@ class ApiClient {
       case "PUT":
         response = await put(Uri.parse(url),
             headers: {
-              'content-Type': 'application/json',
+              'authorization': 'Bearer $token',
             },
             body: body);
         break;
