@@ -296,11 +296,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                               if (state is ChangePasswordblocLoaded) {
                                 Navigator.of(context).pop();
                                 ToastMessage().toastmessage(message:'Password Changed SuccessFully');
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const Profile()),
-                                        (route) => false);
                               }
                               if (state is ChangePasswordblocLoading) {
                                 showDialog(
