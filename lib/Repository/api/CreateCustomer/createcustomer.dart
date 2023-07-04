@@ -31,7 +31,7 @@ class CreateCustomerApi {
       'allowed_perms': jsonEncode(allowedperms) // Convert the list to JSON string
     };
 
-    Response response = await apiClient.invokeAPI(trendingpath, 'POST_', body);
+    Response response = await apiClient.invokeAPI(trendingpath, 'POST1', body);
 
     print(response.body); // Print the response body
       return CreateCustomerModel.fromJson(jsonDecode(response.body));

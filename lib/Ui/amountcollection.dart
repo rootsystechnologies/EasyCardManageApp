@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +9,7 @@ import '../Repository/modelclass/GetAllCollectionModel.dart';
 import '../Repository/modelclass/Getallcustomers.dart';
 import 'amountcollectioncollectamount.dart';
 import 'package:intl/intl.dart';
+
 class AmountCollection extends StatefulWidget {
   const AmountCollection({Key? key}) : super(key: key);
 
@@ -20,23 +20,25 @@ class AmountCollection extends StatefulWidget {
 late Getallcustomers customers;
 bool move = true;
 TextEditingController search = TextEditingController();
-TextEditingController toDate = TextEditingController();
 late GetAllCollectionModel collections;
-final DateFormat formatter = DateFormat('MM-dd-yyyy');
+final DateFormat formatter = DateFormat('yyyy-MM-dd');
+String userName = '';
+
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
   bool isExpanded2 = false;
-  DateTime fromDate=DateTime.now();
+  DateTime fromDate = DateTime.now();
+  DateTime toDate = DateTime.now();
+
   @override
   void initState() {
-    BlocProvider.of<GetAllCollectionBloc>(context).add(FetchGetAllCollection(
-        search: search.text, toDate: toDate.text, fromDate: formatter.format(fromDate)));
+    BlocProvider.of<GetAllCollectionBloc>(context)
+        .add(FetchGetAllCollection(search: '', toDate: '', fromDate: ''));
     BlocProvider.of<GetAllCustomersBloc>(context)
         .add(FetchGetAllCustomers(searchKey: search.text));
     super.initState();
   }
-
 
   Future<void> _selectFromDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -52,6 +54,22 @@ class _AmountCollectionState extends State<AmountCollection> {
       });
     }
   }
+
+  Future<void> _selectToDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null && pickedDate != toDate) {
+      setState(() {
+        toDate = pickedDate;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,21 +209,24 @@ class _AmountCollectionState extends State<AmountCollection> {
                                               Padding(
                                                 padding:
                                                     EdgeInsets.only(left: 16.w),
-                                                child: GestureDetector(onTap: (){
-                                                  _selectFromDate(context);
-                                                },
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _selectFromDate(context);
+                                                  },
                                                   child: SizedBox(
                                                     width: 86.w,
                                                     height: 26.h,
                                                     child: Text(
                                                       "From Date",
-                                                      style: GoogleFonts.poppins(
+                                                      style:
+                                                          GoogleFonts.poppins(
                                                         textStyle: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 17.sp,
                                                           fontWeight:
                                                               FontWeight.w400,
-                                                          letterSpacing: -0.30.sp,
+                                                          letterSpacing:
+                                                              -0.30.sp,
                                                         ),
                                                       ),
                                                     ),
@@ -235,7 +256,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             border:
                                                 Border.all(color: Colors.grey),
                                           ),
-                                          child: Center(child: Text(formatter.format(fromDate)),),
+                                          child: Center(
+                                            child: Text(
+                                                formatter.format(fromDate)),
+                                          ),
                                         ),
                                     ],
                                   ),
@@ -271,18 +295,25 @@ class _AmountCollectionState extends State<AmountCollection> {
                                               Padding(
                                                 padding:
                                                     EdgeInsets.only(left: 31.w),
-                                                child: SizedBox(
-                                                  width: 64.w,
-                                                  height: 26.h,
-                                                  child: Text(
-                                                    "To Date",
-                                                    style: GoogleFonts.poppins(
-                                                      textStyle: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 17.sp,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        letterSpacing: -0.30.sp,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    _selectToDate(context);
+                                                  },
+                                                  child: SizedBox(
+                                                    width: 64.w,
+                                                    height: 26.h,
+                                                    child: Text(
+                                                      "To Date",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        textStyle: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 17.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          letterSpacing:
+                                                              -0.30.sp,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -306,28 +337,16 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         Container(
                                           width: 200.w,
                                           height: 50.h,
+                                          padding: EdgeInsets.all(8.h),
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             border:
                                                 Border.all(color: Colors.grey),
                                           ),
-                                          child: TextField(
-                                              onSubmitted: (value) {
-                                                BlocProvider.of<
-                                                            GetAllCollectionBloc>(
-                                                        context)
-                                                    .add(FetchGetAllCollection(
-                                                        search: search.text,
-                                                        toDate: toDate.text,
-                                                        fromDate:
-                                                            fromDate.toString()));
-                                              },
-                                              controller: toDate,
-                                              autofocus: true,
-                                              decoration: InputDecoration(
-                                                focusedBorder: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                              )),
+                                          child: Center(
+                                            child:
+                                                Text(formatter.format(toDate)),
+                                          ),
                                         ),
                                     ],
                                   ),
@@ -607,22 +626,33 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                     child: SizedBox(
                                                       height: 24.h,
                                                       width: 120.w,
-                                                      child: Text(
-                                                        customers.customers!
-                                                            .data![index].name
-                                                            .toString(),
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                textStyle:
-                                                                    TextStyle(
-                                                          color:
-                                                              Color(0xFFA3A3A3),
-                                                          fontSize: 16.sp,
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          letterSpacing: -0.30,
-                                                        )),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          userName = customers
+                                                              .customers!
+                                                              .data![index]
+                                                              .name
+                                                              .toString();
+                                                        },
+                                                        child: Text(
+                                                          customers.customers!
+                                                              .data![index].name
+                                                              .toString(),
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  textStyle:
+                                                                      TextStyle(
+                                                            color: Color(
+                                                                0xFFA3A3A3),
+                                                            fontSize: 16.sp,
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            letterSpacing:
+                                                                -0.30,
+                                                          )),
+                                                        ),
                                                       ),
                                                     ),
                                                   );
@@ -646,6 +676,20 @@ class _AmountCollectionState extends State<AmountCollection> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                BlocProvider.of<GetAllCollectionBloc>(context)
+                                    .add(FetchGetAllCollection(
+                                        search: userName.toString(),
+                                        toDate: formatter.format(toDate).toString(),
+                                        fromDate: formatter
+                                            .format(fromDate)
+                                            .toString()));
+                              },
+                              child: Text("Get")),
                           SizedBox(
                             height: 22.h,
                           ),
@@ -730,7 +774,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             GetAllCollectionBloc>(context)
                                         .add(FetchGetAllCollection(
                                             search: search.text,
-                                            toDate: toDate.text,
+                                            toDate: toDate.toString(),
                                             fromDate: fromDate.toString()));
                                   },
                                   child: SingleChildScrollView(
@@ -907,6 +951,4 @@ class _AmountCollectionState extends State<AmountCollection> {
               ),
             ])));
   }
-
-
 }
