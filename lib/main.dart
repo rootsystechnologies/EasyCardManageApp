@@ -13,6 +13,7 @@ import 'Bloc/Login/login_bloc.dart';
 import 'Bloc/Recharge/recharge_bloc.dart';
 import 'Bloc/UpdateEmail/update_email_bloc.dart';
 import 'Bloc/UpdateName/update_name_bloc.dart';
+import 'Bloc/WalletHistory/wallet_history_bloc.dart';
 import 'Ui/loginpage.dart';
 
 String basePath = 'http://easycard.rootsys.in/api';
@@ -55,7 +56,10 @@ class MyApp extends StatelessWidget {
                 create: (context) => UpdateNameBloc(),
               ),BlocProvider(
                 create: (context) => UpdateEmailBloc(),
+              ),BlocProvider(
+                create: (context) => WalletHistoryBloc(),
               ),
+
             ],
             child: MaterialApp(
                 debugShowCheckedModeBanner: false,
