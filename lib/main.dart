@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'Bloc/ChangePassword/change_password_bloc.dart';
+import 'Bloc/ChangePin/change_pin_bloc.dart';
 import 'Bloc/CollectAmount/collect_amount_bloc.dart';
 import 'Bloc/CreateCustomer/create_customer_bloc.dart';
 import 'Bloc/GetAllColection/get_all_collection_bloc.dart';
@@ -11,6 +12,7 @@ import 'Bloc/GetAllPermission/get_all_permission_bloc.dart';
 import 'Bloc/Login/login_bloc.dart';
 import 'Bloc/Recharge/recharge_bloc.dart';
 import 'Ui/loginpage.dart';
+import 'Ui/profile.dart';
 
 String basePath = 'http://easycard.rootsys.in/api';
 
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
                 create: (context) => RechargeBloc(),
               ),BlocProvider(
                 create: (context) => ChangePasswordBloc(),
+              ),BlocProvider(
+                create: (context) => ChangePinBloc(),
               ),
             ],
             child: MaterialApp(
@@ -56,7 +60,7 @@ class MyApp extends StatelessWidget {
                       seedColor: Colors.red),
                   useMaterial3: true,
                 ),
-                home: LoginPage()),
+                home: Profile()),
           ),
     );
   }

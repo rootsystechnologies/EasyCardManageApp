@@ -808,7 +808,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             height: 21.h,
                                             child: Text(
                                                 collections.collections!
-                                                    .data![index].userId
+                                                    .data![index].user!.name
                                                     .toString(),
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.poppins(

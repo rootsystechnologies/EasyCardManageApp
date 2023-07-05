@@ -128,7 +128,8 @@ class Data {
       this.balanceToCollect, 
       this.userId, 
       this.createdAt, 
-      this.updatedAt,});
+      this.updatedAt, 
+      this.user,});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -137,6 +138,7 @@ class Data {
     userId = json['user_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
   int? id;
   String? collectedAmount;
@@ -144,6 +146,7 @@ class Data {
   int? userId;
   String? createdAt;
   String? updatedAt;
+  User? user;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -151,6 +154,116 @@ class Data {
     map['collectedAmount'] = collectedAmount;
     map['balanceToCollect'] = balanceToCollect;
     map['user_id'] = userId;
+    map['created_at'] = createdAt;
+    map['updated_at'] = updatedAt;
+    if (user != null) {
+      map['user'] = user?.toJson();
+    }
+    return map;
+  }
+
+}
+
+class User {
+  User({
+      this.id, 
+      this.name, 
+      this.mobile, 
+      this.email, 
+      this.place, 
+      this.emailVerifiedAt, 
+      this.addedBy, 
+      this.createdAt, 
+      this.updatedAt, 
+      this.deletedAt, 
+      this.wallet, 
+      this.permissions,});
+
+  User.fromJson(dynamic json) {
+    id = json['id'];
+    name = json['name'];
+    mobile = json['mobile'];
+    email = json['email'];
+    place = json['place'];
+    emailVerifiedAt = json['email_verified_at'];
+    addedBy = json['added_by'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    deletedAt = json['deleted_at'];
+    wallet = json['wallet'] != null ? Wallet.fromJson(json['wallet']) : null;
+    if (json['permissions'] != null) {
+      permissions = [];
+      json['permissions'].forEach((v) {
+        permissions?.add(v);
+      });
+    }
+  }
+  int? id;
+  String? name;
+  String? mobile;
+  String? email;
+  dynamic place;
+  dynamic emailVerifiedAt;
+  int? addedBy;
+  String? createdAt;
+  String? updatedAt;
+  dynamic deletedAt;
+  Wallet? wallet;
+  List<dynamic>? permissions;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['name'] = name;
+    map['mobile'] = mobile;
+    map['email'] = email;
+    map['place'] = place;
+    map['email_verified_at'] = emailVerifiedAt;
+    map['added_by'] = addedBy;
+    map['created_at'] = createdAt;
+    map['updated_at'] = updatedAt;
+    map['deleted_at'] = deletedAt;
+    if (wallet != null) {
+      map['wallet'] = wallet?.toJson();
+    }
+    if (permissions != null) {
+      map['permissions'] = permissions?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+
+}
+
+class Wallet {
+  Wallet({
+      this.id, 
+      this.userId, 
+      this.balance, 
+      this.creditLimit, 
+      this.createdAt, 
+      this.updatedAt,});
+
+  Wallet.fromJson(dynamic json) {
+    id = json['id'];
+    userId = json['user_id'];
+    balance = json['balance'];
+    creditLimit = json['credit_limit'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+  int? id;
+  int? userId;
+  String? balance;
+  String? creditLimit;
+  String? createdAt;
+  String? updatedAt;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['user_id'] = userId;
+    map['balance'] = balance;
+    map['credit_limit'] = creditLimit;
     map['created_at'] = createdAt;
     map['updated_at'] = updatedAt;
     return map;

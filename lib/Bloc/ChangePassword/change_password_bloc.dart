@@ -17,7 +17,7 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
     on<FetchChangePassword>((event, emit)async {
       emit(ChangePasswordblocLoading());
       try{
-        changePasswordModel = await changePasswordApi.changePassword(event.name, event.email, event.password);
+        changePasswordModel = await changePasswordApi.changePassword(event.password);
         emit(ChangePasswordblocLoaded());
       } catch(e){
         ToastMessage().toastmessage(message:e.toString());

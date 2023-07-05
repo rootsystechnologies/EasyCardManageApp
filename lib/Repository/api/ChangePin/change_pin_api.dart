@@ -6,19 +6,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../modelclass/ChangePasswordModel.dart';
 import '../apiclient.dart';
 
-class ChangePasswordApi {
+class ChangePinApi {
   ApiClient apiClient = ApiClient();
   String trendingpath = '/collector/profile/update';
 
-  Future<ChangePasswordModel> changePassword(String password) async {
+  Future<ChangePasswordModel> changePin(String oldPin,String newPin) async {
     final preferences = await SharedPreferences.getInstance();
     final String name=preferences.getString('Name').toString();
     final String email=preferences.getString('Email').toString();
     var body = {
       'name':name,
       'email':email,
-      'change_password':'yes',
-      'password':password
+      'pin_change':'yes',
+      'old_pin':oldPin,
+      'new_pin':newPin
     };
     Response response = await apiClient.invokeAPI(trendingpath, 'PUT', body);
 

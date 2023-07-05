@@ -7,6 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Bloc/Login/login_bloc.dart';
+import '../Repository/Modelclass/LoginModel.dart';
+
+late LoginModel usermodel;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,8 +20,9 @@ class LoginPage extends StatefulWidget {
 
 bool move = true;
 bool move1 = true;
-TextEditingController email=TextEditingController();
-TextEditingController password=TextEditingController();
+TextEditingController email = TextEditingController();
+TextEditingController password = TextEditingController();
+
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 transform:
-                GradientRotation(190.64 * (3.1415926535897932 / 180.0).sp),
+                    GradientRotation(190.64 * (3.1415926535897932 / 180.0).sp),
                 stops: [0.0057.sp, 0.969.sp],
                 colors: [
                   Color(0xffD70000),
@@ -95,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                                           height: 60.h,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(8.r),
+                                                BorderRadius.circular(8.r),
                                             border: Border.all(
                                                 width: 1.w,
                                                 color: Color(0xffE4E4E4)),
@@ -132,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                                         decoration: BoxDecoration(
                                           color: Colors.transparent,
                                           borderRadius:
-                                          BorderRadius.circular(8.r),
+                                              BorderRadius.circular(8.r),
                                           border: Border.all(
                                               width: 1.w,
                                               color: Color(0xffE4E4E4)),
@@ -147,22 +151,23 @@ class _LoginPageState extends State<LoginPage> {
                                           child: SizedBox(
                                             width: 250.w,
                                             height: 60.h,
-                                            child: TextFormField(controller: email,
+                                            child: TextFormField(
+                                              controller: email,
                                               autofocus: true,
                                               decoration: InputDecoration(
                                                   focusedBorder:
-                                                  InputBorder.none,
+                                                      InputBorder.none,
                                                   enabledBorder:
-                                                  InputBorder.none,
+                                                      InputBorder.none,
                                                   hintText: 'Email',
                                                   hintStyle:
-                                                  GoogleFonts.poppins(
+                                                      GoogleFonts.poppins(
                                                     textStyle: TextStyle(
                                                       height: 27 / 18.sp,
                                                       color: Color(0xffD9D9D9),
                                                       fontSize: 18.sp,
                                                       fontWeight:
-                                                      FontWeight.w400,
+                                                          FontWeight.w400,
                                                     ),
                                                   )),
                                             ),
@@ -193,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                                           height: 60.h,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(8.r),
+                                                BorderRadius.circular(8.r),
                                             border: Border.all(
                                                 width: 1.w,
                                                 color: Color(0xffE4E4E4)),
@@ -230,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                                         decoration: BoxDecoration(
                                           color: Colors.transparent,
                                           borderRadius:
-                                          BorderRadius.circular(8.r),
+                                              BorderRadius.circular(8.r),
                                           border: Border.all(
                                               width: 1.w,
                                               color: Color(0xffE4E4E4)),
@@ -245,22 +250,23 @@ class _LoginPageState extends State<LoginPage> {
                                           child: SizedBox(
                                             width: 250.w,
                                             height: 60.h,
-                                            child: TextFormField(controller: password,
+                                            child: TextFormField(
+                                              controller: password,
                                               autofocus: true,
                                               decoration: InputDecoration(
                                                   focusedBorder:
-                                                  InputBorder.none,
+                                                      InputBorder.none,
                                                   enabledBorder:
-                                                  InputBorder.none,
+                                                      InputBorder.none,
                                                   hintText: 'Password',
                                                   hintStyle:
-                                                  GoogleFonts.poppins(
+                                                      GoogleFonts.poppins(
                                                     textStyle: TextStyle(
                                                       height: 27 / 18.sp,
                                                       color: Color(0xffD9D9D9),
                                                       fontSize: 18.sp,
                                                       fontWeight:
-                                                      FontWeight.w400,
+                                                          FontWeight.w400,
                                                     ),
                                                   )),
                                             ),
@@ -310,21 +316,26 @@ class _LoginPageState extends State<LoginPage> {
                               child: BlocListener<LoginBloc, LoginState>(
                                 listener: (context, state) {
                                   if (state is LoginblocLoaded) {
-
-                                    userInfo(BlocProvider.of<LoginBloc>(context).loginModel.token.toString());
+                                    usermodel =
+                                        BlocProvider.of<LoginBloc>(context)
+                                            .loginModel;
+                                    userInfo(
+                                        usermodel.token.toString(),
+                                        usermodel.user!.name.toString(),
+                                        usermodel.user!.email.toString());
                                     Navigator.of(context).pop();
                                     Navigator.of(context).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                            const OptionScreen()),
-                                            (route) => false);
+                                                const OptionScreen()),
+                                        (route) => false);
                                   }
                                   if (state is LoginblocLoading) {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext a) => const Center(
                                             child:
-                                            CircularProgressIndicator()));
+                                                CircularProgressIndicator()));
                                   }
                                   if (state is LoginblocError) {
                                     Navigator.of(context).pop();
@@ -332,7 +343,10 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 child: GestureDetector(
                                   onTap: () {
-                                    BlocProvider.of<LoginBloc>(context).add(FetchLogin(email: email.text, password: password.text));
+                                    BlocProvider.of<LoginBloc>(context).add(
+                                        FetchLogin(
+                                            email: email.text,
+                                            password: password.text));
                                   },
                                   child: Container(
                                     width: 91.w,
@@ -340,7 +354,7 @@ class _LoginPageState extends State<LoginPage> {
                                     decoration: BoxDecoration(
                                         color: Color(0xffFF0000),
                                         borderRadius:
-                                        BorderRadius.circular(7.r)),
+                                            BorderRadius.circular(7.r)),
                                     child: Row(
                                       children: [
                                         SizedBox(
@@ -372,8 +386,10 @@ class _LoginPageState extends State<LoginPage> {
                         ])))));
   }
 
-  void userInfo(String token) async {
+  void userInfo(String token, String name, String email) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setString('Token', token);
+    await preferences.setString('Name', name);
+    await preferences.setString('Email', email);
   }
 }

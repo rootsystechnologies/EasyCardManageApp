@@ -12,13 +12,22 @@ class Profile extends StatefulWidget {
   @override
   State<Profile> createState() => _ProfileState();
 }
-
+bool usernameEdit=false;
+bool emailEdit=false;
+TextEditingController userName=TextEditingController();
+TextEditingController email=TextEditingController();
 class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-  }
 
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +125,7 @@ class _ProfileState extends State<Profile> {
                                 )),
                           )
                         ],
-                      ),
+                      )
                     ),
                     SizedBox(
                       height: 17.37.h,
@@ -132,7 +141,7 @@ class _ProfileState extends State<Profile> {
                             ),
                         borderRadius: BorderRadius.circular(8.0.r),
                       ),
-                      child: Row(
+                      child:usernameEdit==false? Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -158,12 +167,28 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             width: 90.w,
                           ),
-                          SizedBox(
-                            width: 19.w,
-                            height: 19.h,
-                            child: Image.asset('assets/edit.png'),
+                          GestureDetector(onTap: (){setState(() {
+                            usernameEdit=!usernameEdit;
+                          });},
+                            child: SizedBox(
+                              width: 19.w,
+                              height: 19.h,
+                              child: Image.asset('assets/edit.png'),
+                            ),
                           )
                         ],
+                      ):TextField(autofocus: true,
+                        controller: userName,
+                        decoration: InputDecoration(
+                          hintText: 'User Name',
+                          hintStyle: TextStyle(
+                            color: Color(0xffA4A4A4),
+                            letterSpacing: -0.3.sp,
+                            fontSize: 13.0
+                                .sp, // Change hint text size based on focus
+                          ),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -228,7 +253,7 @@ class _ProfileState extends State<Profile> {
                             ),
                         borderRadius: BorderRadius.circular(8.0.r),
                       ),
-                      child: Row(
+                      child:emailEdit==false? Row(
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -251,12 +276,28 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 )),
                           ),
-                          SizedBox(
-                            width: 19.w,
-                            height: 19.h,
-                            child: Image.asset('assets/edit.png'),
+                          GestureDetector(onTap: ()=>setState(() {
+                            emailEdit=!emailEdit;
+                          }),
+                            child: SizedBox(
+                              width: 19.w,
+                              height: 19.h,
+                              child: Image.asset('assets/edit.png'),
+                            ),
                           )
                         ],
+                      ):TextField(autofocus: true,
+                        controller: email,
+                        decoration: InputDecoration(
+                          hintText: 'Email',
+                          hintStyle: TextStyle(
+                            color: Color(0xffA4A4A4),
+                            letterSpacing: -0.3.sp,
+                            fontSize: 13.0
+                                .sp, // Change hint text size based on focus
+                          ),
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                     SizedBox(
