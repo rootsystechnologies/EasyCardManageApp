@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../modelclass/ChangePasswordModel.dart';
 import '../apiclient.dart';
@@ -11,12 +10,7 @@ class ChangePinApi {
   String trendingpath = '/collector/profile/update';
 
   Future<ChangePasswordModel> changePin(String oldPin,String newPin) async {
-    final preferences = await SharedPreferences.getInstance();
-    final String name=preferences.getString('Name').toString();
-    final String email=preferences.getString('Email').toString();
     var body = {
-      'name':name,
-      'email':email,
       'pin_change':'yes',
       'old_pin':oldPin,
       'new_pin':newPin

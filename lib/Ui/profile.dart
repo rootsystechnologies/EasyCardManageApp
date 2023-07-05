@@ -1,8 +1,13 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:easymanage/Bloc/UpdateName/update_name_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Bloc/UpdateEmail/update_email_bloc.dart';
+import 'Widget/toastmessage.dart';
 import 'changepassword.dart';
 import 'changepin.dart';
 
@@ -12,22 +17,35 @@ class Profile extends StatefulWidget {
   @override
   State<Profile> createState() => _ProfileState();
 }
-bool usernameEdit=false;
-bool emailEdit=false;
-TextEditingController userName=TextEditingController();
-TextEditingController email=TextEditingController();
+
+bool usernameEdit = false;
+bool emailEdit = false;
+String userName1 = '';
+String email1 = '';
+TextEditingController userName = TextEditingController();
+TextEditingController email = TextEditingController();
+
 class _ProfileState extends State<Profile> {
   @override
   void initState() {
+    getUserDetails();
     super.initState();
-
   }
+
+  getUserDetails() async {
+    final preferences = await SharedPreferences.getInstance();
+    setState(() {
+      userName1 = preferences.getString('Name').toString();
+      email1 = preferences.getString('Email').toString();
+    });
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,54 +97,53 @@ class _ProfileState extends State<Profile> {
                   child: SingleChildScrollView(
                       child: Column(children: [
                     Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromRGBO(0, 0, 0, 0.25.sp),
-                              offset: Offset(0, 1.sp),
-                              blurRadius: 2.r,
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(0, 0, 0, 0.25.sp),
+                                offset: Offset(0, 1.sp),
+                                blurRadius: 2.r,
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25.r),
+                                topRight: Radius.circular(25.r))),
+                        width: 326.w,
+                        height: 70.63.h,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: 107.w,
+                                  top: 16.48.h,
+                                  bottom: 16.48.h,
+                                  right: 2.w),
+                              child: SizedBox(
+                                  width: 35.06.w,
+                                  height: 35.06.h,
+                                  child: Image.asset('assets/option5.png')),
                             ),
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25.r),
-                              topRight: Radius.circular(25.r))),
-                      width: 326.w,
-                      height: 70.63.h,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: 107.w,
-                                top: 16.48.h,
-                                bottom: 16.48.h,
-                                right: 2.w),
-                            child: SizedBox(
-                                width: 35.06.w,
-                                height: 35.06.h,
-                                child: Image.asset('assets/option5.png')),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 16.22.h, bottom: 14.35.h, left: 7.w),
-                            child: SizedBox(
-                                width: 74.w,
-                                height: 30.61.h,
-                                child: Text(
-                                  'Profile',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      letterSpacing: -0.3.sp,
-                                      color: Color(0xffEC1C24),
-                                      fontSize: 19.sp,
-                                      fontWeight: FontWeight.w400,
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: 16.22.h, bottom: 14.35.h, left: 7.w),
+                              child: SizedBox(
+                                  width: 74.w,
+                                  height: 30.61.h,
+                                  child: Text(
+                                    'Profile',
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        letterSpacing: -0.3.sp,
+                                        color: Color(0xffEC1C24),
+                                        fontSize: 19.sp,
+                                        fontWeight: FontWeight.w400,
+                                      ),
                                     ),
-                                  ),
-                                )),
-                          )
-                        ],
-                      )
-                    ),
+                                  )),
+                            )
+                          ],
+                        )),
                     SizedBox(
                       height: 17.37.h,
                     ),
@@ -141,55 +158,95 @@ class _ProfileState extends State<Profile> {
                             ),
                         borderRadius: BorderRadius.circular(8.0.r),
                       ),
-                      child:usernameEdit==false? Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 16.w,
-                              top: 13.h,
-                              bottom: 11.h,
-                            ),
-                            child: SizedBox(
-                                width: 127.w,
-                                height: 27.h,
-                                child: Text(
-                                  'Username',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      letterSpacing: -0.3.sp,
-                                      color: Color(0xFFEC1C24),
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                      child: usernameEdit == false
+                          ? Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 16.w,
+                                    top: 13.h,
+                                    bottom: 11.h,
                                   ),
-                                )),
-                          ),
-                          SizedBox(
-                            width: 90.w,
-                          ),
-                          GestureDetector(onTap: (){setState(() {
-                            usernameEdit=!usernameEdit;
-                          });},
-                            child: SizedBox(
-                              width: 19.w,
-                              height: 19.h,
-                              child: Image.asset('assets/edit.png'),
+                                  child: SizedBox(
+                                      width: 127.w,
+                                      height: 27.h,
+                                      child: Text(
+                                        userName1.toString(),
+                                        style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                            letterSpacing: -0.3.sp,
+                                            color: Color(0xFFEC1C24),
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(
+                                  width: 90.w,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      usernameEdit = !usernameEdit;
+                                    });
+                                  },
+                                  child: SizedBox(
+                                    width: 19.w,
+                                    height: 19.h,
+                                    child: Image.asset('assets/edit.png'),
+                                  ),
+                                )
+                              ],
+                            )
+                          : TextField(
+                              autofocus: true,
+                              controller: userName,
+                              decoration: InputDecoration(
+                                suffix: BlocListener<UpdateNameBloc,
+                                    UpdateNameState>(
+                                  listener: (context, state) {
+                                    if (state is ChangeNameblocLoaded) {
+                                      Navigator.of(context).pop();
+                                      setState(() {
+                                        usernameEdit = false;
+                                      });
+                                      ToastMessage().toastmessage(
+                                          message:
+                                              'UserName Changed SuccessFully');
+                                    }
+                                    if (state is ChangeNameblocLoading) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext a) => const Center(
+                                              child:
+                                                  CircularProgressIndicator()));
+                                    }
+                                    if (state is ChangeNameblocError) {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        BlocProvider.of<UpdateNameBloc>(context)
+                                            .add(FetchChangeName(
+                                                name: userName.text));
+                                      },
+                                      child: Text(
+                                        'Update',
+                                        style: TextStyle(color: Colors.red),
+                                      )),
+                                ),
+                                hintText: 'User Name',
+                                hintStyle: TextStyle(
+                                  color: Color(0xffA4A4A4),
+                                  letterSpacing: -0.3.sp,
+                                  fontSize: 13.0
+                                      .sp, // Change hint text size based on focus
+                                ),
+                                border: InputBorder.none,
+                              ),
                             ),
-                          )
-                        ],
-                      ):TextField(autofocus: true,
-                        controller: userName,
-                        decoration: InputDecoration(
-                          hintText: 'User Name',
-                          hintStyle: TextStyle(
-                            color: Color(0xffA4A4A4),
-                            letterSpacing: -0.3.sp,
-                            fontSize: 13.0
-                                .sp, // Change hint text size based on focus
-                          ),
-                          border: InputBorder.none,
-                        ),
-                      ),
                     ),
                     SizedBox(
                       height: 25.h,
@@ -253,52 +310,88 @@ class _ProfileState extends State<Profile> {
                             ),
                         borderRadius: BorderRadius.circular(8.0.r),
                       ),
-                      child:emailEdit==false? Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 16.w,
-                              top: 13.h,
-                              bottom: 11.h,
-                            ),
-                            child: SizedBox(
-                                width: 216.w,
-                                height: 27.h,
-                                child: Text(
-                                  'johnadam@gmail.com',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      letterSpacing: -0.3.sp,
-                                      color: Color(0xFFEC1C24),
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                      child: emailEdit == false
+                          ? Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 16.w,
+                                    top: 13.h,
+                                    bottom: 11.h,
                                   ),
-                                )),
-                          ),
-                          GestureDetector(onTap: ()=>setState(() {
-                            emailEdit=!emailEdit;
-                          }),
-                            child: SizedBox(
-                              width: 19.w,
-                              height: 19.h,
-                              child: Image.asset('assets/edit.png'),
+                                  child: SizedBox(
+                                      width: 216.w,
+                                      height: 27.h,
+                                      child: Text(
+                                        email1.toString(),
+                                        style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                            letterSpacing: -0.3.sp,
+                                            color: Color(0xFFEC1C24),
+                                            fontSize: 15.sp,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                                GestureDetector(
+                                  onTap: () => setState(() {
+                                    emailEdit = !emailEdit;
+                                  }),
+                                  child: SizedBox(
+                                    width: 19.w,
+                                    height: 19.h,
+                                    child: Image.asset('assets/edit.png'),
+                                  ),
+                                )
+                              ],
+                            )
+                          : TextField(
+                              autofocus: true,
+                              controller: email,
+                              decoration: InputDecoration(suffix: BlocListener<UpdateEmailBloc,
+                                  UpdateEmailState>(
+                                listener: (context, state) {
+                                  if (state is ChangeEmailblocLoaded) {
+                                    Navigator.of(context).pop();
+                                    setState(() {
+                                      emailEdit = false;
+                                    });
+                                    ToastMessage().toastmessage(
+                                        message:
+                                        'Email Changed SuccessFully');
+                                  }
+                                  if (state is ChangeEmailblocLoading) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext a) => const Center(
+                                            child:
+                                            CircularProgressIndicator()));
+                                  }
+                                  if (state is ChangeEmailblocError) {
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                                child: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<UpdateEmailBloc>(context)
+                                          .add(FetchChangeEmail(email: email.text));
+                                    },
+                                    child: Text(
+                                      'Update',
+                                      style: TextStyle(color: Colors.red),
+                                    )),
+                              ),
+                                hintText: 'Email',
+                                hintStyle: TextStyle(
+                                  color: Color(0xffA4A4A4),
+                                  letterSpacing: -0.3.sp,
+                                  fontSize: 13.0
+                                      .sp, // Change hint text size based on focus
+                                ),
+                                border: InputBorder.none,
+                              ),
                             ),
-                          )
-                        ],
-                      ):TextField(autofocus: true,
-                        controller: email,
-                        decoration: InputDecoration(
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                            color: Color(0xffA4A4A4),
-                            letterSpacing: -0.3.sp,
-                            fontSize: 13.0
-                                .sp, // Change hint text size based on focus
-                          ),
-                          border: InputBorder.none,
-                        ),
-                      ),
                     ),
                     SizedBox(
                       height: 25.h,
