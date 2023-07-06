@@ -598,7 +598,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   GestureDetector(
                                     onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (_) => EditCustomer())),
+                                            builder: (_) => EditCustomer(name: widget.name, email: widget.email, creditLimit: widget.creditLimit, phone: widget.mobile,))),
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           top: 20.h, bottom: 20.h, right: 20.w),

@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Bloc/UpdateName/update_name_bloc.dart';
+
 class EditCustomer extends StatefulWidget {
-  const EditCustomer({super.key});
+  final String name;
+  final String phone;
+  final String email;
+  final String creditLimit;
+  const EditCustomer({super.key,required this.name,required this.email,required this.creditLimit,required this.phone});
 
   @override
   State<EditCustomer> createState() => _EditCustomerState();
 }
-
+bool usernameEdit = false;
+bool phoneEdit = false;
+bool emailEdit = false;
+bool creditLimitEdit = false;
+TextEditingController userName = TextEditingController();
+TextEditingController phone = TextEditingController();
+TextEditingController email = TextEditingController();
+TextEditingController credit = TextEditingController();
 class _EditCustomerState extends State<EditCustomer> {
   @override
   Widget build(BuildContext context) {
@@ -129,7 +143,8 @@ class _EditCustomerState extends State<EditCustomer> {
                                     ),
                                 borderRadius: BorderRadius.circular(9.0.r),
                               ),
-                              child: Row(
+                              child:usernameEdit == false
+                                  ? Row(
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -141,7 +156,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                         width: 127.w,
                                         height: 27.h,
                                         child: Text(
-                                          'JOHN ADAM',
+                                          widget.name,
                                           style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
                                               letterSpacing: -0.3.sp,
@@ -161,6 +176,29 @@ class _EditCustomerState extends State<EditCustomer> {
                                     child: Image.asset('assets/edit.png'),
                                   )
                                 ],
+                              ):TextField(
+                                autofocus: true,
+                                controller: userName,
+                                decoration: InputDecoration(
+                                  suffix: GestureDetector(
+                                      onTap: () {
+                                        BlocProvider.of<UpdateNameBloc>(context)
+                                            .add(FetchChangeName(
+                                            name: userName.text));
+                                      },
+                                      child: Text(
+                                        'Update',
+                                        style: TextStyle(color: Colors.red),
+                                      )),
+                                  hintText: 'User Name',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA4A4A4),
+                                    letterSpacing: -0.3.sp,
+                                    fontSize: 13.0
+                                        .sp, // Change hint text size based on focus
+                                  ),
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -177,7 +215,8 @@ class _EditCustomerState extends State<EditCustomer> {
                                     ),
                                 borderRadius: BorderRadius.circular(9.0.r),
                               ),
-                              child: Row(
+                              child:phoneEdit == false
+                                  ?  Row(
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -189,7 +228,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                         width: 127.w,
                                         height: 27.h,
                                         child: Text(
-                                          '789 369 4556',
+                                          widget.phone,
                                           style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
                                               letterSpacing: -0.3.sp,
@@ -209,6 +248,29 @@ class _EditCustomerState extends State<EditCustomer> {
                                     child: Image.asset('assets/edit.png'),
                                   )
                                 ],
+                              ):TextField(
+                                autofocus: true,
+                                controller: phone,
+                                decoration: InputDecoration(
+                                  suffix: GestureDetector(
+                                      onTap: () {
+                                        BlocProvider.of<UpdateNameBloc>(context)
+                                            .add(FetchChangeName(
+                                            name: userName.text));
+                                      },
+                                      child: Text(
+                                        'Update',
+                                        style: TextStyle(color: Colors.red),
+                                      )),
+                                  hintText: 'Phone',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA4A4A4),
+                                    letterSpacing: -0.3.sp,
+                                    fontSize: 13.0
+                                        .sp, // Change hint text size based on focus
+                                  ),
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -225,7 +287,8 @@ class _EditCustomerState extends State<EditCustomer> {
                                     ),
                                 borderRadius: BorderRadius.circular(9.0.r),
                               ),
-                              child: Row(
+                              child: emailEdit == false
+                                  ? Row(
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -237,7 +300,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                         width: 220.w,
                                         height: 27.h,
                                         child: Text(
-                                          'johnadam@gmail.com',
+                                          widget.email,
                                           style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
                                               letterSpacing: -0.3.sp,
@@ -254,6 +317,29 @@ class _EditCustomerState extends State<EditCustomer> {
                                     child: Image.asset('assets/edit.png'),
                                   )
                                 ],
+                              ):TextField(
+                                autofocus: true,
+                                controller: email,
+                                decoration: InputDecoration(
+                                  suffix: GestureDetector(
+                                      onTap: () {
+                                        BlocProvider.of<UpdateNameBloc>(context)
+                                            .add(FetchChangeName(
+                                            name: userName.text));
+                                      },
+                                      child: Text(
+                                        'Update',
+                                        style: TextStyle(color: Colors.red),
+                                      )),
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA4A4A4),
+                                    letterSpacing: -0.3.sp,
+                                    fontSize: 13.0
+                                        .sp, // Change hint text size based on focus
+                                  ),
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -270,7 +356,8 @@ class _EditCustomerState extends State<EditCustomer> {
                                     ),
                                 borderRadius: BorderRadius.circular(9.0.r),
                               ),
-                              child: Row(
+                              child:creditLimitEdit == false
+                                  ?  Row(
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -282,7 +369,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                         width: 169.w,
                                         height: 27.h,
                                         child: Text(
-                                          'Credit Limit - 2556 Sar',
+                                          'Credit Limit - ${widget.creditLimit} Sar',
                                           style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
                                               letterSpacing: -0.3.sp,
@@ -302,6 +389,29 @@ class _EditCustomerState extends State<EditCustomer> {
                                     child: Image.asset('assets/edit.png'),
                                   )
                                 ],
+                              ):TextField(
+                                autofocus: true,
+                                controller: credit,
+                                decoration: InputDecoration(
+                                  suffix: GestureDetector(
+                                      onTap: () {
+                                        BlocProvider.of<UpdateNameBloc>(context)
+                                            .add(FetchChangeName(
+                                            name: userName.text));
+                                      },
+                                      child: Text(
+                                        'Update',
+                                        style: TextStyle(color: Colors.red),
+                                      )),
+                                  hintText: 'Cred Limit',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA4A4A4),
+                                    letterSpacing: -0.3.sp,
+                                    fontSize: 13.0
+                                        .sp, // Change hint text size based on focus
+                                  ),
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
                             SizedBox(
