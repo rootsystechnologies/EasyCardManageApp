@@ -1,16 +1,35 @@
 class CreateCustomerModel {
-  CreateCustomerModel({
-      this.message,});
+  String? name;
+  String? mobile;
+  String? email;
+  String? opBalance;
+  String? creditLimit;
 
-  CreateCustomerModel.fromJson(dynamic json) {
-    message = json['message'];
+  CreateCustomerModel({
+    this.name,
+    this.mobile,
+    this.email,
+    this.opBalance,
+    this.creditLimit,
+  });
+
+  factory CreateCustomerModel.fromJson(Map<String, dynamic> json) {
+    return CreateCustomerModel(
+      name: json['name'],
+      mobile: json['mobile'],
+      email: json['email'],
+      opBalance: json['op_balance'],
+      creditLimit: json['cred_limit'],
+    );
   }
-  String? message;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['message'] = message;
+    map['name'] = name;
+    map['mobile'] = mobile;
+    map['email'] = email;
+    map['op_balance'] = opBalance;
+    map['cred_limit'] = creditLimit;
     return map;
   }
-
 }

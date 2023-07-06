@@ -28,6 +28,7 @@ class ApiClient {
         response = await post(Uri.parse(url),
             headers: {
               'content-Type': 'application/x-www-form-urlencoded',
+              'authorization': 'Bearer $token',
             },
             body: body,);
 

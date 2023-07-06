@@ -1,15 +1,14 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:http/http.dart';
-
+import '../../../main.dart';
 import '../../modelclass/CreateCustomerModel.dart';
-import '../apiclient.dart';
 
 class CreateCustomerApi {
-  ApiClient apiClient = ApiClient();
-  String trendingpath = '/collector/customer/create';
+  String baseUrl = basePath;
 
-  Future<CreateCustomerModel> createCustomer(
+   createCustomer(
       String name,
       String mobile,
       String email,
@@ -17,24 +16,40 @@ class CreateCustomerApi {
       String creditLimit,
       String password,
       String passwordConfirmation,
-      List<String> allowedperms,String place) async {
+      List<String> allowedPerms,String place) async {
+    final url = Uri.parse('$baseUrl/collector/customer/create');
+    final preferences = await SharedPreferences.getInstance();
 
-    var body = {
+    final token = preferences.getString('Token');
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+    final body = jsonEncode({
       'name': name,
       'mobile': mobile,
       'email': email,
       'op_balance': opBalance,
       'cred_limit': creditLimit,
       'password': password,
-      'password_confirmation': passwordConfirmation,
       'place':place,
-      'allowed_perms': jsonEncode(allowedperms) // Convert the list to JSON string
-    };
+      'password_confirmation': passwordConfirmation,
+      'allowed_perms': allowedPerms,
+    });
 
-    Response response = await apiClient.invokeAPI(trendingpath, 'POST1', body);
+    final response = await http.post(url, headers: headers, body: body);
 
-    print(response.body); // Print the response body
-      return CreateCustomerModel.fromJson(jsonDecode(response.body));
-
+    if (response.statusCode == 200||response.statusCode == 201) {
+      final jsonResponse = jsonDecode(response.body);
+      print(response.body);
+      if (jsonResponse != null) {
+        return CreateCustomerModel.fromJson(jsonResponse);
+      } else {
+        throw Exception('Invalid response body');
+      }
+    } else {
+      print('API request failed with status code ${response.statusCode}');
+      throw Exception('API request failed');
+    }
   }
 }

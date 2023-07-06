@@ -13,12 +13,12 @@ class RechargeApi {
 
   Future<RechargeModel> rechargeAmount(String userId, String amount, int pin) async {
     var body = {
-      'user':userId,
-      'amount': amount,
-      'fromapi':true,
-      'pin':pin
+      'user':userId.toString(),
+      'amount': amount.toString(),
+      'fromapi':'true',
+      'pin':pin.toString()
     };
-    Response response = await  apiClient.invokeAPI(trendingpath, 'POST_', jsonEncode(body));
+    Response response = await  apiClient.invokeAPI(trendingpath, 'POST', body);
 
     print(response.body); // Print the response body
 
