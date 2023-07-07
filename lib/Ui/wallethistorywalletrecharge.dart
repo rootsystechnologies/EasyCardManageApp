@@ -18,7 +18,7 @@ class WalletHistoryWalletRecharge extends StatefulWidget {
   State<WalletHistoryWalletRecharge> createState() =>
       _WalletHistoryWalletRechargeState();
 }
-
+int page=1;
 bool move = true;
 late FocusNode _focusNode1;
 late Getallcustomers customers;
@@ -380,7 +380,7 @@ class _WalletHistoryWalletRechargeState
                                                             .add(FetchGetAllCustomers(
                                                             searchKey:
                                                             search
-                                                                .text));
+                                                                .text, page: page.toString()));
                                                       },onChanged: (n){
                                                         BlocProvider.of<
                                                             GetAllCustomersBloc>(
@@ -388,7 +388,7 @@ class _WalletHistoryWalletRechargeState
                                                             .add(FetchGetAllCustomers(
                                                             searchKey:
                                                             search
-                                                                .text));
+                                                                .text, page: page.toString()));
                                                       },
                                                         controller: search,
                                                         autofocus: true,
@@ -440,7 +440,7 @@ class _WalletHistoryWalletRechargeState
                                                               GetAllCustomersBloc>(
                                                           context)
                                                       .add(FetchGetAllCustomers(
-                                                          searchKey: ''));
+                                                          searchKey: '', page: page.toString()));
                                                 },
                                                 child: SingleChildScrollView(
                                                   physics:

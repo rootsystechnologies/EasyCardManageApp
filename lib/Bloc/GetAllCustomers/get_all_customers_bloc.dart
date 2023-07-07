@@ -20,7 +20,7 @@ class GetAllCustomersBloc extends Bloc<GetAllCustomersEvent, GetAllCustomersStat
     on<FetchGetAllCustomers>((event, emit) async{
       emit(GetAllCustomersblocLoading());
       try{
-        getallcustomers = await getAllCustomersApi.getallcustomers(event.searchKey);
+        getallcustomers = await getAllCustomersApi.getallcustomers(event.searchKey,event.page);
         emit(GetAllCustomersblocLoaded());
       } catch(e){
         if(e.toString()=='Unauthenticated.'){

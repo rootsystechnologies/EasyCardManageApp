@@ -16,12 +16,13 @@ class Customers extends StatefulWidget {
 }
 
 bool move = true;
+int page=1;
 late Getallcustomers customers;
 TextEditingController search = TextEditingController();
 class _CustomersState extends State<Customers> {
   @override
   void initState() {
-    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: ''));
+    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));
     super.initState();
   }
 @override
@@ -203,9 +204,9 @@ class _CustomersState extends State<Customers> {
                                 width: 250.w,
                                 height: 60.h,
                                 child: TextFormField(controller: search,textInputAction:  TextInputAction.done,onFieldSubmitted: (value){
-                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
+                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text, page: page.toString()));
                                 },onChanged: (value){
-                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
+                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text, page: page.toString()));
                                 },
                                   autofocus: true,
                                   decoration: InputDecoration(
@@ -280,7 +281,7 @@ class _CustomersState extends State<Customers> {
                         return RefreshIndicator(
                           onRefresh: () async {
                             return BlocProvider.of<GetAllCustomersBloc>(context)
-                                .add(FetchGetAllCustomers(searchKey: ''));
+                                .add(FetchGetAllCustomers(searchKey: '', page:page.toString()));
                           },
                           child: SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),

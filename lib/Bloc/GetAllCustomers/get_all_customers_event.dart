@@ -4,5 +4,6 @@ part of 'get_all_customers_bloc.dart';
 abstract class GetAllCustomersEvent {}
 class FetchGetAllCustomers extends GetAllCustomersEvent{
   final String searchKey;
-  FetchGetAllCustomers({required this.searchKey});
+  final String page;
+  FetchGetAllCustomers({required this.searchKey,required this.page});
 }

@@ -28,12 +28,12 @@ String userId = '';
 TextEditingController search = TextEditingController();
 TextEditingController amount = TextEditingController();
 String userName = '';
-
+int page=1;
 class _AmountCollection1State extends State<AmountCollection1> {
   @override
   void initState() {
     BlocProvider.of<GetAllCustomersBloc>(context)
-        .add(FetchGetAllCustomers(searchKey: search.text));
+        .add(FetchGetAllCustomers(searchKey: search.text, page: page.toString()));
     super.initState();
     _focusNode1 = FocusNode();
     _focusNode1.addListener(() {
@@ -385,7 +385,7 @@ class _AmountCollection1State extends State<AmountCollection1> {
                                                               .add(FetchGetAllCustomers(
                                                                   searchKey:
                                                                       search
-                                                                          .text));
+                                                                          .text, page: page.toString()));
                                                         },
                                                         onChanged: (value) {
                                                           BlocProvider.of<
@@ -394,7 +394,7 @@ class _AmountCollection1State extends State<AmountCollection1> {
                                                               .add(FetchGetAllCustomers(
                                                                   searchKey:
                                                                       search
-                                                                          .text));
+                                                                          .text, page: page.toString()));
                                                         },
                                                         controller: search,
                                                         autofocus: true,
@@ -446,7 +446,7 @@ class _AmountCollection1State extends State<AmountCollection1> {
                                                               GetAllCustomersBloc>(
                                                           context)
                                                       .add(FetchGetAllCustomers(
-                                                          searchKey: ''));
+                                                          searchKey: '', page: page.toString()));
                                                 },
                                                 child: SingleChildScrollView(
                                                   physics:

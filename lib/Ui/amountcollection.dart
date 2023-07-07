@@ -19,6 +19,7 @@ class AmountCollection extends StatefulWidget {
 
 Getallcustomers? customers;
 bool move = true;
+int page=1;
 TextEditingController search = TextEditingController();
 late GetAllCollectionModel collections;
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
@@ -42,7 +43,7 @@ class _AmountCollectionState extends State<AmountCollection> {
     BlocProvider.of<GetAllCollectionBloc>(context)
         .add(FetchGetAllCollection(search: '', toDate: '', fromDate: ''));
     BlocProvider.of<GetAllCustomersBloc>(context)
-        .add(FetchGetAllCustomers(searchKey: search.text));
+        .add(FetchGetAllCustomers(searchKey: search.text, page: page.toString()));
     super.initState();
   }
 
@@ -578,7 +579,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                                   .add(FetchGetAllCustomers(
                                                                       searchKey:
                                                                           search
-                                                                              .text));
+                                                                              .text, page: page.toString()));
                                                             },
                                                             onChanged: (value) {
                                                               BlocProvider.of<
@@ -587,7 +588,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                                   .add(FetchGetAllCustomers(
                                                                       searchKey:
                                                                           search
-                                                                              .text));
+                                                                              .text, page: page.toString()));
                                                             },
                                                             controller: search,
                                                             autofocus: true,
@@ -639,7 +640,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                           .add(
                                                               FetchGetAllCustomers(
                                                                   searchKey:
-                                                                      ''));
+                                                                      '', page: page.toString()));
                                                     },
                                                     child:
                                                         SingleChildScrollView(

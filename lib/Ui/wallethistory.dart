@@ -36,12 +36,12 @@ String convertISODate(String isoDate) {
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;
 }
-
+int page=1;
 class _WalletHistoryState extends State<WalletHistory> {
   @override
   void initState() {
     BlocProvider.of<GetAllCustomersBloc>(context)
-        .add(FetchGetAllCustomers(searchKey: search.text));
+        .add(FetchGetAllCustomers(searchKey: search.text, page: page.toString()));
     BlocProvider.of<WalletHistoryBloc>(context).add(FetchGetAllWallet(
         search: search.text,
         toDate: formatter.format(toDate).toString(),
@@ -751,7 +751,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                     .add(FetchGetAllCustomers(
                                                                     searchKey:
                                                                     search
-                                                                        .text));
+                                                                        .text, page: page.toString()));
                                                               },
                                                               onChanged: (value) {
                                                                 BlocProvider.of<
@@ -760,7 +760,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                     .add(FetchGetAllCustomers(
                                                                     searchKey:
                                                                     search
-                                                                        .text));
+                                                                        .text, page: page.toString()));
                                                               },
                                                               controller: search,
                                                               autofocus: true,
@@ -812,7 +812,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                 .add(
                                                                 FetchGetAllCustomers(
                                                                     searchKey:
-                                                                    ''));
+                                                                    '', page: page.toString()));
                                                           },
                                                           child:
                                                           SingleChildScrollView(
