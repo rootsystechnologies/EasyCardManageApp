@@ -304,8 +304,9 @@ class _CustomersState extends State<Customers> {
                           width: 326.w,
                           height: 407.5.h,
                           child: ListView.separated(
-                            itemCount: customers.customers!.data!.length,
+                            itemCount: customers.customers!.data!.length+1,
                             itemBuilder: (BuildContext context, int index) {
+                              if(index<customers.customers!.data!.length){
                               return Row(
                                 children: [
                                   SizedBox(
@@ -388,7 +389,12 @@ class _CustomersState extends State<Customers> {
                                     ),
                                   )
                                 ],
-                              );
+                              );}else{
+                                return TextButton(onPressed: (){
+                                  page=page+1;
+                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));
+                                }, child: Text("Next"));
+                              }
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
