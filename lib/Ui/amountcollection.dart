@@ -17,7 +17,7 @@ class AmountCollection extends StatefulWidget {
   State<AmountCollection> createState() => _AmountCollectionState();
 }
 
-late Getallcustomers customers;
+Getallcustomers? customers;
 bool move = true;
 TextEditingController search = TextEditingController();
 late GetAllCollectionModel collections;
@@ -29,6 +29,7 @@ String convertISODate(String isoDate) {
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;
 }
+
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
@@ -214,15 +215,15 @@ class _AmountCollectionState extends State<AmountCollection> {
                                               Padding(
                                                 padding:
                                                     EdgeInsets.only(left: 16.w),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    _selectFromDate(context);
-                                                  },
-                                                  child: SizedBox(
-                                                    width: 86.w,
-                                                    height: 26.h,
+                                                child: SizedBox(
+                                                  width: 86.w,
+                                                  height: 26.h,
+                                                  child: FittedBox(
                                                     child: Text(
-                                                      "From Date",
+                                                      fromDate == null
+                                                          ? "From Date"
+                                                          : formatter
+                                                              .format(fromDate),
                                                       style:
                                                           GoogleFonts.poppins(
                                                         textStyle: TextStyle(
@@ -252,18 +253,23 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         ),
                                       ),
                                       if (isExpanded)
-                                        Container(
-                                          width: 200.w,
-                                          height: 50.h,
-                                          padding: EdgeInsets.all(8.h),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border:
-                                                Border.all(color: Colors.grey),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                                formatter.format(fromDate)),
+                                        GestureDetector(
+                                          onTap: () {
+                                            _selectFromDate(context);
+                                          },
+                                          child: Container(
+                                            width: 200.w,
+                                            height: 50.h,
+                                            padding: EdgeInsets.all(8.h),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              border: Border.all(
+                                                  color: Colors.grey),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                  formatter.format(fromDate)),
+                                            ),
                                           ),
                                         ),
                                     ],
@@ -299,16 +305,16 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             children: [
                                               Padding(
                                                 padding:
-                                                    EdgeInsets.only(left: 31.w),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    _selectToDate(context);
-                                                  },
-                                                  child: SizedBox(
-                                                    width: 64.w,
-                                                    height: 26.h,
+                                                    EdgeInsets.only(left: 16.w),
+                                                child: SizedBox(
+                                                  width: 86.w,
+                                                  height: 26.h,
+                                                  child: FittedBox(
                                                     child: Text(
-                                                      "To Date",
+                                                      toDate == null
+                                                          ? "To Date"
+                                                          : formatter
+                                                              .format(toDate),
                                                       style:
                                                           GoogleFonts.poppins(
                                                         textStyle: TextStyle(
@@ -339,18 +345,23 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         ),
                                       ),
                                       if (isExpanded1)
-                                        Container(
-                                          width: 200.w,
-                                          height: 50.h,
-                                          padding: EdgeInsets.all(8.h),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            border:
-                                                Border.all(color: Colors.grey),
-                                          ),
-                                          child: Center(
-                                            child:
-                                                Text(formatter.format(toDate)),
+                                        GestureDetector(
+                                          onTap: () {
+                                            _selectToDate(context);
+                                          },
+                                          child: Container(
+                                            width: 200.w,
+                                            height: 50.h,
+                                            padding: EdgeInsets.all(8.h),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              border: Border.all(
+                                                  color: Colors.grey),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                  formatter.format(toDate)),
+                                            ),
                                           ),
                                         ),
                                     ],
@@ -362,341 +373,389 @@ class _AmountCollectionState extends State<AmountCollection> {
                           SizedBox(
                             height: 17.h,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 18.w, right: 20.w),
-                            child: Container(
-                              decoration: ShapeDecoration(
-                                color: Color(0xFFEC1C24),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7.r)),
-                              ),
-                              width: 299.w,
-                              // Replace with your desired width
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  SizedBox(
-                                    height: 36.h,
-                                    child: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          isExpanded2 = !isExpanded2;
-                                        });
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                              left: 108.w,
-                                            ),
-                                            child: SizedBox(
-                                              width: 83.w,
-                                              height: 26.h,
-                                              child: Text(
-                                                "Customer",
-                                                style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 17.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                    letterSpacing: -0.30.sp,
+                          Row(
+                            children: [
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: 10.w),
+                                child: Container(
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFFEC1C24),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(7.r)),
+                                  ),
+                                  width: 180.w,
+                                  // Replace with your desired width
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      SizedBox(
+                                        height: 36.h,
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              isExpanded2 = !isExpanded2;
+                                            });
+                                          },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                  left: 28.w,
+                                                ),
+                                                child: SizedBox(
+                                                  width: 83.w,
+                                                  height: 26.h,
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      "Customer",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        textStyle: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 17.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          letterSpacing:
+                                                              -0.30.sp,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 8.w, right: 9.77.w),
+                                                  child: SizedBox(
+                                                      height: 10.8.h,
+                                                      width: 10.8.w,
+                                                      child: Image.asset(isExpanded2
+                                                          ? 'assets/arrowdown.png'
+                                                          : 'assets/arrowforward.png'))),
+                                            ],
                                           ),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 63.w, right: 9.77.w),
-                                              child: SizedBox(
-                                                  height: 10.8.h,
-                                                  width: 10.8.w,
-                                                  child: Image.asset(isExpanded2
-                                                      ? 'assets/arrowdown.png'
-                                                      : 'assets/arrowforward.png'))),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  if (isExpanded2)
-                                    Container(
-                                      width: 299.w,
-                                      height: 174.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(color: Colors.grey),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                move = !move;
-                                                print(move);
-                                              });
-                                            },
-                                            child: Stack(
-                                              children: [
-                                                Visibility(
-                                                  visible: move ? true : false,
-                                                  child: AnimatedPositioned(
-                                                    duration:
-                                                        Duration(seconds: 1),
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: 51.w,
-                                                          right: 50.w,
-                                                          top: 8.h),
-                                                      width: 198.w,
-                                                      height: 32.h,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors
-                                                              .transparent,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.r),
-                                                          border: Border.all(
-                                                              color: Color(
-                                                                  0xffD9D9D9))),
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 16.w,
-                                                          ),
-                                                          SizedBox(
-                                                              width: 13.52.w,
-                                                              height: 12.55.h,
-                                                              child: Image.asset(
-                                                                  'assets/search.png')),
-                                                          SizedBox(
-                                                            height: 17.5.h,
-                                                            child:
-                                                                VerticalDivider(
-                                                              color: Color(
-                                                                  0xffEC1C24),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 9.w,
-                                                          ),
-                                                          SizedBox(
-                                                              width: 85.82.w,
-                                                              height: 16.94.h,
-                                                              child: Text(
-                                                                "Search",
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .poppins(
-                                                                  textStyle:
-                                                                      TextStyle(
-                                                                    letterSpacing:
-                                                                        -0.3.sp,
-                                                                    color: Color(
-                                                                        0xffEC1C24),
-                                                                    fontSize:
-                                                                        10.sp,
-                                                                  ),
+                                      if (isExpanded2)
+                                        Container(
+                                          width: 299.w,
+                                          height: 174.h,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border:
+                                                Border.all(color: Colors.grey),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    move = !move;
+                                                    print(move);
+                                                  });
+                                                },
+                                                child: Stack(
+                                                  children: [
+                                                    Visibility(
+                                                      visible:
+                                                          move ? true : false,
+                                                      child: AnimatedPositioned(
+                                                        duration: Duration(
+                                                            seconds: 1),
+                                                        child: Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 51.w,
+                                                                  right: 50.w,
+                                                                  top: 8.h),
+                                                          width: 198.w,
+                                                          height: 32.h,
+                                                          decoration: BoxDecoration(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.r),
+                                                              border: Border.all(
+                                                                  color: Color(
+                                                                      0xffD9D9D9))),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 16.w,
+                                                              ),
+                                                              SizedBox(
+                                                                  width:
+                                                                      13.52.w,
+                                                                  height:
+                                                                      12.55.h,
+                                                                  child: Image
+                                                                      .asset(
+                                                                          'assets/search.png')),
+                                                              SizedBox(
+                                                                height: 17.5.h,
+                                                                child:
+                                                                    VerticalDivider(
+                                                                  color: Color(
+                                                                      0xffEC1C24),
                                                                 ),
-                                                              ))
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Visibility(
-                                                  visible: move == false
-                                                      ? true
-                                                      : false,
-                                                  child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 51.w,
-                                                        right: 50.w,
-                                                        top: 8.h),
-                                                    width: 198.w,
-                                                    height: 32.h,
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.r),
-                                                        border: Border.all(
-                                                            color: Color(
-                                                                0xffD9D9D9))),
-                                                    child: Padding(
-                                                      padding: EdgeInsets.only(
-                                                        left: 17.w,
-                                                      ),
-                                                      child: SizedBox(
-                                                        width: 198.w,
-                                                        height: 32.h,
-                                                        child: TextFormField(
-                                                          onChanged: (value) {
-                                                            BlocProvider.of<
-                                                                        GetAllCustomersBloc>(
-                                                                    context)
-                                                                .add(FetchGetAllCustomers(
-                                                                    searchKey:
-                                                                        search
-                                                                            .text));
-                                                          },
-                                                          controller: search,
-                                                          autofocus: true,
-                                                          decoration:
-                                                              InputDecoration(
-                                                                  focusedBorder:
-                                                                      InputBorder
-                                                                          .none,
-                                                                  enabledBorder:
-                                                                      InputBorder
-                                                                          .none,
-                                                                  hintText:
-                                                                      'Search',
-                                                                  hintStyle:
-                                                                      GoogleFonts
-                                                                          .poppins(
-                                                                    textStyle: TextStyle(
-                                                                        color: Color(
-                                                                            0xffD9D9D9),
-                                                                        fontSize: 10
-                                                                            .sp,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w300,
+                                                              ),
+                                                              SizedBox(
+                                                                width: 9.w,
+                                                              ),
+                                                              SizedBox(
+                                                                  width:
+                                                                      85.82.w,
+                                                                  height:
+                                                                      16.94.h,
+                                                                  child: Text(
+                                                                    "Search",
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      textStyle:
+                                                                          TextStyle(
                                                                         letterSpacing:
-                                                                            -0.3.sp),
-                                                                  )),
+                                                                            -0.3.sp,
+                                                                        color: Color(
+                                                                            0xffEC1C24),
+                                                                        fontSize:
+                                                                            10.sp,
+                                                                      ),
+                                                                    ),
+                                                                  ))
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(child: BlocBuilder<
-                                                  GetAllCustomersBloc,
-                                                  GetAllCustomersState>(
-                                              builder: (context, state) {
-                                            if (state
-                                                is GetAllCustomersblocLoading) {
-                                              return SizedBox();
-                                            }
-                                            if (state
-                                                is GetAllCustomersblocError) {
-                                              return RefreshIndicator(
-                                                onRefresh: () async {
-                                                  return BlocProvider.of<
-                                                              GetAllCustomersBloc>(
-                                                          context)
-                                                      .add(FetchGetAllCustomers(
-                                                          searchKey: ''));
-                                                },
-                                                child: SingleChildScrollView(
-                                                  physics:
-                                                      const BouncingScrollPhysics(),
-                                                  child: Container(
-                                                      height:
-                                                          MediaQuery.of(context)
+                                                    Visibility(
+                                                      visible: move == false
+                                                          ? true
+                                                          : false,
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(
+                                                            left: 51.w,
+                                                            right: 50.w,
+                                                            top: 8.h),
+                                                        width: 198.w,
+                                                        height: 32.h,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors
+                                                                .transparent,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.r),
+                                                            border: Border.all(
+                                                                color: Color(
+                                                                    0xffD9D9D9))),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                            left: 17.w,
+                                                          ),
+                                                          child: SizedBox(
+                                                            width: 198.w,
+                                                            height: 32.h,
+                                                            child:
+                                                                TextFormField(
+                                                              onChanged:
+                                                                  (value) {
+                                                                BlocProvider.of<
+                                                                            GetAllCustomersBloc>(
+                                                                        context)
+                                                                    .add(FetchGetAllCustomers(
+                                                                        searchKey:
+                                                                            search.text));
+                                                              },
+                                                              controller:
+                                                                  search,
+                                                              autofocus: true,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                      focusedBorder: InputBorder
+                                                                          .none,
+                                                                      enabledBorder:
+                                                                          InputBorder
+                                                                              .none,
+                                                                      hintText:
+                                                                          'Search',
+                                                                      hintStyle:
+                                                                          GoogleFonts
+                                                                              .poppins(
+                                                                        textStyle: TextStyle(
+                                                                            color:
+                                                                                Color(0xffD9D9D9),
+                                                                            fontSize: 10.sp,
+                                                                            fontWeight: FontWeight.w300,
+                                                                            letterSpacing: -0.3.sp),
+                                                                      )),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(child: BlocBuilder<
+                                                      GetAllCustomersBloc,
+                                                      GetAllCustomersState>(
+                                                  builder: (context, state) {
+                                                if (state
+                                                    is GetAllCustomersblocLoading) {
+                                                  return SizedBox();
+                                                }
+                                                if (state
+                                                    is GetAllCustomersblocError) {
+                                                  return RefreshIndicator(
+                                                    onRefresh: () async {
+                                                      return BlocProvider.of<
+                                                                  GetAllCustomersBloc>(
+                                                              context)
+                                                          .add(
+                                                              FetchGetAllCustomers(
+                                                                  searchKey:
+                                                                      ''));
+                                                    },
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      physics:
+                                                          const BouncingScrollPhysics(),
+                                                      child: Container(
+                                                          height: MediaQuery.of(
+                                                                      context)
                                                                   .size
                                                                   .height *
                                                               .9,
-                                                      // color: Colors.red,
-                                                      child: Center(
-                                                          child:
-                                                              Text("Error"))),
-                                                ),
-                                              );
-                                            }
-                                            if (state
-                                                is GetAllCustomersblocLoaded) {
-                                              customers = BlocProvider.of<
-                                                          GetAllCustomersBloc>(
-                                                      context)
-                                                  .getallcustomers;
-
-                                              return ListView.separated(
-                                                itemCount: customers
-                                                    .customers!.data!.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-
-                                                  return Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 17.w),
-                                                    child: SizedBox(
-                                                      height: 24.h,
-                                                      width: 120.w,
-                                                      child: GestureDetector(
-                                                        onTap: () {
-                                                          userName = customers
-                                                              .customers!
-                                                              .data![index]
-                                                              .name
-                                                              .toString();
-                                                        },
-                                                        child: Text(
-                                                          customers.customers!
-                                                              .data![index].name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  textStyle:
-                                                                      TextStyle(
-                                                            color: Color(
-                                                                0xFFA3A3A3),
-                                                            fontSize: 16.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            letterSpacing:
-                                                                -0.30,
-                                                          )),
-                                                        ),
-                                                      ),
+                                                          // color: Colors.red,
+                                                          child: Center(
+                                                              child: Text(
+                                                                  "Error"))),
                                                     ),
                                                   );
-                                                },
-                                                separatorBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return SizedBox(
-                                                    height: 2.h,
+                                                }
+                                                if (state
+                                                    is GetAllCustomersblocLoaded) {
+                                                  customers = BlocProvider.of<
+                                                              GetAllCustomersBloc>(
+                                                          context)
+                                                      .getallcustomers;
+
+                                                  return ListView.separated(
+                                                    itemCount: customers!
+                                                        .customers!
+                                                        .data!
+                                                        .length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                left: 17.w),
+                                                        child: SizedBox(
+                                                          height: 24.h,
+                                                          width: 120.w,
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              userName = customers!
+                                                                  .customers!
+                                                                  .data![index]
+                                                                  .name
+                                                                  .toString();
+                                                            },
+                                                            child: Text(
+                                                              customers!
+                                                                  .customers!
+                                                                  .data![index]
+                                                                  .name
+                                                                  .toString(),
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                      textStyle:
+                                                                          TextStyle(
+                                                                color: Color(
+                                                                    0xFFA3A3A3),
+                                                                fontSize: 16.sp,
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                letterSpacing:
+                                                                    -0.30,
+                                                              )),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    separatorBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      return SizedBox(
+                                                        height: 2.h,
+                                                      );
+                                                    },
                                                   );
-                                                },
-                                              );
-                                            } else {
-                                              return SizedBox();
-                                            }
-                                          }))
-                                        ],
+                                                } else {
+                                                  return SizedBox();
+                                                }
+                                              }))
+                                            ],
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    BlocProvider.of<GetAllCollectionBloc>(
+                                            context)
+                                        .add(FetchGetAllCollection(
+                                            search: userName.toString(),
+                                            toDate: formatter
+                                                .format(toDate)
+                                                .toString(),
+                                            fromDate: formatter
+                                                .format(fromDate)
+                                                .toString()));
+                                  },
+                                  child: Container(
+                                    width: 100.w,
+                                    height: 36.h,
+                                    child: Center(
+                                      child: Text(
+                                        "Get",
+                                        style:  GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17.sp,
+                                              fontWeight:
+                                              FontWeight.w400,
+                                              letterSpacing:
+                                              -0.30.sp,
+                                            )),
                                       ),
                                     ),
-                                ],
-                              ),
-                            ),
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius:
+                                            BorderRadius.circular(7.r)),
+                                  )),
+                            ],
                           ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                BlocProvider.of<GetAllCollectionBloc>(context)
-                                    .add(FetchGetAllCollection(
-                                        search: userName.toString(),
-                                        toDate: formatter.format(toDate).toString(),
-                                        fromDate: formatter
-                                            .format(fromDate)
-                                            .toString()));
-                              },
-                              child: Text("Get")),
                           SizedBox(
                             height: 22.h,
                           ),
@@ -808,9 +867,9 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         collections.collections!.data!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                          String formattedDate = convertISODate(customers
-                                              .customers!
-                                              .data![index].createdAt!);
+                                      String formattedDate = convertISODate(
+                                          collections.collections!.data![index]
+                                              .createdAt!);
                                       return Row(
                                         children: [
                                           SizedBox(
