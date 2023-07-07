@@ -75,7 +75,13 @@ class _AmountCollectionState extends State<AmountCollection> {
       });
     }
   }
-
+@override
+  void dispose() {
+ move=true;
+    search.clear();
+    userName='';
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -376,8 +382,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                           Row(
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsets.only(left: 10.w),
+                                padding: EdgeInsets.only(left: 10.w),
                                 child: Container(
                                   decoration: ShapeDecoration(
                                     color: Color(0xFFEC1C24),
@@ -412,7 +417,9 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                   height: 26.h,
                                                   child: FittedBox(
                                                     child: Text(
-                                                      userName==null?"Customer":userName,
+                                                      userName == ''
+                                                          ? "Customer"
+                                                          : userName,
                                                       style:
                                                           GoogleFonts.poppins(
                                                         textStyle: TextStyle(
@@ -472,8 +479,8 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                         child: Container(
                                                           margin:
                                                               EdgeInsets.only(
-                                                                  left: 51.w,
-                                                                  right: 50.w,
+                                                                  left: 10.w,
+                                                                  right: 10.w,
                                                                   top: 8.h),
                                                           width: 198.w,
                                                           height: 32.h,
@@ -542,8 +549,8 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                           : false,
                                                       child: Container(
                                                         margin: EdgeInsets.only(
-                                                            left: 51.w,
-                                                            right: 50.w,
+                                                            left: 10.w,
+                                                            right: 10.w,
                                                             top: 8.h),
                                                         width: 198.w,
                                                         height: 32.h,
@@ -562,43 +569,51 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                               EdgeInsets.only(
                                                             left: 17.w,
                                                           ),
-                                                          child: SizedBox(
-                                                            width: 198.w,
-                                                            height: 32.h,
-                                                            child:
-                                                                TextFormField(
-                                                              onChanged:
-                                                                  (value) {
-                                                                BlocProvider.of<
-                                                                            GetAllCustomersBloc>(
-                                                                        context)
-                                                                    .add(FetchGetAllCustomers(
-                                                                        searchKey:
-                                                                            search.text));
-                                                              },
-                                                              controller:
-                                                                  search,
-                                                              autofocus: true,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                      focusedBorder: InputBorder
-                                                                          .none,
-                                                                      enabledBorder:
-                                                                          InputBorder
-                                                                              .none,
-                                                                      hintText:
-                                                                          'Search',
-                                                                      hintStyle:
-                                                                          GoogleFonts
-                                                                              .poppins(
-                                                                        textStyle: TextStyle(
-                                                                            color:
-                                                                                Color(0xffD9D9D9),
-                                                                            fontSize: 10.sp,
-                                                                            fontWeight: FontWeight.w300,
-                                                                            letterSpacing: -0.3.sp),
-                                                                      )),
-                                                            ),
+                                                          child: TextFormField(
+                                                            onFieldSubmitted:
+                                                                (value) {
+                                                              BlocProvider.of<
+                                                                          GetAllCustomersBloc>(
+                                                                      context)
+                                                                  .add(FetchGetAllCustomers(
+                                                                      searchKey:
+                                                                          search
+                                                                              .text));
+                                                            },
+                                                            onChanged: (value) {
+                                                              BlocProvider.of<
+                                                                          GetAllCustomersBloc>(
+                                                                      context)
+                                                                  .add(FetchGetAllCustomers(
+                                                                      searchKey:
+                                                                          search
+                                                                              .text));
+                                                            },
+                                                            controller: search,
+                                                            autofocus: true,
+                                                            decoration:
+                                                                InputDecoration(
+                                                                    focusedBorder:
+                                                                        InputBorder
+                                                                            .none,
+                                                                    enabledBorder:
+                                                                        InputBorder
+                                                                            .none,
+                                                                    hintText:
+                                                                        'Search',
+                                                                    hintStyle:
+                                                                        GoogleFonts
+                                                                            .poppins(
+                                                                      textStyle: TextStyle(
+                                                                          color: Color(
+                                                                              0xffD9D9D9),
+                                                                          fontSize: 10
+                                                                              .sp,
+                                                                          fontWeight: FontWeight
+                                                                              .w300,
+                                                                          letterSpacing:
+                                                                              -0.3.sp),
+                                                                    )),
                                                           ),
                                                         ),
                                                       ),
@@ -649,65 +664,85 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                               GetAllCustomersBloc>(
                                                           context)
                                                       .getallcustomers;
-
-                                                  return ListView.separated(
-                                                    itemCount: customers!
-                                                        .customers!
-                                                        .data!
-                                                        .length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      return Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 17.w),
-                                                        child: SizedBox(
-                                                          height: 24.h,
-                                                          width: 120.w,
+                                                  if (customers!.customers!
+                                                      .data!.isEmpty) {
+                                                    return Container(
+                                                        width: 326.w,
+                                                        height: 407.5.h,
+                                                        child: Center(
                                                           child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              userName = customers!
-                                                                  .customers!
-                                                                  .data![index]
-                                                                  .name
-                                                                  .toString();
-                                                            },
-                                                            child: Text(
-                                                              customers!
-                                                                  .customers!
-                                                                  .data![index]
-                                                                  .name
-                                                                  .toString(),
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                      textStyle:
-                                                                          TextStyle(
-                                                                color: Color(
-                                                                    0xFFA3A3A3),
-                                                                fontSize: 16.sp,
-                                                                fontFamily:
-                                                                    'Poppins',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                letterSpacing:
-                                                                    -0.30,
-                                                              )),
+                                                              Text("No Data"),
+                                                        ));
+                                                  } else {
+                                                    return ListView.separated(
+                                                      itemCount: customers!
+                                                          .customers!
+                                                          .data!
+                                                          .length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 17.w),
+                                                          child: SizedBox(
+                                                            height: 24.h,
+                                                            width: 120.w,
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                userName = customers!
+                                                                    .customers!
+                                                                    .data![
+                                                                        index]
+                                                                    .name
+                                                                    .toString();
+                                                                if (userName
+                                                                    .isNotEmpty) {
+                                                                  setState(() {
+                                                                    isExpanded2 =
+                                                                        false;
+                                                                  });
+                                                                }
+                                                              },
+                                                              child: Text(
+                                                                customers!
+                                                                    .customers!
+                                                                    .data![
+                                                                        index]
+                                                                    .name
+                                                                    .toString(),
+                                                                style: GoogleFonts
+                                                                    .poppins(
+                                                                        textStyle:
+                                                                            TextStyle(
+                                                                  color: Color(
+                                                                      0xFFA3A3A3),
+                                                                  fontSize:
+                                                                      16.sp,
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  letterSpacing:
+                                                                      -0.30,
+                                                                )),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    separatorBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      return SizedBox(
-                                                        height: 2.h,
-                                                      );
-                                                    },
-                                                  );
+                                                        );
+                                                      },
+                                                      separatorBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return SizedBox(
+                                                          height: 2.h,
+                                                        );
+                                                      },
+                                                    );
+                                                  }
                                                 } else {
                                                   return SizedBox();
                                                 }
@@ -738,15 +773,13 @@ class _AmountCollectionState extends State<AmountCollection> {
                                     child: Center(
                                       child: Text(
                                         "Get",
-                                        style:  GoogleFonts.poppins(
+                                        style: GoogleFonts.poppins(
                                             textStyle: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 17.sp,
-                                              fontWeight:
-                                              FontWeight.w400,
-                                              letterSpacing:
-                                              -0.30.sp,
-                                            )),
+                                          color: Colors.white,
+                                          fontSize: 17.sp,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: -0.30.sp,
+                                        )),
                                       ),
                                     ),
                                     decoration: BoxDecoration(
@@ -862,79 +895,104 @@ class _AmountCollectionState extends State<AmountCollection> {
                                 return SizedBox(
                                   height: 318.h,
                                   width: 337.w,
-                                  child:collections.collections!.data!.isEmpty?Center(child: Text("No Data"),) :ListView.separated(
-                                    itemCount:
-                                        collections.collections!.data!.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      String formattedDate = convertISODate(
-                                          collections.collections!.data![index]
-                                              .createdAt!);
-                                      return Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 93.w,
-                                            height: 21.h,
-                                            child: Text(
-                                                collections.collections!
-                                                    .data![index].user!.name
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
-                                                  color: Color(0xFFA3A3A3),
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30.sp,
-                                                ))),
-                                          ),
-                                          SizedBox(
-                                            width: 24.w,
-                                          ),
-                                          SizedBox(
-                                            width: 93.w,
-                                            height: 21.h,
-                                            child: Text(formattedDate,
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
-                                                  color: Color(0xFFA3A3A3),
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30.sp,
-                                                ))),
-                                          ),
-                                          SizedBox(
-                                            width: 44.w,
-                                          ),
-                                          SizedBox(
-                                            width: 62.w,
-                                            height: 21.h,
-                                            child: Text(
-                                                collections
+                                  child: collections.collections!.data!.isEmpty
+                                      ? Center(
+                                          child: Text("No Data"),
+                                        )
+                                      : ListView.separated(
+                                          itemCount: collections
+                                              .collections!.data!.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            String formattedDate =
+                                                convertISODate(collections
                                                     .collections!
                                                     .data![index]
-                                                    .collectedAmount
-                                                    .toString(),
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                    textStyle: TextStyle(
-                                                  color: Color(0xFFA3A3A3),
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30.sp,
-                                                ))),
-                                          )
-                                        ],
-                                      );
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return Divider(
-                                        color: Color(0xffD9D9D9),
-                                      );
-                                    },
-                                  ),
+                                                    .createdAt!);
+                                            return Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 93.w,
+                                                  height: 21.h,
+                                                  child: Text(
+                                                      collections
+                                                          .collections!
+                                                          .data![index]
+                                                          .user!
+                                                          .name
+                                                          .toString(),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              textStyle:
+                                                                  TextStyle(
+                                                        color:
+                                                            Color(0xFFA3A3A3),
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        letterSpacing: -0.30.sp,
+                                                      ))),
+                                                ),
+                                                SizedBox(
+                                                  width: 24.w,
+                                                ),
+                                                SizedBox(
+                                                  width: 93.w,
+                                                  height: 21.h,
+                                                  child: Text(formattedDate,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              textStyle:
+                                                                  TextStyle(
+                                                        color:
+                                                            Color(0xFFA3A3A3),
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        letterSpacing: -0.30.sp,
+                                                      ))),
+                                                ),
+                                                SizedBox(
+                                                  width: 44.w,
+                                                ),
+                                                SizedBox(
+                                                  width: 62.w,
+                                                  height: 21.h,
+                                                  child: Text(
+                                                      collections
+                                                          .collections!
+                                                          .data![index]
+                                                          .collectedAmount
+                                                          .toString(),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              textStyle:
+                                                                  TextStyle(
+                                                        color:
+                                                            Color(0xFFA3A3A3),
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        letterSpacing: -0.30.sp,
+                                                      ))),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                          separatorBuilder:
+                                              (BuildContext context,
+                                                  int index) {
+                                            return Divider(
+                                              color: Color(0xffD9D9D9),
+                                            );
+                                          },
+                                        ),
                                 );
                               } else {
                                 return SizedBox();

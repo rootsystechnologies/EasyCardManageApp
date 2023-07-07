@@ -17,7 +17,7 @@ class WalletHistoryBloc extends Bloc<WalletHistoryEvent, WalletHistoryState> {
     on<FetchGetAllWallet>((event, emit)async {
       emit(GetAllWalletblocLoading());
       try{
-        walletHistoryModel = await getAllCollectionApi.getallwallet(event.fromDate,event. toDate, event.search, event.particular);
+        walletHistoryModel = await getAllCollectionApi.getallwallet(event.fromDate,event. toDate, event.search, event.particular,event.forAll);
         emit(GetAllWalletblocLoaded());
       } catch(e){
         ToastMessage().toastmessage(message:e.toString());

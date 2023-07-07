@@ -7,5 +7,6 @@ class FetchGetAllWallet extends WalletHistoryEvent{
   final String toDate;
   final String search;
   final String particular;
-  FetchGetAllWallet({required this.search,required this.toDate,required this.fromDate,required this.particular});
+  final bool forAll;
+  FetchGetAllWallet({required this.search,required this.toDate,required this.fromDate,required this.particular,required this.forAll});
 }

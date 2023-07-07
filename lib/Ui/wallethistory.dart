@@ -30,11 +30,13 @@ String userName = '';
 DateTime fromDate = DateTime.now();
 DateTime toDate = DateTime.now();
 late WalletHistoryModel history;
+
 String convertISODate(String isoDate) {
   DateTime date = DateTime.parse(isoDate);
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;
 }
+
 class _WalletHistoryState extends State<WalletHistory> {
   @override
   void initState() {
@@ -44,7 +46,7 @@ class _WalletHistoryState extends State<WalletHistory> {
         search: search.text,
         toDate: formatter.format(toDate).toString(),
         fromDate: formatter.format(fromDate).toString(),
-        particular: particular));
+        particular: particular, forAll: true));
     super.initState();
   }
 
@@ -76,6 +78,15 @@ class _WalletHistoryState extends State<WalletHistory> {
         toDate = pickedDate;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    move = true;
+    search.clear();
+    userName = '';
+    particular='';
+    super.dispose();
   }
 
   @override
@@ -218,15 +229,15 @@ class _WalletHistoryState extends State<WalletHistory> {
                                             Padding(
                                               padding:
                                                   EdgeInsets.only(left: 16.w),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  _selectFromDate(context);
-                                                },
-                                                child: SizedBox(
-                                                  width: 86.w,
-                                                  height: 26.h,
+                                              child: SizedBox(
+                                                width: 86.w,
+                                                height: 26.h,
+                                                child: FittedBox(
                                                   child: Text(
-                                                    "From Date",
+                                                    fromDate == null
+                                                        ? "From Date"
+                                                        : formatter
+                                                            .format(fromDate),
                                                     style: GoogleFonts.poppins(
                                                       textStyle: TextStyle(
                                                         color: Colors.white,
@@ -254,17 +265,23 @@ class _WalletHistoryState extends State<WalletHistory> {
                                       ),
                                     ),
                                     if (isExpanded)
-                                      Container(
-                                        width: 200.w,
-                                        height: 50.h,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                        ),
-                                        child: Center(
-                                          child:
-                                              Text(formatter.format(fromDate)),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _selectFromDate(context);
+                                        },
+                                        child: Container(
+                                          width: 200.w,
+                                          height: 50.h,
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border:
+                                                Border.all(color: Colors.grey),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                                formatter.format(fromDate)),
+                                          ),
                                         ),
                                       ),
                                   ],
@@ -299,16 +316,16 @@ class _WalletHistoryState extends State<WalletHistory> {
                                           children: [
                                             Padding(
                                               padding:
-                                                  EdgeInsets.only(left: 31.w),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  _selectToDate(context);
-                                                },
-                                                child: SizedBox(
-                                                  width: 64.w,
-                                                  height: 26.h,
+                                                  EdgeInsets.only(left: 16.w),
+                                              child: SizedBox(
+                                                width: 86.w,
+                                                height: 26.h,
+                                                child: FittedBox(
                                                   child: Text(
-                                                    "To Date",
+                                                    toDate == null
+                                                        ? "To Date"
+                                                        : formatter
+                                                            .format(toDate),
                                                     style: GoogleFonts.poppins(
                                                       textStyle: TextStyle(
                                                         color: Colors.white,
@@ -336,16 +353,23 @@ class _WalletHistoryState extends State<WalletHistory> {
                                       ),
                                     ),
                                     if (isExpanded1)
-                                      Container(
-                                        width: 200.w,
-                                        height: 50.h,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                        ),
-                                        child: Center(
-                                          child: Text(formatter.format(toDate)),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _selectToDate(context);
+                                        },
+                                        child: Container(
+                                          width: 200.w,
+                                          height: 50.h,
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border:
+                                                Border.all(color: Colors.grey),
+                                          ),
+                                          child: Center(
+                                            child:
+                                                Text(formatter.format(toDate)),
+                                          ),
                                         ),
                                       ),
                                   ],
@@ -390,7 +414,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                             width: 83.w,
                                             height: 26.h,
                                             child: Text(
-                                              "Particular",
+                                             particular==''? "Particular":particular,
                                               style: GoogleFonts.poppins(
                                                 textStyle: TextStyle(
                                                   color: Colors.white,
@@ -428,57 +452,95 @@ class _WalletHistoryState extends State<WalletHistory> {
                                         SizedBox(
                                           height: 16.h,
                                         ),
-                                        SizedBox(
-                                          width: 135.w,
-                                          height: 27.h,
-                                          child: Text(
-                                            'Cash Collected',
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                              color: Color(0xFF00B94A),
-                                              fontSize: 18.sp,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: -0.30.sp,
-                                            )),
+                                        GestureDetector(onTap: (){
+                                          setState(() {
+                                            particular='collected';
+                                          });
+                                          if (particular.isNotEmpty) {
+                                            setState(() {
+                                              isExpanded2 =
+                                              false;
+                                            });
+                                          }
+                                        },
+                                          child: SizedBox(
+                                            width: 135.w,
+                                            height: 27.h,
+                                            child: Text(
+                                              'Cash Collected',
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                color: Color(0xFF00B94A),
+                                                fontSize: 18.sp,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w400,
+                                                letterSpacing: -0.30.sp,
+                                              )),
+                                            ),
                                           ),
                                         ),
                                         SizedBox(
                                           height: 14.h,
                                         ),
-                                        SizedBox(
-                                          width: 89.w,
-                                          height: 27.h,
-                                          child: Text('Cash Paid',
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  color: Color(0xFFEC1C24),
-                                                  fontSize: 18,
-                                                  fontFamily: 'Poppins',
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30,
-                                                ),
-                                              )),
+                                        GestureDetector(onTap: (){
+                                          setState(() {
+                                            particular='paid';
+                                          });
+
+                                          if (particular.isNotEmpty) {
+                                            setState(() {
+                                              isExpanded2 =
+                                              false;
+                                            });
+                                          }
+                                        },
+                                          child: SizedBox(
+                                            width: 89.w,
+                                            height: 27.h,
+                                            child: Text('Cash Paid',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    color: Color(0xFFEC1C24),
+                                                    fontSize: 18,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w400,
+                                                    letterSpacing: -0.30,
+                                                  ),
+                                                )),
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 14.h,
                                         ),
-                                        SizedBox(
-                                          width: 21.w,
-                                          height: 27.h,
-                                          child: Text('All',
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 18,
-                                                  fontFamily: 'Poppins',
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30,
-                                                ),
-                                              )),
+                                        GestureDetector(onTap: (){
+                                          setState(() {
+                                            particular='all';
+                                          });
+
+                                          if (particular.isNotEmpty) {
+                                            setState(() {
+                                              isExpanded2 =
+                                              false;
+                                            });
+                                          }
+                                        },
+                                          child: SizedBox(
+                                            width: 21.w,
+                                            height: 27.h,
+                                            child: Text('All',
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontFamily: 'Poppins',
+                                                    fontWeight: FontWeight.w400,
+                                                    letterSpacing: -0.30,
+                                                  ),
+                                                )),
+                                          ),
                                         )
                                       ],
                                     ),
@@ -490,319 +552,411 @@ class _WalletHistoryState extends State<WalletHistory> {
                         SizedBox(
                           height: 17.h,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 18.w, right: 20.w),
-                          child: Container(
-                            decoration: ShapeDecoration(
-                              color: Color(0xFFEC1C24),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7.r)),
-                            ),
-                            width: 299.w,
-                            // Replace with your desired width
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                            Row(
                               children: [
-                                SizedBox(
-                                  height: 36.h,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        isExpanded3 = !isExpanded3;
-                                      });
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                Padding(
+                                  padding: EdgeInsets.only(left: 10.w),
+                                  child: Container(
+                                    decoration: ShapeDecoration(
+                                      color: Color(0xFFEC1C24),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                          BorderRadius.circular(7.r)),
+                                    ),
+                                    width: 180.w,
+                                    // Replace with your desired width
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                       children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 108.w,
-                                          ),
-                                          child: SizedBox(
-                                            width: 83.w,
-                                            height: 26.h,
-                                            child: Text(
-                                              "Customer",
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 17.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30.sp,
+                                        SizedBox(
+                                          height: 36.h,
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                isExpanded3 = !isExpanded3;
+                                              });
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                    left: 28.w,
+                                                  ),
+                                                  child: SizedBox(
+                                                    width: 83.w,
+                                                    height: 26.h,
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        userName == ''
+                                                            ? "Customer"
+                                                            : userName,
+                                                        style:
+                                                        GoogleFonts.poppins(
+                                                          textStyle: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 17.sp,
+                                                            fontWeight:
+                                                            FontWeight.w400,
+                                                            letterSpacing:
+                                                            -0.30.sp,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 8.w, right: 9.77.w),
+                                                    child: SizedBox(
+                                                        height: 10.8.h,
+                                                        width: 10.8.w,
+                                                        child: Image.asset(isExpanded3
+                                                            ? 'assets/arrowdown.png'
+                                                            : 'assets/arrowforward.png'))),
+                                              ],
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 63.w, right: 9.77.w),
-                                            child: SizedBox(
-                                                height: 10.8.h,
-                                                width: 10.8.w,
-                                                child: Image.asset(isExpanded3
-                                                    ? 'assets/arrowdown.png'
-                                                    : 'assets/arrowforward.png'))),
+                                        if (isExpanded3)
+                                          Container(
+                                            width: 299.w,
+                                            height: 174.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              border:
+                                              Border.all(color: Colors.grey),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      move = !move;
+                                                      print(move);
+                                                    });
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      Visibility(
+                                                        visible:
+                                                        move ? true : false,
+                                                        child: AnimatedPositioned(
+                                                          duration: Duration(
+                                                              seconds: 1),
+                                                          child: Container(
+                                                            margin:
+                                                            EdgeInsets.only(
+                                                                left: 10.w,
+                                                                right: 10.w,
+                                                                top: 8.h),
+                                                            width: 198.w,
+                                                            height: 32.h,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .transparent,
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    8.r),
+                                                                border: Border.all(
+                                                                    color: Color(
+                                                                        0xffD9D9D9))),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  width: 16.w,
+                                                                ),
+                                                                SizedBox(
+                                                                    width:
+                                                                    13.52.w,
+                                                                    height:
+                                                                    12.55.h,
+                                                                    child: Image
+                                                                        .asset(
+                                                                        'assets/search.png')),
+                                                                SizedBox(
+                                                                  height: 17.5.h,
+                                                                  child:
+                                                                  VerticalDivider(
+                                                                    color: Color(
+                                                                        0xffEC1C24),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 9.w,
+                                                                ),
+                                                                SizedBox(
+                                                                    width:
+                                                                    85.82.w,
+                                                                    height:
+                                                                    16.94.h,
+                                                                    child: Text(
+                                                                      "Search",
+                                                                      style: GoogleFonts
+                                                                          .poppins(
+                                                                        textStyle:
+                                                                        TextStyle(
+                                                                          letterSpacing:
+                                                                          -0.3.sp,
+                                                                          color: Color(
+                                                                              0xffEC1C24),
+                                                                          fontSize:
+                                                                          10.sp,
+                                                                        ),
+                                                                      ),
+                                                                    ))
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible: move == false
+                                                            ? true
+                                                            : false,
+                                                        child: Container(
+                                                          margin: EdgeInsets.only(
+                                                              left: 10.w,
+                                                              right: 10.w,
+                                                              top: 8.h),
+                                                          width: 198.w,
+                                                          height: 32.h,
+                                                          decoration: BoxDecoration(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                  8.r),
+                                                              border: Border.all(
+                                                                  color: Color(
+                                                                      0xffD9D9D9))),
+                                                          child: Padding(
+                                                            padding:
+                                                            EdgeInsets.only(
+                                                              left: 17.w,
+                                                            ),
+                                                            child: TextFormField(
+                                                              onFieldSubmitted:
+                                                                  (value) {
+                                                                BlocProvider.of<
+                                                                    GetAllCustomersBloc>(
+                                                                    context)
+                                                                    .add(FetchGetAllCustomers(
+                                                                    searchKey:
+                                                                    search
+                                                                        .text));
+                                                              },
+                                                              onChanged: (value) {
+                                                                BlocProvider.of<
+                                                                    GetAllCustomersBloc>(
+                                                                    context)
+                                                                    .add(FetchGetAllCustomers(
+                                                                    searchKey:
+                                                                    search
+                                                                        .text));
+                                                              },
+                                                              controller: search,
+                                                              autofocus: true,
+                                                              decoration:
+                                                              InputDecoration(
+                                                                  focusedBorder:
+                                                                  InputBorder
+                                                                      .none,
+                                                                  enabledBorder:
+                                                                  InputBorder
+                                                                      .none,
+                                                                  hintText:
+                                                                  'Search',
+                                                                  hintStyle:
+                                                                  GoogleFonts
+                                                                      .poppins(
+                                                                    textStyle: TextStyle(
+                                                                        color: Color(
+                                                                            0xffD9D9D9),
+                                                                        fontSize: 10
+                                                                            .sp,
+                                                                        fontWeight: FontWeight
+                                                                            .w300,
+                                                                        letterSpacing:
+                                                                        -0.3.sp),
+                                                                  )),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(child: BlocBuilder<
+                                                    GetAllCustomersBloc,
+                                                    GetAllCustomersState>(
+                                                    builder: (context, state) {
+                                                      if (state
+                                                      is GetAllCustomersblocLoading) {
+                                                        return SizedBox();
+                                                      }
+                                                      if (state
+                                                      is GetAllCustomersblocError) {
+                                                        return RefreshIndicator(
+                                                          onRefresh: () async {
+                                                            return BlocProvider.of<
+                                                                GetAllCustomersBloc>(
+                                                                context)
+                                                                .add(
+                                                                FetchGetAllCustomers(
+                                                                    searchKey:
+                                                                    ''));
+                                                          },
+                                                          child:
+                                                          SingleChildScrollView(
+                                                            physics:
+                                                            const BouncingScrollPhysics(),
+                                                            child: Container(
+                                                                height: MediaQuery.of(
+                                                                    context)
+                                                                    .size
+                                                                    .height *
+                                                                    .9,
+                                                                // color: Colors.red,
+                                                                child: Center(
+                                                                    child: Text(
+                                                                        "Error"))),
+                                                          ),
+                                                        );
+                                                      }
+                                                      if (state
+                                                      is GetAllCustomersblocLoaded) {
+                                                        customers = BlocProvider.of<
+                                                            GetAllCustomersBloc>(
+                                                            context)
+                                                            .getallcustomers;
+                                                        if (customers!.customers!
+                                                            .data!.isEmpty) {
+                                                          return Container(
+                                                              width: 326.w,
+                                                              height: 407.5.h,
+                                                              child: Center(
+                                                                child:
+                                                                Text("No Data"),
+                                                              ));
+                                                        } else {
+                                                          return ListView.separated(
+                                                            itemCount: customers!
+                                                                .customers!
+                                                                .data!
+                                                                .length,
+                                                            itemBuilder:
+                                                                (BuildContext context,
+                                                                int index) {
+                                                              return Padding(
+                                                                padding:
+                                                                EdgeInsets.only(
+                                                                    left: 17.w),
+                                                                child: SizedBox(
+                                                                  height: 24.h,
+                                                                  width: 120.w,
+                                                                  child:
+                                                                  GestureDetector(
+                                                                    onTap: () {
+                                                                      userName = customers!
+                                                                          .customers!
+                                                                          .data![
+                                                                      index]
+                                                                          .name
+                                                                          .toString();
+                                                                      if (userName
+                                                                          .isNotEmpty) {
+                                                                        setState(() {
+                                                                          isExpanded3 =
+                                                                          false;
+                                                                        });
+                                                                      }
+                                                                    },
+                                                                    child: Text(
+                                                                      customers!
+                                                                          .customers!
+                                                                          .data![
+                                                                      index]
+                                                                          .name
+                                                                          .toString(),
+                                                                      style: GoogleFonts
+                                                                          .poppins(
+                                                                          textStyle:
+                                                                          TextStyle(
+                                                                            color: Color(
+                                                                                0xFFA3A3A3),
+                                                                            fontSize:
+                                                                            16.sp,
+                                                                            fontFamily:
+                                                                            'Poppins',
+                                                                            fontWeight:
+                                                                            FontWeight
+                                                                                .w400,
+                                                                            letterSpacing:
+                                                                            -0.30,
+                                                                          )),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                            separatorBuilder:
+                                                                (BuildContext context,
+                                                                int index) {
+                                                              return SizedBox(
+                                                                height: 2.h,
+                                                              );
+                                                            },
+                                                          );
+                                                        }
+                                                      } else {
+                                                        return SizedBox();
+                                                      }
+                                                    }))
+                                              ],
+                                            ),
+                                          ),
                                       ],
                                     ),
                                   ),
                                 ),
-                                if (isExpanded3)
-                                  Container(
-                                    width: 299.w,
-                                    height: 174.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.grey),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              move = !move;
-                                              print(move);
-                                            });
-                                          },
-                                          child: Stack(
-                                            children: [
-                                              Visibility(
-                                                visible: move ? true : false,
-                                                child: AnimatedPositioned(
-                                                  duration:
-                                                      Duration(seconds: 1),
-                                                  child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 51.w,
-                                                        right: 50.w,
-                                                        top: 8.h),
-                                                    width: 198.w,
-                                                    height: 32.h,
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.r),
-                                                        border: Border.all(
-                                                            color: Color(
-                                                                0xffD9D9D9))),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 16.w,
-                                                        ),
-                                                        SizedBox(
-                                                            width: 13.52.w,
-                                                            height: 12.55.h,
-                                                            child: Image.asset(
-                                                                'assets/search.png')),
-                                                        SizedBox(
-                                                          height: 17.5.h,
-                                                          child:
-                                                              VerticalDivider(
-                                                            color: Color(
-                                                                0xffEC1C24),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 9.w,
-                                                        ),
-                                                        SizedBox(
-                                                            width: 85.82.w,
-                                                            height: 16.94.h,
-                                                            child: Text(
-                                                              "Search",
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                textStyle:
-                                                                    TextStyle(
-                                                                  letterSpacing:
-                                                                      -0.3.sp,
-                                                                  color: Color(
-                                                                      0xffEC1C24),
-                                                                  fontSize:
-                                                                      10.sp,
-                                                                ),
-                                                              ),
-                                                            ))
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Visibility(
-                                                visible: move == false
-                                                    ? true
-                                                    : false,
-                                                child: Container(
-                                                  margin: EdgeInsets.only(
-                                                      left: 51.w,
-                                                      right: 50.w,
-                                                      top: 8.h),
-                                                  width: 198.w,
-                                                  height: 32.h,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.transparent,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.r),
-                                                      border: Border.all(
-                                                          color: Color(
-                                                              0xffD9D9D9))),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      left: 17.w,
-                                                    ),
-                                                    child: SizedBox(
-                                                      width: 198.w,
-                                                      height: 32.h,
-                                                      child: TextFormField(
-                                                        onChanged: (value) {
-                                                          BlocProvider.of<
-                                                                      GetAllCustomersBloc>(
-                                                                  context)
-                                                              .add(FetchGetAllCustomers(
-                                                                  searchKey:
-                                                                      search
-                                                                          .text));
-                                                        },
-                                                        controller: search,
-                                                        autofocus: true,
-                                                        decoration:
-                                                            InputDecoration(
-                                                                focusedBorder:
-                                                                    InputBorder
-                                                                        .none,
-                                                                enabledBorder:
-                                                                    InputBorder
-                                                                        .none,
-                                                                hintText:
-                                                                    'Search',
-                                                                hintStyle:
-                                                                    GoogleFonts
-                                                                        .poppins(
-                                                                  textStyle: TextStyle(
-                                                                      color: Color(
-                                                                          0xffD9D9D9),
-                                                                      fontSize:
-                                                                          10.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w300,
-                                                                      letterSpacing:
-                                                                          -0.3.sp),
-                                                                )),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
+                                TextButton(
+                                    onPressed: () {
+                                      BlocProvider.of<WalletHistoryBloc>(context).add(FetchGetAllWallet(
+                                          search: search.text,
+                                          toDate: formatter.format(toDate).toString(),
+                                          fromDate: formatter.format(fromDate).toString(),
+                                          particular: particular, forAll: false));
+                                    },
+                                    child: Container(
+                                      width: 100.w,
+                                      height: 36.h,
+                                      child: Center(
+                                        child: Text(
+                                          "Get",
+                                          style: GoogleFonts.poppins(
+                                              textStyle: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 17.sp,
+                                                fontWeight: FontWeight.w400,
+                                                letterSpacing: -0.30.sp,
+                                              )),
                                         ),
-                                        Expanded(child: BlocBuilder<
-                                                GetAllCustomersBloc,
-                                                GetAllCustomersState>(
-                                            builder: (context, state) {
-                                          if (state
-                                              is GetAllCustomersblocLoading) {
-                                            return SizedBox();
-                                          }
-                                          if (state
-                                              is GetAllCustomersblocError) {
-                                            return RefreshIndicator(
-                                              onRefresh: () async {
-                                                return BlocProvider.of<
-                                                            GetAllCustomersBloc>(
-                                                        context)
-                                                    .add(FetchGetAllCustomers(
-                                                        searchKey: ''));
-                                              },
-                                              child: SingleChildScrollView(
-                                                physics:
-                                                    const BouncingScrollPhysics(),
-                                                child: Container(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            .9,
-                                                    // color: Colors.red,
-                                                    child: Center(
-                                                        child: Text("Error"))),
-                                              ),
-                                            );
-                                          }
-                                          if (state
-                                              is GetAllCustomersblocLoaded) {
-                                            customers = BlocProvider.of<
-                                                        GetAllCustomersBloc>(
-                                                    context)
-                                                .getallcustomers;
-                                            return ListView.separated(
-                                              itemCount: customers
-                                                  .customers!.data!.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 17.w),
-                                                  child: SizedBox(
-                                                    height: 24.h,
-                                                    width: 120.w,
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        userName = customers
-                                                            .customers!
-                                                            .data![index]
-                                                            .name
-                                                            .toString();
-                                                      },
-                                                      child: Text(
-                                                        customers.customers!
-                                                            .data![index].name
-                                                            .toString(),
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                textStyle:
-                                                                    TextStyle(
-                                                          color:
-                                                              Color(0xFFA3A3A3),
-                                                          fontSize: 16.sp,
-                                                          fontFamily: 'Poppins',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          letterSpacing: -0.30,
-                                                        )),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              separatorBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return SizedBox(
-                                                  height: 2.h,
-                                                );
-                                              },
-                                            );
-                                          } else {
-                                            return SizedBox();
-                                          }
-                                        }))
-                                      ],
-                                    ),
-                                  ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          borderRadius:
+                                          BorderRadius.circular(7.r)),
+                                    )),
                               ],
                             ),
-                          ),
-                        ),
                         SizedBox(
                           height: 22.h,
                         ),
@@ -908,7 +1062,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                           fromDate: formatter
                                               .format(fromDate)
                                               .toString(),
-                                          particular: particular));
+                                          particular: particular, forAll: false));
                                 },
                                 child: SingleChildScrollView(
                                   physics: const BouncingScrollPhysics(),
@@ -928,17 +1082,27 @@ class _WalletHistoryState extends State<WalletHistory> {
                               return SizedBox(
                                 height: 318.h,
                                 width: 337.w,
-                                child: ListView.separated(
-                                  itemCount: history.walletTransactions!.data!.length,
+                                child:history.walletTransactions!.data!.isEmpty?Center(child: Text('No Data'),): ListView.separated(
+                                  itemCount:
+                                      history.walletTransactions!.data!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                        String formattedDate = convertISODate(history.walletTransactions!.data![index].createdAt!);
+                                    String formattedDate = convertISODate(
+                                        history.walletTransactions!.data![index]
+                                            .createdAt!);
                                     return Row(
                                       children: [
                                         SizedBox(
                                           width: 59.w,
                                           height: 17.h,
-                                          child: Text(history.walletTransactions!.data![index].wallet!.user!.name.toString(),
+                                          child: Text(
+                                              history
+                                                  .walletTransactions!
+                                                  .data![index]
+                                                  .wallet!
+                                                  .user!
+                                                  .name
+                                                  .toString(),
                                               textAlign: TextAlign.center,
                                               style: GoogleFonts.poppins(
                                                   textStyle: TextStyle(
@@ -970,7 +1134,10 @@ class _WalletHistoryState extends State<WalletHistory> {
                                         SizedBox(
                                           width: 24.w,
                                           height: 17.h,
-                                          child: Text(history.walletTransactions!.data![index].type.toString(),
+                                          child: Text(
+                                              history.walletTransactions!
+                                                  .data![index].type
+                                                  .toString(),
                                               textAlign: TextAlign.center,
                                               style: GoogleFonts.poppins(
                                                   textStyle: TextStyle(
@@ -986,7 +1153,8 @@ class _WalletHistoryState extends State<WalletHistory> {
                                         SizedBox(
                                           width: 42.w,
                                           height: 17.h,
-                                          child: Text('${history.walletTransactions!.data![index].amount} Sar',
+                                          child: Text(
+                                              '${history.walletTransactions!.data![index].amount} Sar',
                                               textAlign: TextAlign.center,
                                               style: GoogleFonts.poppins(
                                                   textStyle: TextStyle(

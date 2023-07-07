@@ -27,6 +27,7 @@ bool move = true;
 String userId = '';
 TextEditingController search = TextEditingController();
 TextEditingController amount = TextEditingController();
+String userName = '';
 
 class _AmountCollection1State extends State<AmountCollection1> {
   @override
@@ -54,6 +55,10 @@ class _AmountCollection1State extends State<AmountCollection1> {
     super.dispose();
     _focusNode1.dispose();
     _focusNode2.dispose();
+    search.clear();
+    userName='';
+    amount.clear();
+    move=true;
   }
 
   @override
@@ -173,7 +178,8 @@ class _AmountCollection1State extends State<AmountCollection1> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(keyboardType: TextInputType.number,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
                               controller: amount,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(
@@ -228,14 +234,18 @@ class _AmountCollection1State extends State<AmountCollection1> {
                                           child: SizedBox(
                                             width: 83.w,
                                             height: 26.h,
-                                            child: Text(
-                                              "Customer",
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 17.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30.sp,
+                                            child: FittedBox(
+                                              child: Text(
+                                                userName == ''
+                                                    ? "Customer"
+                                                    : userName,
+                                                style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 17.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    letterSpacing: -0.30.sp,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -367,6 +377,25 @@ class _AmountCollection1State extends State<AmountCollection1> {
                                                       width: 198.w,
                                                       height: 32.h,
                                                       child: TextFormField(
+                                                        onFieldSubmitted:
+                                                            (value) {
+                                                          BlocProvider.of<
+                                                                      GetAllCustomersBloc>(
+                                                                  context)
+                                                              .add(FetchGetAllCustomers(
+                                                                  searchKey:
+                                                                      search
+                                                                          .text));
+                                                        },
+                                                        onChanged: (value) {
+                                                          BlocProvider.of<
+                                                                      GetAllCustomersBloc>(
+                                                                  context)
+                                                              .add(FetchGetAllCustomers(
+                                                                  searchKey:
+                                                                      search
+                                                                          .text));
+                                                        },
                                                         controller: search,
                                                         autofocus: true,
                                                         decoration:
@@ -442,57 +471,83 @@ class _AmountCollection1State extends State<AmountCollection1> {
                                                       context)
                                                   .getallcustomers;
 
-                                              return ListView.separated(
-                                                itemCount: customers
-                                                    .customers!.data!.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 17.w),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        userId = customers
-                                                            .customers!
-                                                            .data![index]
-                                                            .id
-                                                            .toString();
-                                                      },
-                                                      child: SizedBox(
-                                                        height: 24.h,
-                                                        width: 120.w,
-                                                        child: Text(
-                                                          customers.customers!
-                                                              .data![index].name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  textStyle:
-                                                                      TextStyle(
-                                                            color: Color(
-                                                                0xFFA3A3A3),
-                                                            fontSize: 16.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            letterSpacing:
-                                                                -0.30,
-                                                          )),
+                                              if (customers
+                                                  .customers!.data!.isEmpty) {
+                                                return Container(
+                                                    width: 326.w,
+                                                    height: 407.5.h,
+                                                    child: Center(
+                                                      child: Text("No Data"),
+                                                    ));
+                                              } else {
+                                                return ListView.separated(
+                                                  itemCount: customers
+                                                      .customers!.data!.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 17.w),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          userId = customers
+                                                              .customers!
+                                                              .data![index]
+                                                              .id
+                                                              .toString();
+                                                          userName = customers!
+                                                              .customers!
+                                                              .data![
+                                                          index]
+                                                              .name
+                                                              .toString();
+                                                          if (userName
+                                                              .isNotEmpty) {
+                                                            setState(() {
+                                                              isExpanded =
+                                                              false;
+                                                            });
+                                                          }
+                                                        },
+                                                        child: SizedBox(
+                                                          height: 24.h,
+                                                          width: 120.w,
+                                                          child: Text(
+                                                            customers
+                                                                .customers!
+                                                                .data![index]
+                                                                .name
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                                    textStyle:
+                                                                        TextStyle(
+                                                              color: Color(
+                                                                  0xFFA3A3A3),
+                                                              fontSize: 16.sp,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              letterSpacing:
+                                                                  -0.30,
+                                                            )),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  );
-                                                },
-                                                separatorBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return SizedBox(
-                                                    height: 2.h,
-                                                  );
-                                                },
-                                              );
+                                                    );
+                                                  },
+                                                  separatorBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return SizedBox(
+                                                      height: 2.h,
+                                                    );
+                                                  },
+                                                );
+                                              }
                                             } else {
                                               return SizedBox();
                                             }
@@ -629,11 +684,20 @@ class _AmountCollection1State extends State<AmountCollection1> {
                                   },
                                   child: GestureDetector(
                                     onTap: () {
+                                      if(userName==''||amount.text.isEmpty){
+                                        if(userName==''){
+                                          ToastMessage().toastmessage(message: 'Please Select A User');
+                                        }
+                                       else{
+                                          ToastMessage().toastmessage(message: 'Invalid Amount');
+                                        }
+                                      }
+                                      else{
                                       BlocProvider.of<CollectAmountBloc>(
                                               context)
                                           .add(FetchCollectAmount(
                                               amount: amount.text,
-                                              userId: userId));
+                                              userId: userId));}
                                     },
                                     child: Container(
                                       width: 58.w,
