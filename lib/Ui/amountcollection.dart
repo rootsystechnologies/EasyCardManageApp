@@ -26,7 +26,7 @@ String userName = '';
 
 String convertISODate(String isoDate) {
   DateTime date = DateTime.parse(isoDate);
-  String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+  String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;
 }
 class _AmountCollectionState extends State<AmountCollection> {

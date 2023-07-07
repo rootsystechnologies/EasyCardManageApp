@@ -30,7 +30,11 @@ String userName = '';
 DateTime fromDate = DateTime.now();
 DateTime toDate = DateTime.now();
 late WalletHistoryModel history;
-
+String convertISODate(String isoDate) {
+  DateTime date = DateTime.parse(isoDate);
+  String formattedDate = DateFormat('dd-MM-yyyy').format(date);
+  return formattedDate;
+}
 class _WalletHistoryState extends State<WalletHistory> {
   @override
   void initState() {
@@ -928,6 +932,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                   itemCount: history.walletTransactions!.data!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
+                                        String formattedDate = convertISODate(history.walletTransactions!.data![index].createdAt!);
                                     return Row(
                                       children: [
                                         SizedBox(
@@ -949,7 +954,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                         SizedBox(
                                           width: 64.w,
                                           height: 17.h,
-                                          child: Text('DD-YY-MM',
+                                          child: Text(formattedDate,
                                               textAlign: TextAlign.center,
                                               style: GoogleFonts.poppins(
                                                   textStyle: TextStyle(

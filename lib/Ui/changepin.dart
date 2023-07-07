@@ -175,7 +175,7 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextField(keyboardType: TextInputType.number,
                               controller: oldPin,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(
@@ -211,7 +211,7 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextField(keyboardType: TextInputType.number,
                               controller: newPin,
                               focusNode: _focusNode2,
                               decoration: InputDecoration(
@@ -247,7 +247,7 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextField(keyboardType: TextInputType.number,
                               controller: confirmPin,
                               focusNode: _focusNode3,
                               decoration: InputDecoration(
