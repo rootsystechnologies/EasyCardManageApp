@@ -94,78 +94,34 @@ class _LoginPageState extends State<LoginPage> {
                             Padding(
                                 padding:
                                     EdgeInsets.only(right: 21.w, left: 21.w),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      move = !move;
-                                      print(move);
-                                    });
-                                  },
-                                  child: Stack(children: [
-                                    AnimatedPositioned(
-                                      duration: Duration(seconds: 1),
-                                      child: Visibility(
-                                        visible: move ? true : false,
-                                        child: Container(
-                                            width: 276.w,
-                                            height: 60.h,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              border: Border.all(
-                                                  width: 1.w,
-                                                  color: Color(0xffE4E4E4)),
-                                            ),
-                                            child: Row(children: [
-                                              Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 21.w,
-                                                    top: 17.h,
-                                                    bottom: 17.h,
-                                                    right: 8.w,
-                                                  ),
-                                                  child: SvgPicture.asset(
-                                                    'assets/user.svg',
-                                                    // Set the desired height
-                                                  )),
-                                              Text(
-                                                "Email",
-                                                style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                    height: 27 / 18.sp,
-                                                    color: Color(0xffEC1C24),
-                                                    fontSize: 18.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ),
-                                            ])),
-                                      ),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      border: Border.all(
+                                          width: 1.w, color: Color(0xffE4E4E4)),
                                     ),
-                                    Visibility(
-                                      visible: move == false ? true : false,
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius:
-                                                BorderRadius.circular(8.r),
-                                            border: Border.all(
-                                                width: 1.w,
-                                                color: Color(0xffE4E4E4)),
+                                    width: 276.w,
+                                    height: 60.h,
+                                    child: Row(
+                                      children: [Padding(
+                                          padding: EdgeInsets.only(
+                                            left: 15.w,
+                                            top: 4.h,
                                           ),
-                                          width: 276.w,
-                                          height: 60.h,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              left: 20.w,
-                                              top: 19.h,
-                                            ),
-                                            child: SizedBox(
-                                              width: 250.w,
-                                              height: 60.h,
-                                              child: TextFormField(
+                                          child: SvgPicture.asset(
+                                            'assets/user.svg',
+                                            // Set the desired height
+                                          )),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: 19.h,left: 12.w
+                                          ),
+                                          child: SizedBox(
+                                            width: 200.w,
+                                            height: 60.h,
+                                            child: TextFormField(textInputAction: TextInputAction.next,
                                                 controller: email,
-                                                autofocus: true,
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.trim().isEmpty ||
@@ -180,146 +136,101 @@ class _LoginPageState extends State<LoginPage> {
                                                       RegExp(r'\s+'), '');
                                                 },
                                                 onChanged: (value) {
-                                                  email.value =
-                                                      TextEditingValue(
+                                                  email.value = TextEditingValue(
                                                     text: value.trim(),
                                                     selection: email.selection,
                                                   );
                                                 },
                                                 decoration: InputDecoration(
-                                                    focusedBorder:
-                                                        InputBorder.none,
-                                                    enabledBorder:
-                                                        InputBorder.none,errorBorder:InputBorder.none,
-                                                    hintText: 'Email',
-                                                    hintStyle:
-                                                        GoogleFonts.poppins(
-                                                      textStyle: TextStyle(
-                                                        height: 27 / 18.sp,
-                                                        color:
-                                                            Color(0xffD9D9D9),
-                                                        fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      ),
-                                                    )),
-                                              ),
-                                            ),
-                                          )),
-                                    )
-                                  ]),
-                                )),
+                                                  focusedBorder: InputBorder.none,
+                                                  enabledBorder: InputBorder.none,
+                                                  errorBorder: InputBorder.none,
+                                                  hintText: 'Email',
+                                                  hintStyle: GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                      height: 27 / 18.sp,
+                                                      color: Color(0xffEC1C24),
+                                                      fontSize: 18.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                )),
+                                          ),
+                                        ),
+                                      ],
+                                    ))),
                             SizedBox(
                               height: 17.h,
                             ),
                             Padding(
                                 padding:
                                     EdgeInsets.only(right: 21.w, left: 21.w),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      move1 = !move1;
-                                      print(move1);
-                                    });
-                                  },
-                                  child: Stack(children: [
-                                    AnimatedPositioned(
-                                      duration: Duration(seconds: 1),
-                                      child: Visibility(
-                                        visible: move1 ? true : false,
-                                        child: Container(
-                                            width: 276.w,
-                                            height: 60.h,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              border: Border.all(
-                                                  width: 1.w,
-                                                  color: Color(0xffE4E4E4)),
-                                            ),
-                                            child: Row(children: [
-                                              Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 21.w,
-                                                    top: 17.h,
-                                                    bottom: 17.h,
-                                                    right: 8.w,
-                                                  ),
-                                                  child: SvgPicture.asset(
-                                                    'assets/lock.svg',
-                                                    // Set the desired height
-                                                  )),
-                                              Text(
-                                                "Password",
-                                                style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                    height: 27 / 18.sp,
-                                                    color: Color(0xffEC1C24),
-                                                    fontSize: 18.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ),
-                                            ])),
-                                      ),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      borderRadius:
+                                          BorderRadius.circular(8.r),
+                                      border: Border.all(
+                                          width: 1.w,
+                                          color: Color(0xffE4E4E4)),
                                     ),
-                                    Visibility(
-                                      visible: move1 == false ? true : false,
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius:
-                                                BorderRadius.circular(8.r),
-                                            border: Border.all(
-                                                width: 1.w,
-                                                color: Color(0xffE4E4E4)),
+                                    width: 276.w,
+                                    height: 60.h,
+                                    child: Row(
+                                      children: [Padding(
+                                          padding:
+                                          EdgeInsets.only(
+                                            left: 14.w,
+                                            top: 17.h,bottom: 16.h,right: 10.w,
+
                                           ),
-                                          width: 276.w,
-                                          height: 60.h,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                              left: 20.w,
-                                              top: 19.h,
-                                            ),
-                                            child: SizedBox(
-                                              width: 250.w,
-                                              height: 60.h,
-                                              child: TextFormField(
-                                                controller: password,
-                                                autofocus: true,
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return 'Field Should Not Be Empty';
-                                                  }
-                                                  return null;
-                                                },
-                                                onSaved: (value) {
-                                                  password1 =
-                                                      value!.trimRight();
-                                                },
-                                                decoration: InputDecoration(errorBorder:InputBorder.none,
-                                                    focusedBorder:
-                                                        InputBorder.none,
-                                                    enabledBorder:
-                                                        InputBorder.none,
-                                                    hintText: 'Password',
-                                                    hintStyle:
-                                                        GoogleFonts.poppins(
-                                                      textStyle: TextStyle(
-                                                        height: 27 / 18.sp,
-                                                        color:
-                                                            Color(0xffD9D9D9),
-                                                        fontSize: 18.sp,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      ),
-                                                    )),
-                                              ),
-                                            ),
+                                          child: SvgPicture.asset(
+                                            'assets/lock.svg',
+                                            // Set the desired height
                                           )),
-                                    )
-                                  ]),
-                                )),
+                                        Padding(
+                                          padding:  EdgeInsets.only(
+                                            left: 3.w,
+                                            top: 27.h,right: 10.w,
+
+                                          ),
+                                          child: SizedBox(
+                                            width: 200.w,
+                                            height: 60.h,
+                                            child: TextFormField(
+                                              controller: password,
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Field Should Not Be Empty';
+                                                }
+                                                return null;
+                                              },
+                                              onSaved: (value) {
+                                                password1 =
+                                                    value!.trimRight();
+                                              },
+                                              decoration: InputDecoration(
+                                                  errorBorder:
+                                                      InputBorder.none,
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                  enabledBorder:
+                                                      InputBorder.none,
+                                                  hintText: 'Password',
+                                                  hintStyle:
+                                                  GoogleFonts.poppins(
+                                                    textStyle: TextStyle(
+                                                      height: 27 / 18.sp,
+                                                      color: Color(0xffEC1C24),
+                                                      fontSize: 18.sp,
+                                                      fontWeight: FontWeight.w400,
+                                                    ),
+                                                  ),),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ))),
                             SizedBox(
                               height: 38.h,
                             ),
@@ -389,12 +300,17 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                   child: GestureDetector(
                                     onTap: () {
-                                      if(email.text.isEmpty||password.text.isEmpty){
-                                        ToastMessage().toastmessage(message: 'Fields Should Not Be Empty');
+                                      if (email.text.isEmpty ||
+                                          password.text.isEmpty) {
+                                        ToastMessage().toastmessage(
+                                            message:
+                                                'Fields Should Not Be Empty');
                                       }
                                       final isvalid =
                                           form_key.currentState?.validate();
-                                      if (isvalid == true&&email.text.isNotEmpty&&password.text.isNotEmpty) {
+                                      if (isvalid == true &&
+                                          email.text.isNotEmpty &&
+                                          password.text.isNotEmpty) {
                                         form_key.currentState?.save();
                                         BlocProvider.of<LoginBloc>(context).add(
                                             FetchLogin(

@@ -24,7 +24,12 @@ class _CustomersState extends State<Customers> {
     BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: ''));
     super.initState();
   }
-
+@override
+  void dispose() {
+  search.clear();
+  move=true;
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -290,6 +295,10 @@ class _CustomersState extends State<Customers> {
                         customers =
                             BlocProvider.of<GetAllCustomersBloc>(context)
                                 .getallcustomers;
+                        if(customers.customers!.data!.isEmpty){
+                          return Container( width: 326.w,
+                              height: 407.5.h,child: Center(child: Text("No Data"),));
+                        }else{
                         return Container(
                           width: 326.w,
                           height: 407.5.h,
@@ -395,7 +404,7 @@ class _CustomersState extends State<Customers> {
                             },
                           ),
                         );
-                      } else {
+                      } }else {
                         return SizedBox();
                       }
                     },

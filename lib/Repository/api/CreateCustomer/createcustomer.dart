@@ -39,7 +39,7 @@ class CreateCustomerApi {
 
     final response = await http.post(url, headers: headers, body: body);
 
-    if (response.statusCode == 200||response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       print(response.body);
       if (jsonResponse != null) {
