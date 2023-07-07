@@ -412,7 +412,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                   height: 26.h,
                                                   child: FittedBox(
                                                     child: Text(
-                                                      "Customer",
+                                                      userName==null?"Customer":userName,
                                                       style:
                                                           GoogleFonts.poppins(
                                                         textStyle: TextStyle(
@@ -862,7 +862,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                 return SizedBox(
                                   height: 318.h,
                                   width: 337.w,
-                                  child: ListView.separated(
+                                  child:collections.collections!.data!.isEmpty?Center(child: Text("No Data"),) :ListView.separated(
                                     itemCount:
                                         collections.collections!.data!.length,
                                     itemBuilder:
