@@ -28,6 +28,7 @@ class _CustomersState extends State<Customers> {
 @override
   void dispose() {
   search.clear();
+  page=1;
   move=true;
     super.dispose();
   }
@@ -390,10 +391,19 @@ class _CustomersState extends State<Customers> {
                                   )
                                 ],
                               );}else{
-                                return TextButton(onPressed: (){
-                                  page=page+1;
-                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));
-                                }, child: Text("Next"));
+                                return Row(
+                                  children: [SizedBox(width: 10.w,),
+                                    TextButton(onPressed: (){
+                                      if(page>=1){
+                                      page=page-1;
+                                      BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));}
+                                    }, child: Text("Previous")),SizedBox(width: 150.w,),
+                                    TextButton(onPressed: (){
+                                      page=page+1;
+                                      BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));
+                                    }, child: Text("Next")),
+                                  ],
+                                );
                               }
                             },
                             separatorBuilder:
