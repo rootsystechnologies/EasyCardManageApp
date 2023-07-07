@@ -199,6 +199,8 @@ class _CustomersState extends State<Customers> {
                                 height: 60.h,
                                 child: TextFormField(controller: search,textInputAction:  TextInputAction.done,onFieldSubmitted: (value){
                                   BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
+                                },onChanged: (value){
+                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text));
                                 },
                                   autofocus: true,
                                   decoration: InputDecoration(
@@ -267,7 +269,7 @@ class _CustomersState extends State<Customers> {
                   BlocBuilder<GetAllCustomersBloc, GetAllCustomersState>(
                     builder: (context, state) {
                       if (state is GetAllCustomersblocLoading) {
-                        return CircularProgressIndicator();
+                        return Center(child: CircularProgressIndicator());
                       }
                       if (state is GetAllCustomersblocError) {
                         return RefreshIndicator(

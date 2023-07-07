@@ -53,6 +53,8 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
     // TODO: implement dispose
     super.dispose();
     _focusNode1.dispose();
+    amount.clear();
+    pin.clear();
     _focusNode2.dispose();
   }
 
@@ -202,7 +204,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextField(keyboardType: TextInputType.number,
                               controller: amount,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(

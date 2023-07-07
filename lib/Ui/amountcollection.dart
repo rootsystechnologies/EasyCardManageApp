@@ -24,6 +24,11 @@ late GetAllCollectionModel collections;
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
 String userName = '';
 
+String convertISODate(String isoDate) {
+  DateTime date = DateTime.parse(isoDate);
+  String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+  return formattedDate;
+}
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
@@ -614,12 +619,14 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                           GetAllCustomersBloc>(
                                                       context)
                                                   .getallcustomers;
+
                                               return ListView.separated(
                                                 itemCount: customers
                                                     .customers!.data!.length,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
+
                                                   return Padding(
                                                     padding: EdgeInsets.only(
                                                         left: 17.w),
@@ -801,6 +808,9 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         collections.collections!.data!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
+                                          String formattedDate = convertISODate(customers
+                                              .customers!
+                                              .data![index].createdAt!);
                                       return Row(
                                         children: [
                                           SizedBox(
@@ -825,7 +835,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                           SizedBox(
                                             width: 93.w,
                                             height: 21.h,
-                                            child: Text('DD-YY-MM',
+                                            child: Text(formattedDate,
                                                 textAlign: TextAlign.center,
                                                 style: GoogleFonts.poppins(
                                                     textStyle: TextStyle(

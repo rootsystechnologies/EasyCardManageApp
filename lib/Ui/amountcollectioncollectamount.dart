@@ -173,7 +173,7 @@ class _AmountCollection1State extends State<AmountCollection1> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextField(keyboardType: TextInputType.number,
                               controller: amount,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(
@@ -508,38 +508,38 @@ class _AmountCollection1State extends State<AmountCollection1> {
                         SizedBox(
                           height: 28.h,
                         ),
-                        FocusScope(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 16.w, right: 17.w),
-                            padding: EdgeInsets.symmetric(horizontal: 16.0.h),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: _isFocused2 == false
-                                    ? Color(0xffD9D9D9)
-                                    : Color(
-                                        0xffFF0000), // Change border color based on focus
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: TextField(
-                              focusNode: _focusNode2,
-                              decoration: InputDecoration(
-                                hintText: 'Pin ',
-                                hintStyle: TextStyle(
-                                  color: _isFocused2 == false
-                                      ? Color(0xffEC1C24)
-                                      : Color(0xffA4A4A4),
-                                  letterSpacing: -0.3.sp,
-                                  fontSize: _isFocused2 == false
-                                      ? 15.0.sp
-                                      : 13.0
-                                          .sp, // Change hint text size based on focus
-                                ),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        )
+                        // FocusScope(
+                        //   child: Container(
+                        //     margin: EdgeInsets.only(left: 16.w, right: 17.w),
+                        //     padding: EdgeInsets.symmetric(horizontal: 16.0.h),
+                        //     decoration: BoxDecoration(
+                        //       border: Border.all(
+                        //         color: _isFocused2 == false
+                        //             ? Color(0xffD9D9D9)
+                        //             : Color(
+                        //                 0xffFF0000), // Change border color based on focus
+                        //       ),
+                        //       borderRadius: BorderRadius.circular(8.0),
+                        //     ),
+                        //     child: TextField(
+                        //       focusNode: _focusNode2,
+                        //       decoration: InputDecoration(
+                        //         hintText: 'Pin ',
+                        //         hintStyle: TextStyle(
+                        //           color: _isFocused2 == false
+                        //               ? Color(0xffEC1C24)
+                        //               : Color(0xffA4A4A4),
+                        //           letterSpacing: -0.3.sp,
+                        //           fontSize: _isFocused2 == false
+                        //               ? 15.0.sp
+                        //               : 13.0
+                        //                   .sp, // Change hint text size based on focus
+                        //         ),
+                        //         border: InputBorder.none,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // )
                       ]))),
                   Positioned(
                     top: 324.h,
