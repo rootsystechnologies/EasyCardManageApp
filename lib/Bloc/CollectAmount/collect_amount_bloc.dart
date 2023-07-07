@@ -1,7 +1,9 @@
-import 'dart:async';
+
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Repository/api/CollectAmount/collectamount.dart';
 import '../../Repository/modelclass/CollectAmount.dart';
@@ -20,7 +22,11 @@ class CollectAmountBloc extends Bloc<CollectAmountEvent, CollectAmountState> {
         collectAmount = await loginApi.collectAmount(event.userId, event.amount);
         emit(CollectblocLoaded());
       } catch(e){
-        ToastMessage().toastmessage(message:e.toString());
+        if(e.toString()=='Unauthenticated.'){
+          final preferences = await SharedPreferences.getInstance();
+          preferences.clear().then((value) => exit(0));
+        }else{
+          ToastMessage().toastmessage(message:e.toString());}
 
         print('*****$e');
         emit(CollectblocError());

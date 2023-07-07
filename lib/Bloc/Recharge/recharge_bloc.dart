@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Repository/api/Recharge/recharge_api.dart';
 import '../../Repository/modelclass/RechargeModel.dart';
@@ -20,7 +22,11 @@ class RechargeBloc extends Bloc<RechargeEvent, RechargeState> {
         rechargeModel = await rechargeApi.rechargeAmount(event.userId, event.amount,event.pin);
         emit(RechargeblocLoaded());
       } catch(e){
-        ToastMessage().toastmessage(message:e.toString());
+        if(e.toString()=='Unauthenticated.'){
+          final preferences = await SharedPreferences.getInstance();
+          preferences.clear().then((value) => exit(0));
+        }else{
+          ToastMessage().toastmessage(message:e.toString());}
 
         print('*****$e');
         emit(RechargeblocError());

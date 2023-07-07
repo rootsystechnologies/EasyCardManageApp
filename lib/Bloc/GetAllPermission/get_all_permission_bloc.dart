@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Repository/api/GetAllPermission/getallpermission.dart';
 import '../../Repository/modelclass/GetAllPermission.dart';
@@ -20,7 +22,11 @@ class GetAllPermissionBloc extends Bloc<GetAllPermissionEvent, GetAllPermissionS
         getAllPermission = await getAllPermissionApi.getallpermission();
         emit(GetAllPermissionblocLoaded());
       } catch(e){
-        ToastMessage().toastmessage(message:e.toString());
+        if(e.toString()=='Unauthenticated.'){
+          final preferences = await SharedPreferences.getInstance();
+          preferences.clear().then((value) => exit(0));
+        }else{
+          ToastMessage().toastmessage(message:e.toString());}
 
         print('*****$e');
         emit(GetAllPermissionblocError());

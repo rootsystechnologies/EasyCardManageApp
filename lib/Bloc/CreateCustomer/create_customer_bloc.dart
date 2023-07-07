@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Repository/api/CreateCustomer/createcustomer.dart';
 import '../../Repository/modelclass/CreateCustomerModel.dart';
@@ -29,7 +32,11 @@ class CreateCustomerBloc
             event.allowedPerms,event.place);
         emit(createCustomerblocLoaded());
       } catch (e) {
-        ToastMessage().toastmessage(message: e.toString());
+        if(e.toString()=='Unauthenticated.'){
+          final preferences = await SharedPreferences.getInstance();
+          preferences.clear().then((value) => exit(0));
+        }else{
+          ToastMessage().toastmessage(message:e.toString());}
 
         print('*****$e');
         emit(createCustomerblocError());

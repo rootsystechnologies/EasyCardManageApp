@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Repository/api/getallcustomers/getallcustomersapi.dart';
 
@@ -21,7 +23,11 @@ class GetAllCustomersBloc extends Bloc<GetAllCustomersEvent, GetAllCustomersStat
         getallcustomers = await getAllCustomersApi.getallcustomers(event.searchKey);
         emit(GetAllCustomersblocLoaded());
       } catch(e){
-        ToastMessage().toastmessage(message:e.toString());
+        if(e.toString()=='Unauthenticated.'){
+          final preferences = await SharedPreferences.getInstance();
+          preferences.clear().then((value) => exit(0));
+        }else{
+        ToastMessage().toastmessage(message:e.toString());}
 
         print('*****$e');
         emit(GetAllCustomersblocError());

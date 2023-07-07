@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Repository/api/ChangePin/change_pin_api.dart';
 import '../../Repository/modelclass/ChangePasswordModel.dart';
@@ -20,7 +22,11 @@ class ChangePinBloc extends Bloc<ChangePinEvent, ChangePinState> {
         changePasswordModel = await changePinApi.changePin(event.oldPin,event.newPin );
         emit(ChangePinblocLoaded());
       } catch(e){
-        ToastMessage().toastmessage(message:e.toString());
+        if(e.toString()=='Unauthenticated.'){
+          final preferences = await SharedPreferences.getInstance();
+          preferences.clear().then((value) => exit(0));
+        }else{
+          ToastMessage().toastmessage(message:e.toString());}
 
         print('*****$e');
         emit(ChangePinblocError());
