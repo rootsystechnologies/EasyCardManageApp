@@ -26,20 +26,20 @@ class CreateCustomerApi {
       'Content-Type': 'application/json',
     };
     final body = jsonEncode({
-      'name': name,
-      'mobile': mobile,
-      'email': email,
-      'op_balance': opBalance,
-      'cred_limit': creditLimit,
-      'password': password,
-      'place':place,
-      'password_confirmation': passwordConfirmation,
-      'allowed_perms': allowedPerms,
+      "name": name,
+      "mobile": mobile,
+      "email": email,
+      "op_balance": opBalance,
+      "cred_limit": creditLimit,
+      "password": password,
+      "place":place,
+      "password_confirmation": passwordConfirmation,
+      "allowed_perms":allowedPerms
     });
 
     final response = await http.post(url, headers: headers, body: body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200||response.statusCode == 201) {
       final jsonResponse = jsonDecode(response.body);
       print(response.body);
       if (jsonResponse != null) {

@@ -252,6 +252,9 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                         padding: EdgeInsets.only(
                             left: 173.w, right: 20.w, bottom: 18.h, top: 17.h),
                         child: GestureDetector(onTap: (){
+                          if(amount.text.isEmpty){
+                            ToastMessage().toastmessage(message: 'Please Select A Amount');
+                          }else{
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -397,7 +400,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                                 ),
                               );
                             },
-                          );
+                          );}
                         },
                           child: Container(
                             width: 122.w,
