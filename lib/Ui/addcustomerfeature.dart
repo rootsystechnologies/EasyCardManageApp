@@ -45,7 +45,14 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
     BlocProvider.of<GetAllPermissionBloc>(context).add(FetchGetAllPermission());
     super.initState();
   }
-
+@override
+  void dispose() {
+  allowedPerms=[];
+  allowall=false;
+  values=[];
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

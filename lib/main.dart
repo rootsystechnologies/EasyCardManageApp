@@ -15,6 +15,7 @@ import 'Bloc/UpdateEmail/update_email_bloc.dart';
 import 'Bloc/UpdateName/update_name_bloc.dart';
 import 'Bloc/WalletHistory/wallet_history_bloc.dart';
 import 'Ui/loginpage.dart';
+import 'Ui/splashscreen.dart';
 
 String basePath = 'http://easycard.rootsys.in/api';
 
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
                       seedColor: Colors.red),
                   useMaterial3: true,
                 ),
-                home: LoginPage()),
+                home: Splash_Screen()),
           ),
     );
   }

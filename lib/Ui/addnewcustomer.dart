@@ -99,6 +99,14 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
     _focusNode6.dispose();
     _focusNode7.dispose();
     _focusNode8.dispose();
+    name.clear();
+    mobile.clear();
+    email.clear();
+    opbalance.clear();
+    creditlimit.clear();
+    password.clear();
+    passwordconfirmation.clear();
+    place.clear();
     // name.dispose();
     // mobile.dispose();
     // email.dispose();
@@ -271,7 +279,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
-                                          child: TextField(
+                                          child: TextField(keyboardType: TextInputType.phone,
                                             controller: mobile,
                                             focusNode: _focusNode2,
                                             decoration: InputDecoration(
@@ -349,7 +357,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
-                                          child: TextField(
+                                          child: TextField(keyboardType: TextInputType.number,
                                             controller: opbalance,
                                             focusNode: _focusNode4,
                                             decoration: InputDecoration(
@@ -388,7 +396,7 @@ class _AddNewCustomerState extends State<AddNewCustomer> {
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
-                                          child: TextField(
+                                          child: TextField(keyboardType: TextInputType.number,
                                             controller: creditlimit,
                                             focusNode: _focusNode5,
                                             decoration: InputDecoration(

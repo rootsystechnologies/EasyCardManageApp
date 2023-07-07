@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easymanage/Ui/profile.dart';
 import 'package:easymanage/Ui/wallethistory.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +49,7 @@ class _OptionScreenState extends State<OptionScreen> {
                   padding: EdgeInsets.only(left: 26.w),
                   child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        exit(0);
                       },
                       child: SizedBox(
                         width: 37.062.w,
