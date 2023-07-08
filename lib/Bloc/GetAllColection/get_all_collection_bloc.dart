@@ -19,7 +19,7 @@ class GetAllCollectionBloc extends Bloc<GetAllCollectionEvent, GetAllCollectionS
     on<FetchGetAllCollection>((event, emit)async{
       emit(GetAllCollectionblocLoading());
       try{
-        getAllCollectionModel = await getAllCollectionApi.getallCollections(event.fromDate, event.toDate, event.search);
+        getAllCollectionModel = await getAllCollectionApi.getallCollections(event.fromDate, event.toDate, event.userId,event.forAll);
         emit(GetAllCollectionblocLoaded());
       } catch(e){
         if(e.toString()=='Unauthenticated.'){

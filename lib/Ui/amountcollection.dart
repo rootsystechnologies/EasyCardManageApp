@@ -8,8 +8,9 @@ import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import '../Repository/modelclass/GetAllCollectionModel.dart';
 import '../Repository/modelclass/Getallcustomers.dart';
 import 'Widget/toastmessage.dart';
-import 'amountcollectioncollectamount.dart';
 import 'package:intl/intl.dart';
+
+import 'amountcollectioncollectamount.dart';
 
 class AmountCollection extends StatefulWidget {
   const AmountCollection({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ String convertISODate(String isoDate) {
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;
 }
-
+int userId=0;
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
@@ -42,7 +43,7 @@ class _AmountCollectionState extends State<AmountCollection> {
   @override
   void initState() {
     BlocProvider.of<GetAllCollectionBloc>(context)
-        .add(FetchGetAllCollection(search: '', toDate: '', fromDate: ''));
+        .add(FetchGetAllCollection(userId: 0, toDate: '', fromDate: '', forAll: true));
     BlocProvider.of<GetAllCustomersBloc>(context).add(
         FetchGetAllCustomers(searchKey: search.text, page: page.toString()));
     super.initState();
@@ -475,10 +476,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                           GetAllCollectionBloc>(
                                                       context)
                                                   .add(FetchGetAllCollection(
-                                                      search: search.text,
+                                                      userId: userId,
                                                       toDate: toDate.toString(),
                                                       fromDate:
-                                                          fromDate.toString()));
+                                                          fromDate.toString(), forAll: true));
                                             },
                                             child: SingleChildScrollView(
                                               physics:
@@ -948,6 +949,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                             child:
                                                                 GestureDetector(
                                                               onTap: () {
+                                                                userId=customers!
+                                                                    .customers!
+                                                                    .data![
+                                                                index].id!;
                                                                 userName = customers!
                                                                     .customers!
                                                                     .data![
@@ -1021,13 +1026,13 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         BlocProvider.of<GetAllCollectionBloc>(
                                                 context)
                                             .add(FetchGetAllCollection(
-                                                search: userName.toString(),
+                                                userId: userId,
                                                 toDate: formatter
                                                     .format(toDate)
                                                     .toString(),
                                                 fromDate: formatter
                                                     .format(fromDate)
-                                                    .toString()));
+                                                    .toString(), forAll: false));
                                       }
                                     },
                                     child: Container(

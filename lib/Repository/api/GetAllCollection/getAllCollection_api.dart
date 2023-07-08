@@ -10,9 +10,14 @@ import '../apiclient.dart';
 class GetAllCollectionApi {
   ApiClient apiClient = ApiClient();
 
-  Future<GetAllCollectionModel> getallCollections(String fromDate, String toDate,String search) async {
+  Future<GetAllCollectionModel> getallCollections(String fromDate, String toDate,int userId,bool forAll) async {
+    String trendingPath='';
+if(forAll==false){
+  trendingPath = "/collector/collect/all?from_date=$fromDate&to_date=$toDate&userId=$userId";
+}else{
+  trendingPath = "/collector/collect/all";
+}
 
-    String trendingPath = "/collector/collect/all?from_date=$fromDate&to_date=$toDate&sk=$search";
     Response response = await apiClient.invokeAPI(trendingPath, "GET",  null);
     print(response.body);
     return GetAllCollectionModel.fromJson(json.decode(response.body));

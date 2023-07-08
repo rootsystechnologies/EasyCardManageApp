@@ -5,6 +5,7 @@ abstract class GetAllCollectionEvent {}
 class FetchGetAllCollection extends GetAllCollectionEvent{
   final String fromDate;
   final String toDate;
-  final String search;
-  FetchGetAllCollection({required this.search,required this.toDate,required this.fromDate});
+  final int userId;
+  final bool forAll;
+  FetchGetAllCollection({required this.userId,required this.toDate,required this.fromDate,required this.forAll});
 }
