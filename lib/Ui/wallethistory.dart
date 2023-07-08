@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import '../Repository/modelclass/Getallcustomers.dart';
 import '../Repository/modelclass/WalletHistoryModel.dart';
+import 'loginpage.dart';
 
 class WalletHistory extends StatefulWidget {
   const WalletHistory({Key? key}) : super(key: key);
@@ -32,7 +34,7 @@ DateTime fromDate = DateTime.now();
 DateTime toDate = DateTime.now();
 late WalletHistoryModel history;
 int userId=0;
-
+String error='';
 String convertISODate(String isoDate) {
   DateTime date = DateTime.parse(isoDate);
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
@@ -639,6 +641,59 @@ class _WalletHistoryState extends State<WalletHistory> {
                                         return CircularProgressIndicator();
                                       }
                                       if (state is GetAllWalletblocError) {
+                                        if (error == 'Unauthenticated.') {
+                                          return Dialog(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(
+                                                    5.0), // Set the desired border radius
+                                              ),
+                                              child: Container(
+                                                  padding: EdgeInsets.all(16.0),
+                                                  child: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 15.h,
+                                                        ),
+                                                        Text(
+                                                          'Token Expired',
+                                                          style: TextStyle(
+                                                              color: Colors.black,
+                                                              fontWeight:
+                                                              FontWeight.w500),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 30.h,
+                                                        ),
+                                                        TextButton(onPressed: ()async{
+                                                          final preferences = await SharedPreferences.getInstance();
+                                                          preferences.clear();
+                                                          Navigator.of(context).pushAndRemoveUntil(
+                                                              MaterialPageRoute(
+                                                                  builder: (BuildContext a) => LoginPage()),
+                                                                  (route) => false);
+                                                        },
+                                                          child: Container(
+                                                            width: 80.w,
+                                                            height: 30.h,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors.red,
+                                                                borderRadius:
+                                                                BorderRadius.circular(
+                                                                    4)),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "Login",
+                                                                style: TextStyle(
+                                                                    color: Colors.white,
+                                                                    fontWeight:
+                                                                    FontWeight.w500),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ])));
+                                        }else{
                                         return RefreshIndicator(
                                           onRefresh: () async {
                                             return BlocProvider.of<WalletHistoryBloc>(
@@ -663,7 +718,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                 child: Center(child: Text("Error"))),
                                           ),
                                         );
-                                      }
+                                      }}
                                       if (state is GetAllWalletblocLoaded) {
                                         history =
                                             BlocProvider.of<WalletHistoryBloc>(context)
@@ -679,6 +734,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                               String formattedDate = convertISODate(
                                                   history.walletTransactions!.data![index]
                                                       .createdAt!);
+
                                               return Row(
                                                 children: [
                                                   SizedBox(

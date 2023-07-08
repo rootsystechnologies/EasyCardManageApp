@@ -15,6 +15,7 @@ part 'change_pin_state.dart';
 class ChangePinBloc extends Bloc<ChangePinEvent, ChangePinState> {
   late  ChangePasswordModel changePasswordModel;
   ChangePinApi changePinApi =ChangePinApi();
+  String error='';
   ChangePinBloc() : super(ChangePinInitial()) {
     on<FetchChangePin>((event, emit)async {
       emit(ChangePinblocLoading());
@@ -22,11 +23,8 @@ class ChangePinBloc extends Bloc<ChangePinEvent, ChangePinState> {
         changePasswordModel = await changePinApi.changePin(event.oldPin,event.newPin );
         emit(ChangePinblocLoaded());
       } catch(e){
-        if(e.toString()=='Unauthenticated.'){
-          final preferences = await SharedPreferences.getInstance();
-          preferences.clear().then((value) => exit(0));
-        }else{
-          ToastMessage().toastmessage(message:e.toString());}
+        error=e.toString();
+          ToastMessage().toastmessage(message:e.toString());
 
         print('*****$e');
         emit(ChangePinblocError());

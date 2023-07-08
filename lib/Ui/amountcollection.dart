@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Bloc/GetAllColection/get_all_collection_bloc.dart';
 import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
@@ -11,6 +12,7 @@ import 'Widget/toastmessage.dart';
 import 'package:intl/intl.dart';
 
 import 'amountcollectioncollectamount.dart';
+import 'loginpage.dart';
 
 class AmountCollection extends StatefulWidget {
   const AmountCollection({Key? key}) : super(key: key);
@@ -26,7 +28,7 @@ TextEditingController search = TextEditingController();
 late GetAllCollectionModel collections;
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
 String userName = '';
-
+String error='';
 String convertISODate(String isoDate) {
   DateTime date = DateTime.parse(isoDate);
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
@@ -215,9 +217,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         height: 36.h,
                                         child: InkWell(
                                           onTap: () {
-                                            setState(() {
-                                              isExpanded = !isExpanded;
-                                            });
+                                            // setState(() {
+                                            //   isExpanded = !isExpanded;
+                                            // });
+                                            _selectFromDate(context);
                                           },
                                           child: Row(
                                             mainAxisAlignment:
@@ -264,23 +267,18 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         ),
                                       ),
                                       if (isExpanded)
-                                        GestureDetector(
-                                          onTap: () {
-                                            _selectFromDate(context);
-                                          },
-                                          child: Container(
-                                            width: 200.w,
-                                            height: 50.h,
-                                            padding: EdgeInsets.all(8.h),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(
-                                                  color: Colors.grey),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                  formatter.format(fromDate)),
-                                            ),
+                                        Container(
+                                          width: 200.w,
+                                          height: 50.h,
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.grey),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                                formatter.format(fromDate)),
                                           ),
                                         ),
                                     ],
@@ -306,9 +304,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         height: 36.h,
                                         child: InkWell(
                                           onTap: () {
-                                            setState(() {
-                                              isExpanded1 = !isExpanded1;
-                                            });
+                                            // setState(() {
+                                            //   isExpanded1 = !isExpanded1;
+                                            // });
+                                            _selectToDate(context);
                                           },
                                           child: Row(
                                             mainAxisAlignment:
@@ -356,23 +355,18 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         ),
                                       ),
                                       if (isExpanded1)
-                                        GestureDetector(
-                                          onTap: () {
-                                            _selectToDate(context);
-                                          },
-                                          child: Container(
-                                            width: 200.w,
-                                            height: 50.h,
-                                            padding: EdgeInsets.all(8.h),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(
-                                                  color: Colors.grey),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                  formatter.format(toDate)),
-                                            ),
+                                        Container(
+                                          width: 200.w,
+                                          height: 50.h,
+                                          padding: EdgeInsets.all(8.h),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            border: Border.all(
+                                                color: Colors.grey),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                                formatter.format(toDate)),
                                           ),
                                         ),
                                     ],
@@ -470,6 +464,59 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         }
                                         if (state
                                             is GetAllCollectionblocError) {
+                                          if (error == 'Unauthenticated.') {
+                                            return Dialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(
+                                                      5.0), // Set the desired border radius
+                                                ),
+                                                child: Container(
+                                                    padding: EdgeInsets.all(16.0),
+                                                    child: Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          SizedBox(
+                                                            height: 15.h,
+                                                          ),
+                                                          Text(
+                                                            'Token Expired',
+                                                            style: TextStyle(
+                                                                color: Colors.black,
+                                                                fontWeight:
+                                                                FontWeight.w500),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 30.h,
+                                                          ),
+                                                          TextButton(onPressed: ()async{
+                                                            final preferences = await SharedPreferences.getInstance();
+                                                            preferences.clear();
+                                                            Navigator.of(context).pushAndRemoveUntil(
+                                                                MaterialPageRoute(
+                                                                    builder: (BuildContext a) => LoginPage()),
+                                                                    (route) => false);
+                                                          },
+                                                            child: Container(
+                                                              width: 80.w,
+                                                              height: 30.h,
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors.red,
+                                                                  borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      4)),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  "Login",
+                                                                  style: TextStyle(
+                                                                      color: Colors.white,
+                                                                      fontWeight:
+                                                                      FontWeight.w500),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ])));
+                                          }else{
                                           return RefreshIndicator(
                                             onRefresh: () async {
                                               return BlocProvider.of<
@@ -494,7 +541,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                       child: Text("Error"))),
                                             ),
                                           );
-                                        }
+                                        }}
                                         if (state
                                             is GetAllCollectionblocLoaded) {
                                           collections = BlocProvider.of<

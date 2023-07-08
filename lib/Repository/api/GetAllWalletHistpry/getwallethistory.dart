@@ -12,9 +12,11 @@ class GetAllWalletApi {
   ApiClient apiClient = ApiClient();
 
   Future<WalletHistoryModel> getallwallet(String fromDate, String toDate,String search,String particular,bool forAll,int userId) async {
+    String isofrom="${fromDate}T00:00:00.000000Z";
+    String isoTo="${toDate}T23:59:59.000000Z";
     String trendingPath='';
     if(forAll==false){
-      trendingPath="/collector/customer/wallet/history?from_date=$fromDate&to_date=$toDate&particular=$particular&userId=$userId";}
+      trendingPath="/collector/customer/wallet/history?from_date=$isofrom&to_date=$isoTo&particular=$particular&userId=$userId";}
     else{
       trendingPath ='/collector/customer/wallet/history';
     }

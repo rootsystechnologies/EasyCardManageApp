@@ -15,6 +15,7 @@ part 'get_all_collection_state.dart';
 class GetAllCollectionBloc extends Bloc<GetAllCollectionEvent, GetAllCollectionState> {
   late  GetAllCollectionModel getAllCollectionModel;
   GetAllCollectionApi getAllCollectionApi =GetAllCollectionApi();
+  String error='';
   GetAllCollectionBloc() : super(GetAllCollectionInitial()) {
     on<FetchGetAllCollection>((event, emit)async{
       emit(GetAllCollectionblocLoading());
@@ -22,11 +23,8 @@ class GetAllCollectionBloc extends Bloc<GetAllCollectionEvent, GetAllCollectionS
         getAllCollectionModel = await getAllCollectionApi.getallCollections(event.fromDate, event.toDate, event.userId,event.forAll);
         emit(GetAllCollectionblocLoaded());
       } catch(e){
-        if(e.toString()=='Unauthenticated.'){
-          final preferences = await SharedPreferences.getInstance();
-          preferences.clear().then((value) => exit(0));
-        }else{
-          ToastMessage().toastmessage(message:e.toString());}
+        error=e.toString();
+          ToastMessage().toastmessage(message:e.toString());
 
         print('*****$e');
         emit(GetAllCollectionblocError());

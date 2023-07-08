@@ -1,7 +1,9 @@
+import 'package:easymanage/Ui/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import '../Repository/modelclass/Getallcustomers.dart';
@@ -16,23 +18,27 @@ class Customers extends StatefulWidget {
 }
 
 bool move = true;
-int page=1;
-int totalPage=0;
+int page = 1;
+int totalPage = 0;
 late Getallcustomers customers;
 TextEditingController search = TextEditingController();
+
 class _CustomersState extends State<Customers> {
   @override
   void initState() {
-    BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));
+    BlocProvider.of<GetAllCustomersBloc>(context)
+        .add(FetchGetAllCustomers(searchKey: '', page: page.toString()));
     super.initState();
   }
-@override
+
+  @override
   void dispose() {
-  search.clear();
-  page=1;
-  move=true;
+    search.clear();
+    page = 1;
+    move = true;
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,11 +211,23 @@ class _CustomersState extends State<Customers> {
                               child: SizedBox(
                                 width: 250.w,
                                 height: 60.h,
-                                child: TextFormField(controller: search,textInputAction:  TextInputAction.done,onFieldSubmitted: (value){
-                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text, page: page.toString()));
-                                },onChanged: (value){
-                                  BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey:search.text, page: page.toString()));
-                                },
+                                child: TextFormField(
+                                  controller: search,
+                                  textInputAction: TextInputAction.done,
+                                  onFieldSubmitted: (value) {
+                                    BlocProvider.of<GetAllCustomersBloc>(
+                                            context)
+                                        .add(FetchGetAllCustomers(
+                                            searchKey: search.text,
+                                            page: page.toString()));
+                                  },
+                                  onChanged: (value) {
+                                    BlocProvider.of<GetAllCustomersBloc>(
+                                            context)
+                                        .add(FetchGetAllCustomers(
+                                            searchKey: search.text,
+                                            page: page.toString()));
+                                  },
                                   autofocus: true,
                                   decoration: InputDecoration(
                                       focusedBorder: InputBorder.none,
@@ -280,10 +298,67 @@ class _CustomersState extends State<Customers> {
                         return Center(child: CircularProgressIndicator());
                       }
                       if (state is GetAllCustomersblocError) {
+                        String error =
+                            BlocProvider.of<GetAllCustomersBloc>(context).error;
+                        if (error == 'Unauthenticated.') {
+                                return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          5.0), // Set the desired border radius
+                                    ),
+                                    child: Container(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              SizedBox(
+                                                height: 15.h,
+                                              ),
+                                              Text(
+                                                'Token Expired',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              SizedBox(
+                                                height: 30.h,
+                                              ),
+                                              TextButton(onPressed: ()async{
+                                                final preferences = await SharedPreferences.getInstance();
+                                                preferences.clear();
+                                                Navigator.of(context).pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext a) => LoginPage()),
+                                                        (route) => false);
+                                              },
+                                                child: Container(
+                                                  width: 80.w,
+                                                  height: 30.h,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4)),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Login",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            ])));
+                              }else{
+
                         return RefreshIndicator(
                           onRefresh: () async {
                             return BlocProvider.of<GetAllCustomersBloc>(context)
-                                .add(FetchGetAllCustomers(searchKey: '', page:page.toString()));
+                                .add(FetchGetAllCustomers(
+                                    searchKey: '', page: page.toString()));
                           },
                           child: SingleChildScrollView(
                             physics: const BouncingScrollPhysics(),
@@ -293,142 +368,182 @@ class _CustomersState extends State<Customers> {
                                 child: Center(child: Text("Error"))),
                           ),
                         );
-                      }
+                      }}
                       if (state is GetAllCustomersblocLoaded) {
                         customers =
                             BlocProvider.of<GetAllCustomersBloc>(context)
                                 .getallcustomers;
-                        totalPage=customers.customers!.total!;
-                        if(customers.customers!.data!.isEmpty){
-                          return Container( width: 326.w,
-                              height: 407.5.h,child: Center(child: Text("No Data"),));
-                        }else{
-                        return Container(
-                          width: 326.w,
-                          height: 407.5.h,
-                          child: ListView.separated(
-                            itemCount: customers.customers!.data!.length+1,
-                            itemBuilder: (BuildContext context, int index) {
-                              if(index<customers.customers!.data!.length){
-                              return Row(
-                                children: [
-                                  SizedBox(
-                                    width: 11.w,
-                                  ),
-                                  SizedBox(
-                                    height: 21,
-                                    width: 75,
-                                    child: Center(
-                                      child: Text(
-                                          customers.customers!.data![index].name
-                                              .toString(),
-                                          style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: Color(0xffA4A4A4),
-                                                  fontSize: 14.sp,
-                                                  letterSpacing: -0.3.sp))),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 50.w,
-                                  ),
-                                  SizedBox(
-                                    width: 62.w,
-                                    height: 21.h,
-                                    child: Center(
-                                      child: Text(
-                                          customers.customers!.data![index]
-                                              .wallet!.balance
-                                              .toString(),
-                                          style: GoogleFonts.poppins(
-                                              textStyle: TextStyle(
-                                                  color: Color(0xffA4A4A4),
-                                                  fontSize: 14.sp,
-                                                  letterSpacing: -0.3.sp))),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 29.w,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                CustomerCollectAmount(
-                                                  customerName: customers
-                                                      .customers!
-                                                      .data![index]
-                                                      .name
-                                                      .toString(), userId: customers
-                                                    .customers!
-                                                    .data![index].id.toString(),
-                                                ))),
-                                    child: SizedBox(
-                                      height: 30.h,
-                                      width: 30.w,
-                                      child:
-                                          Image.asset('assets/customer1.png'),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 20.29.w,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                CustomerWalletRecharge(userId: customers
-                                                    .customers!
-                                                    .data![index].id.toString(), customerName: customers
-                                                    .customers!
-                                                    .data![index]
-                                                    .name
-                                                    .toString(),))),
-                                    child: SizedBox(
-                                      height: 30.h,
-                                      width: 30.w,
-                                      child:
-                                          Image.asset('assets/customer2.png'),
-                                    ),
-                                  )
-                                ],
-                              );}else{
-                                return Visibility(visible: search.text.isEmpty?true:false,
-                                  child: Row(
-                                    children: [SizedBox(width: 10.w,),
-                                      Visibility(visible:page!=1?true:false,
-                                        child: TextButton(onPressed: (){
-                                          if(page>=1){
-                                          page=page-1;
-                                          BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));}
-                                        }, child: Text("Previous")),
-                                      ),SizedBox(width: 150.w,),
-                                      TextButton(onPressed: (){
-                                        if(page<=totalPage){
-                                        page=page+1;
-                                        BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));}
-                                      }, child: Text("Next")),
+                        totalPage = customers.customers!.total!;
+                        if (customers.customers!.data!.isEmpty) {
+                          return Container(
+                              width: 326.w,
+                              height: 407.5.h,
+                              child: Center(
+                                child: Text("No Data"),
+                              ));
+                        } else {
+                          return Container(
+                            width: 326.w,
+                            height: 407.5.h,
+                            child: ListView.separated(
+                              itemCount: customers.customers!.data!.length + 1,
+                              itemBuilder: (BuildContext context, int index) {
+                                if (index < customers.customers!.data!.length) {
+                                  return Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 11.w,
+                                      ),
+                                      SizedBox(
+                                        height: 21,
+                                        width: 75,
+                                        child: Center(
+                                          child: Text(
+                                              customers
+                                                  .customers!.data![index].name
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                      color: Color(0xffA4A4A4),
+                                                      fontSize: 14.sp,
+                                                      letterSpacing: -0.3.sp))),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 50.w,
+                                      ),
+                                      SizedBox(
+                                        width: 62.w,
+                                        height: 21.h,
+                                        child: Center(
+                                          child: Text(
+                                              customers.customers!.data![index]
+                                                  .wallet!.balance
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  textStyle: TextStyle(
+                                                      color: Color(0xffA4A4A4),
+                                                      fontSize: 14.sp,
+                                                      letterSpacing: -0.3.sp))),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 29.w,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    CustomerCollectAmount(
+                                                      customerName: customers
+                                                          .customers!
+                                                          .data![index]
+                                                          .name
+                                                          .toString(),
+                                                      userId: customers
+                                                          .customers!
+                                                          .data![index]
+                                                          .id
+                                                          .toString(),
+                                                    ))),
+                                        child: SizedBox(
+                                          height: 30.h,
+                                          width: 30.w,
+                                          child: Image.asset(
+                                              'assets/customer1.png'),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 20.29.w,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    CustomerWalletRecharge(
+                                                      userId: customers
+                                                          .customers!
+                                                          .data![index]
+                                                          .id
+                                                          .toString(),
+                                                      customerName: customers
+                                                          .customers!
+                                                          .data![index]
+                                                          .name
+                                                          .toString(),
+                                                    ))),
+                                        child: SizedBox(
+                                          height: 30.h,
+                                          width: 30.w,
+                                          child: Image.asset(
+                                              'assets/customer2.png'),
+                                        ),
+                                      )
                                     ],
+                                  );
+                                } else {
+                                  return Visibility(
+                                    visible: search.text.isEmpty ? true : false,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 10.w,
+                                        ),
+                                        Visibility(
+                                          visible: page != 1 ? true : false,
+                                          child: TextButton(
+                                              onPressed: () {
+                                                if (page >= 1) {
+                                                  page = page - 1;
+                                                  BlocProvider.of<
+                                                              GetAllCustomersBloc>(
+                                                          context)
+                                                      .add(FetchGetAllCustomers(
+                                                          searchKey: '',
+                                                          page:
+                                                              page.toString()));
+                                                }
+                                              },
+                                              child: Text("Previous")),
+                                        ),
+                                        SizedBox(
+                                          width: 150.w,
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              if (page <= totalPage) {
+                                                page = page + 1;
+                                                BlocProvider.of<
+                                                            GetAllCustomersBloc>(
+                                                        context)
+                                                    .add(FetchGetAllCustomers(
+                                                        searchKey: '',
+                                                        page: page.toString()));
+                                              }
+                                            },
+                                            child: Text("Next")),
+                                      ],
+                                    ),
+                                  );
+                                }
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 11.w,
+                                    right: 9.w,
+                                    top: 10.48.h,
+                                  ),
+                                  child: Divider(
+                                    color: Color(0xffD9D9D9),
                                   ),
                                 );
-                              }
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return Padding(
-                                padding: EdgeInsets.only(
-                                  left: 11.w,
-                                  right: 9.w,
-                                  top: 10.48.h,
-                                ),
-                                child: Divider(
-                                  color: Color(0xffD9D9D9),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      } }else {
+                              },
+                            ),
+                          );
+                        }
+                      } else {
                         return SizedBox();
                       }
                     },

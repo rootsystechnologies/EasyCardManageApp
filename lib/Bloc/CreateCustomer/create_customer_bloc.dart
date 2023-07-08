@@ -16,7 +16,7 @@ class CreateCustomerBloc
     extends Bloc<CreateCustomerEvent, CreateCustomerState> {
   late CreateCustomerModel createCustomerModel;
   CreateCustomerApi createCustomerApi = CreateCustomerApi();
-
+  String error='';
   CreateCustomerBloc() : super(CreateCustomerInitial()) {
     on<FecthCreateCustomer>((event, emit) async {
       emit(createCustomerblocLoading());
@@ -32,11 +32,8 @@ class CreateCustomerBloc
             event.allowedPerms,event.place);
         emit(createCustomerblocLoaded());
       } catch (e) {
-        if(e.toString()=='Unauthenticated.'){
-          final preferences = await SharedPreferences.getInstance();
-          preferences.clear().then((value) => exit(0));
-        }else{
-          ToastMessage().toastmessage(message:e.toString());}
+        error=e.toString();
+          ToastMessage().toastmessage(message:e.toString());
 
         print('*****$e');
         emit(createCustomerblocError());

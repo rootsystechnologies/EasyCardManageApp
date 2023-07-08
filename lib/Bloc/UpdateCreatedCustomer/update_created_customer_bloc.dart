@@ -16,6 +16,7 @@ part 'update_created_customer_state.dart';
 class UpdateCreatedCustomerBloc extends Bloc<UpdateCreatedCustomerEvent, UpdateCreatedCustomerState> {
   late  UpdateCreatedCustomer updateCreatedCustomer;
   UpdateCreatedCustomerApi updateCreatedCustomerApi =UpdateCreatedCustomerApi();
+  String error='';
   UpdateCreatedCustomerBloc() : super(UpdateCreatedCustomerInitial()) {
     on<FetchUpdateCustomer>((event, emit) async{
       emit(UpdateCreatedCustomerblocLoading());
@@ -23,11 +24,8 @@ class UpdateCreatedCustomerBloc extends Bloc<UpdateCreatedCustomerEvent, UpdateC
         updateCreatedCustomer = await updateCreatedCustomerApi.updateCreatedCustomer(event.userId, event.name, event.mobile, event.email, event.credit);
         emit(UpdateCreatedCustomerblocLoaded());
       } catch(e){
-        if(e.toString()=='Unauthenticated.'){
-          final preferences = await SharedPreferences.getInstance();
-          preferences.clear().then((value) => exit(0));
-        }else{
-          ToastMessage().toastmessage(message:e.toString());}
+        error=e.toString();
+          ToastMessage().toastmessage(message:e.toString());
         print('*****$e');
         emit(UpdateCreatedCustomerblocError());
       }

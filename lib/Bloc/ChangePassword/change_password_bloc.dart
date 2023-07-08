@@ -15,6 +15,7 @@ part 'change_password_state.dart';
 class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> {
   late  ChangePasswordModel changePasswordModel;
   ChangePasswordApi changePasswordApi =ChangePasswordApi();
+  String error='';
   ChangePasswordBloc() : super(ChangePasswordInitial()) {
     on<FetchChangePassword>((event, emit)async {
       emit(ChangePasswordblocLoading());
@@ -23,11 +24,8 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
         emit(ChangePasswordblocLoaded());
       } catch(e){
 
-        if(e.toString()=='Unauthenticated.'){
-          final preferences = await SharedPreferences.getInstance();
-          preferences.clear().then((value) => exit(0));
-        }else{
-          ToastMessage().toastmessage(message:e.toString());}
+        error=e.toString();
+          ToastMessage().toastmessage(message:e.toString());
 
         print('*****$e');
         emit(ChangePasswordblocError());
