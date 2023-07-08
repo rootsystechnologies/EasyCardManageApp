@@ -14,7 +14,7 @@ class GetAllWalletApi {
   Future<WalletHistoryModel> getallwallet(String fromDate, String toDate,String search,String particular,bool forAll,int userId) async {
     String trendingPath='';
     if(forAll==false){
-      trendingPath="/collector/customer/wallet/history?from_date=$fromDate&to_date=$toDate&sk=$search&particular=$particular&userId=$userId";}
+      trendingPath="/collector/customer/wallet/history?from_date=$fromDate&to_date=$toDate&particular=$particular&userId=$userId";}
     else{
       trendingPath ='/collector/customer/wallet/history';
     }

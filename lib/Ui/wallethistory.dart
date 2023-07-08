@@ -402,7 +402,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(
-                                            left: 108.w,
+                                            left: 85.w,
                                           ),
                                           child: FittedBox(
                                             child: Text(
