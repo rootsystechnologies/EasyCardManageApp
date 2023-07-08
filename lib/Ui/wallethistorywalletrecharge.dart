@@ -203,345 +203,7 @@ class _WalletHistoryWalletRechargeState
                         SizedBox(
                           height: 19.h,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 13.w, right: 14.w),
-                          child: Container(
-                            decoration: ShapeDecoration(
-                              color: Color(0xFFEC1C24),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7.r)),
-                            ),
-                            width: 299.w,
-                            // Replace with your desired width
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                SizedBox(
-                                  height: 36.h,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        isExpanded = !isExpanded;
-                                      });
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 108.w,
-                                          ),
-                                          child: SizedBox(
-                                            width: 83.w,
-                                            height: 26.h,
-                                            child: Text(
-                                              userName==''? "Customer":userName,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 17.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30.sp,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 63.w, right: 9.77.w),
-                                            child: SizedBox(
-                                                height: 10.8.h,
-                                                width: 10.8.w,
-                                                child: Image.asset(isExpanded
-                                                    ? 'assets/arrowdown.png'
-                                                    : 'assets/arrowforward.png'))),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                if (isExpanded)
-                                  Container(
-                                    width: 299.w,
-                                    height: 174.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.grey),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              move = !move;
-                                              print(move);
-                                            });
-                                          },
-                                          child: Stack(
-                                            children: [
-                                              Visibility(
-                                                visible: move ? true : false,
-                                                child: AnimatedPositioned(
-                                                  duration:
-                                                      Duration(seconds: 1),
-                                                  child: Container(
-                                                    margin: EdgeInsets.only(
-                                                        left: 51.w,
-                                                        right: 50.w,
-                                                        top: 8.h),
-                                                    width: 198.w,
-                                                    height: 32.h,
-                                                    decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.transparent,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.r),
-                                                        border: Border.all(
-                                                            color: Color(
-                                                                0xffD9D9D9))),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 16.w,
-                                                        ),
-                                                        SizedBox(
-                                                            width: 13.52.w,
-                                                            height: 12.55.h,
-                                                            child: Image.asset(
-                                                                'assets/search.png')),
-                                                        SizedBox(
-                                                          height: 17.5.h,
-                                                          child:
-                                                              VerticalDivider(
-                                                            color: Color(
-                                                                0xffEC1C24),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 9.w,
-                                                        ),
-                                                        SizedBox(
-                                                            width: 85.82.w,
-                                                            height: 16.94.h,
-                                                            child: Text(
-                                                              "Search",
-                                                              style: GoogleFonts
-                                                                  .poppins(
-                                                                textStyle:
-                                                                    TextStyle(
-                                                                  letterSpacing:
-                                                                      -0.3.sp,
-                                                                  color: Color(
-                                                                      0xffEC1C24),
-                                                                  fontSize:
-                                                                      10.sp,
-                                                                ),
-                                                              ),
-                                                            ))
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Visibility(
-                                                visible: move == false
-                                                    ? true
-                                                    : false,
-                                                child: Container(
-                                                  margin: EdgeInsets.only(
-                                                      left: 51.w,
-                                                      right: 50.w,
-                                                      top: 8.h),
-                                                  width: 198.w,
-                                                  height: 32.h,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.transparent,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.r),
-                                                      border: Border.all(
-                                                          color: Color(
-                                                              0xffD9D9D9))),
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      left: 17.w,
-                                                    ),
-                                                    child: SizedBox(
-                                                      width: 198.w,
-                                                      height: 32.h,
-                                                      child: TextFormField(onFieldSubmitted: (v){
-                                                        BlocProvider.of<
-                                                            GetAllCustomersBloc>(
-                                                            context)
-                                                            .add(FetchGetAllCustomers(
-                                                            searchKey:
-                                                            search
-                                                                .text, page: page.toString()));
-                                                      },onChanged: (n){
-                                                        BlocProvider.of<
-                                                            GetAllCustomersBloc>(
-                                                            context)
-                                                            .add(FetchGetAllCustomers(
-                                                            searchKey:
-                                                            search
-                                                                .text, page: page.toString()));
-                                                      },
-                                                        controller: search,
-                                                        autofocus: true,
-                                                        decoration:
-                                                            InputDecoration(
-                                                                focusedBorder:
-                                                                    InputBorder
-                                                                        .none,
-                                                                enabledBorder:
-                                                                    InputBorder
-                                                                        .none,
-                                                                hintText:
-                                                                    'Search',
-                                                                hintStyle:
-                                                                    GoogleFonts
-                                                                        .poppins(
-                                                                  textStyle: TextStyle(
-                                                                      color: Color(
-                                                                          0xffD9D9D9),
-                                                                      fontSize:
-                                                                          10.sp,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w300,
-                                                                      letterSpacing:
-                                                                          -0.3.sp),
-                                                                )),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(child: BlocBuilder<
-                                            GetAllCustomersBloc,
-                                            GetAllCustomersState>(
-                                          builder: (context, state) {
-                                            if (state
-                                                is GetAllCustomersblocLoading) {
-                                              return SizedBox();
-                                            }
-                                            if (state
-                                                is GetAllCustomersblocError) {
-                                              return RefreshIndicator(
-                                                onRefresh: () async {
-                                                  return BlocProvider.of<
-                                                              GetAllCustomersBloc>(
-                                                          context)
-                                                      .add(FetchGetAllCustomers(
-                                                          searchKey: '', page: page.toString()));
-                                                },
-                                                child: SingleChildScrollView(
-                                                  physics:
-                                                      const BouncingScrollPhysics(),
-                                                  child: Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height *
-                                                              .9,
-                                                      // color: Colors.red,
-                                                      child: Center(
-                                                          child:
-                                                              Text("Error"))),
-                                                ),
-                                              );
-                                            }
-                                            if (state
-                                                is GetAllCustomersblocLoaded) {
-                                              customers = BlocProvider.of<
-                                                          GetAllCustomersBloc>(
-                                                      context)
-                                                  .getallcustomers;
 
-                                              return  customers
-                                                  .customers!.data!.isEmpty?Center(child: Text("No Data"),):ListView.separated(
-                                                itemCount: customers
-                                                    .customers!.data!.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 17.w),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        userId = customers
-                                                            .customers!
-                                                            .data![index]
-                                                            .id
-                                                            .toString();
-                                                        userName = customers!
-                                                            .customers!
-                                                            .data![
-                                                        index]
-                                                            .name
-                                                            .toString();
-                                                        if (userName
-                                                            .isNotEmpty) {
-                                                          setState(() {
-                                                            isExpanded =
-                                                            false;
-                                                          });
-                                                        }
-                                                      },
-                                                      child: SizedBox(
-                                                        height: 24.h,
-                                                        width: 120.w,
-                                                        child: Text(
-                                                          customers.customers!
-                                                              .data![index].name
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  textStyle:
-                                                                      TextStyle(
-                                                            color: Color(
-                                                                0xFFA3A3A3),
-                                                            fontSize: 16.sp,
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            letterSpacing:
-                                                                -0.30,
-                                                          )),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                separatorBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return SizedBox(
-                                                    height: 2.h,
-                                                  );
-                                                },
-                                              );
-                                            } else {
-                                              return SizedBox();
-                                            }
-                                          },
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
                         SizedBox(
                           height: 28.h,
                         ),
@@ -667,7 +329,7 @@ class _WalletHistoryWalletRechargeState
                                                       BorderRadius.circular(
                                                           5.0), // Updated border radius to 5
                                                 ),
-                                                child: TextField(
+                                                child: TextField(obscureText: true,
                                                   autofocus: true,
                                                   keyboardType:
                                                       TextInputType.number,
@@ -838,7 +500,345 @@ class _WalletHistoryWalletRechargeState
                             ),
                           ),
                         ),
-                      ))
+                      )),Padding(
+                    padding: EdgeInsets.only(left: 30.w, right: 14.w,top: 180.h,),
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        color: Color(0xFFEC1C24),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.r)),
+                      ),
+                      width: 299.w,
+                      // Replace with your desired width
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SizedBox(
+                            height: 36.h,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  isExpanded = !isExpanded;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 108.w,
+                                    ),
+                                    child: SizedBox(
+                                      width: 83.w,
+                                      height: 26.h,
+                                      child: Text(
+                                        userName==''? "Customer":userName,
+                                        style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: -0.30.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 63.w, right: 9.77.w),
+                                      child: SizedBox(
+                                          height: 10.8.h,
+                                          width: 10.8.w,
+                                          child: Image.asset(isExpanded
+                                              ? 'assets/arrowdown.png'
+                                              : 'assets/arrowforward.png'))),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if (isExpanded)
+                            Container(
+                              width: 299.w,
+                              height: 174.h,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        move = !move;
+                                        print(move);
+                                      });
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Visibility(
+                                          visible: move ? true : false,
+                                          child: AnimatedPositioned(
+                                            duration:
+                                            Duration(seconds: 1),
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  left: 51.w,
+                                                  right: 50.w,
+                                                  top: 8.h),
+                                              width: 198.w,
+                                              height: 32.h,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                  Colors.transparent,
+                                                  borderRadius:
+                                                  BorderRadius
+                                                      .circular(8.r),
+                                                  border: Border.all(
+                                                      color: Color(
+                                                          0xffD9D9D9))),
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 16.w,
+                                                  ),
+                                                  SizedBox(
+                                                      width: 13.52.w,
+                                                      height: 12.55.h,
+                                                      child: Image.asset(
+                                                          'assets/search.png')),
+                                                  SizedBox(
+                                                    height: 17.5.h,
+                                                    child:
+                                                    VerticalDivider(
+                                                      color: Color(
+                                                          0xffEC1C24),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 9.w,
+                                                  ),
+                                                  SizedBox(
+                                                      width: 85.82.w,
+                                                      height: 16.94.h,
+                                                      child: Text(
+                                                        "Search",
+                                                        style: GoogleFonts
+                                                            .poppins(
+                                                          textStyle:
+                                                          TextStyle(
+                                                            letterSpacing:
+                                                            -0.3.sp,
+                                                            color: Color(
+                                                                0xffEC1C24),
+                                                            fontSize:
+                                                            10.sp,
+                                                          ),
+                                                        ),
+                                                      ))
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: move == false
+                                              ? true
+                                              : false,
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                left: 51.w,
+                                                right: 50.w,
+                                                top: 8.h),
+                                            width: 198.w,
+                                            height: 32.h,
+                                            decoration: BoxDecoration(
+                                                color: Colors.transparent,
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    8.r),
+                                                border: Border.all(
+                                                    color: Color(
+                                                        0xffD9D9D9))),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                left: 17.w,
+                                              ),
+                                              child: SizedBox(
+                                                width: 198.w,
+                                                height: 32.h,
+                                                child: TextFormField(onFieldSubmitted: (v){
+                                                  BlocProvider.of<
+                                                      GetAllCustomersBloc>(
+                                                      context)
+                                                      .add(FetchGetAllCustomers(
+                                                      searchKey:
+                                                      search
+                                                          .text, page: page.toString()));
+                                                },onChanged: (n){
+                                                  BlocProvider.of<
+                                                      GetAllCustomersBloc>(
+                                                      context)
+                                                      .add(FetchGetAllCustomers(
+                                                      searchKey:
+                                                      search
+                                                          .text, page: page.toString()));
+                                                },
+                                                  controller: search,
+                                                  autofocus: true,
+                                                  decoration:
+                                                  InputDecoration(
+                                                      focusedBorder:
+                                                      InputBorder
+                                                          .none,
+                                                      enabledBorder:
+                                                      InputBorder
+                                                          .none,
+                                                      hintText:
+                                                      'Search',
+                                                      hintStyle:
+                                                      GoogleFonts
+                                                          .poppins(
+                                                        textStyle: TextStyle(
+                                                            color: Color(
+                                                                0xffD9D9D9),
+                                                            fontSize:
+                                                            10.sp,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w300,
+                                                            letterSpacing:
+                                                            -0.3.sp),
+                                                      )),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(child: BlocBuilder<
+                                      GetAllCustomersBloc,
+                                      GetAllCustomersState>(
+                                    builder: (context, state) {
+                                      if (state
+                                      is GetAllCustomersblocLoading) {
+                                        return SizedBox();
+                                      }
+                                      if (state
+                                      is GetAllCustomersblocError) {
+                                        return RefreshIndicator(
+                                          onRefresh: () async {
+                                            return BlocProvider.of<
+                                                GetAllCustomersBloc>(
+                                                context)
+                                                .add(FetchGetAllCustomers(
+                                                searchKey: '', page: page.toString()));
+                                          },
+                                          child: SingleChildScrollView(
+                                            physics:
+                                            const BouncingScrollPhysics(),
+                                            child: Container(
+                                                height:
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                    .9,
+                                                // color: Colors.red,
+                                                child: Center(
+                                                    child:
+                                                    Text("Error"))),
+                                          ),
+                                        );
+                                      }
+                                      if (state
+                                      is GetAllCustomersblocLoaded) {
+                                        customers = BlocProvider.of<
+                                            GetAllCustomersBloc>(
+                                            context)
+                                            .getallcustomers;
+
+                                        return  customers
+                                            .customers!.data!.isEmpty?Center(child: Text("No Data"),):ListView.separated(
+                                          itemCount: customers
+                                              .customers!.data!.length,
+                                          itemBuilder:
+                                              (BuildContext context,
+                                              int index) {
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 17.w),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  userId = customers
+                                                      .customers!
+                                                      .data![index]
+                                                      .id
+                                                      .toString();
+                                                  userName = customers!
+                                                      .customers!
+                                                      .data![
+                                                  index]
+                                                      .name
+                                                      .toString();
+                                                  if (userName
+                                                      .isNotEmpty) {
+                                                    setState(() {
+                                                      isExpanded =
+                                                      false;
+                                                    });
+                                                  }
+                                                },
+                                                child: SizedBox(
+                                                  height: 24.h,
+                                                  width: 120.w,
+                                                  child: Text(
+                                                    customers.customers!
+                                                        .data![index].name
+                                                        .toString(),
+                                                    style: GoogleFonts
+                                                        .poppins(
+                                                        textStyle:
+                                                        TextStyle(
+                                                          color: Color(
+                                                              0xFFA3A3A3),
+                                                          fontSize: 16.sp,
+                                                          fontFamily:
+                                                          'Poppins',
+                                                          fontWeight:
+                                                          FontWeight.w400,
+                                                          letterSpacing:
+                                                          -0.30,
+                                                        )),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          separatorBuilder:
+                                              (BuildContext context,
+                                              int index) {
+                                            return SizedBox(
+                                              height: 2.h,
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        return SizedBox();
+                                      }
+                                    },
+                                  ))
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               )
             ])));

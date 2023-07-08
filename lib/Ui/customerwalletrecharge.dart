@@ -291,7 +291,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                                             BorderRadius.circular(
                                                 5.0), // Updated border radius to 5
                                           ),
-                                          child: TextField(autofocus: true,
+                                          child: TextField(autofocus: true,obscureText: true,
                                             keyboardType:
                                             TextInputType
                                                 .number,

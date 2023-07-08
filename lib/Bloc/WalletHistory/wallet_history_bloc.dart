@@ -19,7 +19,7 @@ class WalletHistoryBloc extends Bloc<WalletHistoryEvent, WalletHistoryState> {
     on<FetchGetAllWallet>((event, emit)async {
       emit(GetAllWalletblocLoading());
       try{
-        walletHistoryModel = await getAllCollectionApi.getallwallet(event.fromDate,event. toDate, event.search, event.particular,event.forAll);
+        walletHistoryModel = await getAllCollectionApi.getallwallet(event.fromDate,event. toDate, event.search, event.particular,event.forAll,event.userId);
         emit(GetAllWalletblocLoaded());
       } catch(e){
         if(e.toString()=='Unauthenticated.'){

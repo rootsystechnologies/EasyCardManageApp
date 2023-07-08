@@ -1,4 +1,5 @@
 import 'package:easymanage/Bloc/WalletHistory/wallet_history_bloc.dart';
+import 'package:easymanage/Ui/Widget/toastmessage.dart';
 import 'package:easymanage/Ui/wallethistorywalletrecharge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,7 @@ String userName = '';
 DateTime fromDate = DateTime.now();
 DateTime toDate = DateTime.now();
 late WalletHistoryModel history;
+int userId=0;
 
 String convertISODate(String isoDate) {
   DateTime date = DateTime.parse(isoDate);
@@ -46,7 +48,7 @@ class _WalletHistoryState extends State<WalletHistory> {
         search: search.text,
         toDate: formatter.format(toDate).toString(),
         fromDate: formatter.format(fromDate).toString(),
-        particular: particular, forAll: true));
+        particular: particular, forAll: true,  userId: userId));
     super.initState();
   }
 
@@ -86,7 +88,7 @@ class _WalletHistoryState extends State<WalletHistory> {
     search.clear();
     userName = '';
     particular='';
-    super.dispose();
+    userId=0;    super.dispose();
   }
 
   @override
@@ -504,34 +506,34 @@ class _WalletHistoryState extends State<WalletHistory> {
                                         SizedBox(
                                           height: 14.h,
                                         ),
-                                        GestureDetector(onTap: (){
-                                          setState(() {
-                                            particular='all';
-                                          });
-
-                                          if (particular.isNotEmpty) {
-                                            setState(() {
-                                              isExpanded2 =
-                                              false;
-                                            });
-                                          }
-                                        },
-                                          child: SizedBox(
-                                            width: 21.w,
-                                            height: 27.h,
-                                            child: Text('All',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 18,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.w400,
-                                                    letterSpacing: -0.30,
-                                                  ),
-                                                )),
-                                          ),
-                                        )
+                                        // GestureDetector(onTap: (){
+                                        //   setState(() {
+                                        //     particular='all';
+                                        //   });
+                                        //
+                                        //   if (particular.isNotEmpty) {
+                                        //     setState(() {
+                                        //       isExpanded2 =
+                                        //       false;
+                                        //     });
+                                        //   }
+                                        // },
+                                        //   child: SizedBox(
+                                        //     width: 21.w,
+                                        //     height: 27.h,
+                                        //     child: Text('All',
+                                        //         textAlign: TextAlign.center,
+                                        //         style: GoogleFonts.poppins(
+                                        //           textStyle: TextStyle(
+                                        //             color: Colors.black,
+                                        //             fontSize: 18,
+                                        //             fontFamily: 'Poppins',
+                                        //             fontWeight: FontWeight.w400,
+                                        //             letterSpacing: -0.30,
+                                        //           ),
+                                        //         )),
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                   ),
@@ -649,7 +651,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                 fromDate: formatter
                                                     .format(fromDate)
                                                     .toString(),
-                                                particular: particular, forAll: false));
+                                                particular: particular, forAll: false,  userId: userId));
                                           },
                                           child: SingleChildScrollView(
                                             physics: const BouncingScrollPhysics(),
@@ -694,7 +696,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                         style: GoogleFonts.poppins(
                                                             textStyle: TextStyle(
                                                               color: Color(0xFFA3A3A3),
-                                                              fontSize: 11.sp,
+                                                              fontSize: 14.sp,
                                                               fontWeight: FontWeight.w400,
                                                               letterSpacing: -0.30.sp,
                                                             ))),
@@ -710,7 +712,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                         style: GoogleFonts.poppins(
                                                             textStyle: TextStyle(
                                                               color: Color(0xFFA3A3A3),
-                                                              fontSize: 11.sp,
+                                                              fontSize: 14.sp,
                                                               fontWeight: FontWeight.w400,
                                                               letterSpacing: -0.30.sp,
                                                             ))),
@@ -729,13 +731,13 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                         style: GoogleFonts.poppins(
                                                             textStyle: TextStyle(
                                                               color: Color(0xffFF0000),
-                                                              fontSize: 11.sp,
+                                                              fontSize: 14.sp,
                                                               fontWeight: FontWeight.w400,
                                                               letterSpacing: -0.30.sp,
                                                             ))),
                                                   ),
                                                   SizedBox(
-                                                    width: 50.w,
+                                                    width: 40.w,
                                                   ),
                                                   SizedBox(
                                                     width: 42.w,
@@ -746,7 +748,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                         style: GoogleFonts.poppins(
                                                             textStyle: TextStyle(
                                                               color: Color(0xFFA3A3A3),
-                                                              fontSize: 11.sp,
+                                                              fontSize: 14.sp,
                                                               fontWeight: FontWeight.w400,
                                                               letterSpacing: -0.30.sp,
                                                             ))),
@@ -1087,6 +1089,10 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                   index]
                                                                       .name
                                                                       .toString();
+                                                                  userId=customers!
+                                                                      .customers!
+                                                                      .data![
+                                                                  index].id!;
                                                                   if (userName
                                                                       .isNotEmpty) {
                                                                     setState(() {
@@ -1146,19 +1152,21 @@ class _WalletHistoryState extends State<WalletHistory> {
                               padding:EdgeInsets.only(left: 190.w),
                               child: TextButton(
                                   onPressed: () {
+                                 if(particular==''||userName==''){
+                                   if(particular==''){
+                                   ToastMessage().toastmessage(message: 'Please Select A Particular');
+                                   }
+                                   else{
 
-                                    if(particular=='all'){
+                                   }
+
+                                 }else{
+
                                       BlocProvider.of<WalletHistoryBloc>(context).add(FetchGetAllWallet(
-                                          search: search.text,
+                                          search: userName,
                                           toDate: formatter.format(toDate).toString(),
                                           fromDate: formatter.format(fromDate).toString(),
-                                          particular: particular, forAll: true));
-                                    }else{
-                                      BlocProvider.of<WalletHistoryBloc>(context).add(FetchGetAllWallet(
-                                          search: search.text,
-                                          toDate: formatter.format(toDate).toString(),
-                                          fromDate: formatter.format(fromDate).toString(),
-                                          particular: particular, forAll: false));
+                                          particular: particular, forAll: false, userId: userId));
                                     }
                                   },
                                   child: Container(

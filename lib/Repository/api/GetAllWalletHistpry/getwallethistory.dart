@@ -11,10 +11,10 @@ import '../apiclient.dart';
 class GetAllWalletApi {
   ApiClient apiClient = ApiClient();
 
-  Future<WalletHistoryModel> getallwallet(String fromDate, String toDate,String search,String particular,bool forAll) async {
+  Future<WalletHistoryModel> getallwallet(String fromDate, String toDate,String search,String particular,bool forAll,int userId) async {
     String trendingPath='';
     if(forAll==false){
-     trendingPath = "/collector/customer/wallet/history?from_date=$fromDate&to_date=$toDate&sk=$search&particular=$particular";}
+      trendingPath="/collector/customer/wallet/history?from_date=$fromDate&to_date=$toDate&sk=$search&particular=$particular&userId=$userId";}
     else{
       trendingPath ='/collector/customer/wallet/history';
     }
