@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../Bloc/UpdateName/update_name_bloc.dart';
 import 'Widget/toastmessage.dart';
+import 'optionscreen.dart';
 
 class EditCustomer extends StatefulWidget {
   final String name;
@@ -53,7 +54,12 @@ class _EditCustomerState extends State<EditCustomer> {
       Navigator.of(context).pop();
       ToastMessage().toastmessage(
           message: 'Customer Updated SuccessFully');
-      Navigator.of(context).pop();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) =>
+              const OptionScreen()),
+              (route) =>
+          false);
     }
     if (state is UpdateCreatedCustomerblocLoading) {
       showDialog(

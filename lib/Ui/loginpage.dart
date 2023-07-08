@@ -379,4 +379,10 @@ class _LoginPageState extends State<LoginPage> {
     await preferences.setString('Name', name);
     await preferences.setString('Email', email);
   }
+  @override
+  void dispose() {
+    email.clear();
+    password.clear();
+    super.dispose();
+  }
 }
