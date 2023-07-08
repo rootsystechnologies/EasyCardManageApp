@@ -11,6 +11,7 @@ import 'Bloc/GetAllCustomers/get_all_customers_bloc.dart';
 import 'Bloc/GetAllPermission/get_all_permission_bloc.dart';
 import 'Bloc/Login/login_bloc.dart';
 import 'Bloc/Recharge/recharge_bloc.dart';
+import 'Bloc/UpdateCreatedCustomer/update_created_customer_bloc.dart';
 import 'Bloc/UpdateEmail/update_email_bloc.dart';
 import 'Bloc/UpdateName/update_name_bloc.dart';
 import 'Bloc/WalletHistory/wallet_history_bloc.dart';
@@ -59,6 +60,8 @@ class MyApp extends StatelessWidget {
                 create: (context) => UpdateEmailBloc(),
               ),BlocProvider(
                 create: (context) => WalletHistoryBloc(),
+              ),BlocProvider(
+                create: (context) => UpdateCreatedCustomerBloc(),
               ),
 
             ],

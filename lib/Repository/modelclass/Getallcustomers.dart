@@ -65,7 +65,7 @@ class Customers {
   int? lastPage;
   String? lastPageUrl;
   List<Links>? links;
-  dynamic nextPageUrl;
+  String? nextPageUrl;
   String? path;
   int? perPage;
   dynamic prevPageUrl;
@@ -151,7 +151,7 @@ class Data {
     if (json['permissions'] != null) {
       permissions = [];
       json['permissions'].forEach((v) {
-        permissions?.add(Permissions.fromJson(v));
+        permissions?.add(v);
       });
     }
   }
@@ -166,7 +166,7 @@ class Data {
   String? updatedAt;
   dynamic deletedAt;
   Wallet? wallet;
-  List<Permissions>? permissions;
+  List<dynamic>? permissions;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -186,74 +186,6 @@ class Data {
     if (permissions != null) {
       map['permissions'] = permissions?.map((v) => v.toJson()).toList();
     }
-    return map;
-  }
-
-}
-
-class Permissions {
-  Permissions({
-      this.id, 
-      this.userId, 
-      this.permissionId, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.permission,});
-
-  Permissions.fromJson(dynamic json) {
-    id = json['id'];
-    userId = json['user_id'];
-    permissionId = json['permission_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    permission = json['permission'] != null ? Permission.fromJson(json['permission']) : null;
-  }
-  int? id;
-  int? userId;
-  int? permissionId;
-  String? createdAt;
-  String? updatedAt;
-  Permission? permission;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['user_id'] = userId;
-    map['permission_id'] = permissionId;
-    map['created_at'] = createdAt;
-    map['updated_at'] = updatedAt;
-    if (permission != null) {
-      map['permission'] = permission?.toJson();
-    }
-    return map;
-  }
-
-}
-
-class Permission {
-  Permission({
-      this.id, 
-      this.code, 
-      this.createdAt, 
-      this.updatedAt,});
-
-  Permission.fromJson(dynamic json) {
-    id = json['id'];
-    code = json['code'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-  int? id;
-  String? code;
-  String? createdAt;
-  String? updatedAt;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['code'] = code;
-    map['created_at'] = createdAt;
-    map['updated_at'] = updatedAt;
     return map;
   }
 

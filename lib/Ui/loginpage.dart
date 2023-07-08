@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,7 +19,7 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-
+bool passwordvisible = false;
 bool move = true;
 bool move1 = true;
 TextEditingController email = TextEditingController();
@@ -197,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                                           child: SizedBox(
                                             width: 200.w,
                                             height: 60.h,
-                                            child: TextFormField(
+                                            child: TextFormField(   obscureText: passwordvisible ? false : true,
                                               controller: password,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
@@ -209,7 +210,22 @@ class _LoginPageState extends State<LoginPage> {
                                                 password1 =
                                                     value!.trimRight();
                                               },
-                                              decoration: InputDecoration(
+                                              decoration: InputDecoration(suffix: IconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      passwordvisible =
+                                                      !passwordvisible;
+                                                    });
+                                                  },
+                                                  icon: passwordvisible ? Icon(
+                                                    Icons.remove_red_eye,
+                                                    color: Color(0xff767676),
+                                                  ) : Icon(
+                                                    FontAwesomeIcons.eyeSlash,
+                                                    color: Color(0xff767676), size: 18,
+                                                  )
+
+                                              ),
                                                   errorBorder:
                                                       InputBorder.none,
                                                   focusedBorder:

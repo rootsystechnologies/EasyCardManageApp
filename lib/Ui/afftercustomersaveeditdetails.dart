@@ -1,16 +1,19 @@
+import 'package:easymanage/Bloc/UpdateCreatedCustomer/update_created_customer_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Bloc/UpdateName/update_name_bloc.dart';
+import 'Widget/toastmessage.dart';
 
 class EditCustomer extends StatefulWidget {
   final String name;
   final String phone;
   final String email;
   final String creditLimit;
-  const EditCustomer({super.key,required this.name,required this.email,required this.creditLimit,required this.phone});
+  final String userId;
+  const EditCustomer({super.key,required this.name,required this.email,required this.creditLimit,required this.phone,required this.userId});
 
   @override
   State<EditCustomer> createState() => _EditCustomerState();
@@ -44,7 +47,25 @@ class _EditCustomerState extends State<EditCustomer> {
                     ],
                   ),
                 ),
-                child: Column(
+                child: BlocListener<UpdateCreatedCustomerBloc, UpdateCreatedCustomerState>(
+  listener: (context, state) {
+    if (state is UpdateCreatedCustomerblocLoaded) {
+      Navigator.of(context).pop();
+      ToastMessage().toastmessage(
+          message: 'Customer Updated SuccessFully');
+      Navigator.of(context).pop();
+    }
+    if (state is UpdateCreatedCustomerblocLoading) {
+      showDialog(
+          context: context,
+          builder: (BuildContext a) => const Center(
+              child: CircularProgressIndicator()));
+    }
+    if (state is UpdateCreatedCustomerblocError) {
+      Navigator.of(context).pop();
+    }
+  },
+  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
@@ -135,15 +156,15 @@ class _EditCustomerState extends State<EditCustomer> {
                             Container(
                               width: 293.w,
                               height: 51.h,
-                              margin: EdgeInsets.only(left: 17.w, right: 16.w),
+                              margin: EdgeInsets.only(left: 16.w, right: 17.w),
                               padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xffD9D9D9)
-                                    // Change border color based on focus
-                                    ),
-                                borderRadius: BorderRadius.circular(9.0.r),
+                                  // Change border color based on focus
+                                ),
+                                borderRadius: BorderRadius.circular(8.0.r),
                               ),
-                              child:usernameEdit == false
+                              child: usernameEdit == false
                                   ? Row(
                                 children: [
                                   Padding(
@@ -170,27 +191,34 @@ class _EditCustomerState extends State<EditCustomer> {
                                   SizedBox(
                                     width: 90.w,
                                   ),
-                                  SizedBox(
-                                    width: 19.w,
-                                    height: 19.h,
-                                    child: Image.asset('assets/edit.png'),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        usernameEdit = !usernameEdit;
+                                      });
+                                    },
+                                    child: SizedBox(
+                                      width: 19.w,
+                                      height: 19.h,
+                                      child: Image.asset('assets/edit.png'),
+                                    ),
                                   )
                                 ],
-                              ):TextField(
+                              )
+                                  : TextField(
                                 autofocus: true,
                                 controller: userName,
                                 decoration: InputDecoration(
                                   suffix: GestureDetector(
                                       onTap: () {
-                                        BlocProvider.of<UpdateNameBloc>(context)
-                                            .add(FetchChangeName(
-                                            name: userName.text));
+                                        BlocProvider.of<UpdateCreatedCustomerBloc>(context).add(
+                                         FetchUpdateCustomer(userId: widget.userId, name: userName.text, email: widget.email, credit: widget.creditLimit, mobile: widget.phone));
                                       },
                                       child: Text(
                                         'Update',
                                         style: TextStyle(color: Colors.red),
                                       )),
-                                  hintText: 'User Name',
+                                  hintText: widget.name,
                                   hintStyle: TextStyle(
                                     color: Color(0xffA4A4A4),
                                     letterSpacing: -0.3.sp,
@@ -207,16 +235,16 @@ class _EditCustomerState extends State<EditCustomer> {
                             Container(
                               width: 293.w,
                               height: 51.h,
-                              margin: EdgeInsets.only(left: 17.w, right: 16.w),
+                              margin: EdgeInsets.only(left: 16.w, right: 17.w),
                               padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Color(0xffD9D9D9)
-                                    // Change border color based on focus
-                                    ),
-                                borderRadius: BorderRadius.circular(9.0.r),
+                                  // Change border color based on focus
+                                ),
+                                borderRadius: BorderRadius.circular(8.0.r),
                               ),
-                              child:phoneEdit == false
-                                  ?  Row(
+                              child: emailEdit == false
+                                  ? Row(
                                 children: [
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -225,79 +253,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                       bottom: 11.h,
                                     ),
                                     child: SizedBox(
-                                        width: 127.w,
-                                        height: 27.h,
-                                        child: Text(
-                                          widget.phone,
-                                          style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                              letterSpacing: -0.3.sp,
-                                              color: Color(0xFFEC1C24),
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        )),
-                                  ),
-                                  SizedBox(
-                                    width: 90.w,
-                                  ),
-                                  SizedBox(
-                                    width: 19.w,
-                                    height: 19.h,
-                                    child: Image.asset('assets/edit.png'),
-                                  )
-                                ],
-                              ):TextField(
-                                autofocus: true,
-                                controller: phone,
-                                decoration: InputDecoration(
-                                  suffix: GestureDetector(
-                                      onTap: () {
-                                        BlocProvider.of<UpdateNameBloc>(context)
-                                            .add(FetchChangeName(
-                                            name: userName.text));
-                                      },
-                                      child: Text(
-                                        'Update',
-                                        style: TextStyle(color: Colors.red),
-                                      )),
-                                  hintText: 'Phone',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xffA4A4A4),
-                                    letterSpacing: -0.3.sp,
-                                    fontSize: 13.0
-                                        .sp, // Change hint text size based on focus
-                                  ),
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 34.h,
-                            ),
-                            Container(
-                              width: 293.w,
-                              height: 51.h,
-                              margin: EdgeInsets.only(left: 17.w, right: 16.w),
-                              padding: EdgeInsets.symmetric(horizontal: 16.0.h),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Color(0xffD9D9D9)
-                                    // Change border color based on focus
-                                    ),
-                                borderRadius: BorderRadius.circular(9.0.r),
-                              ),
-                              child: emailEdit == false
-                                  ? Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 15.w,
-                                      top: 13.h,
-                                      bottom: 11.h,
-                                    ),
-                                    child: SizedBox(
-                                        width: 220.w,
+                                        width: 216.w,
                                         height: 27.h,
                                         child: Text(
                                           widget.email,
@@ -311,27 +267,103 @@ class _EditCustomerState extends State<EditCustomer> {
                                           ),
                                         )),
                                   ),
-                                  SizedBox(
-                                    width: 19.w,
-                                    height: 19.h,
-                                    child: Image.asset('assets/edit.png'),
+                                  GestureDetector(
+                                    onTap: () => setState(() {
+                                      emailEdit = !emailEdit;
+                                    }),
+                                    child: SizedBox(
+                                      width: 19.w,
+                                      height: 19.h,
+                                      child: Image.asset('assets/edit.png'),
+                                    ),
                                   )
                                 ],
-                              ):TextField(
+                              )
+                                  : TextField(
                                 autofocus: true,
                                 controller: email,
-                                decoration: InputDecoration(
-                                  suffix: GestureDetector(
-                                      onTap: () {
-                                        BlocProvider.of<UpdateNameBloc>(context)
-                                            .add(FetchChangeName(
-                                            name: userName.text));
-                                      },
-                                      child: Text(
-                                        'Update',
-                                        style: TextStyle(color: Colors.red),
-                                      )),
+                                decoration: InputDecoration(suffix: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<UpdateCreatedCustomerBloc>(context).add(
+                                          FetchUpdateCustomer(userId: widget.userId, name: widget.name, email: email.text, credit: widget.creditLimit, mobile: widget.phone));
+                                    },
+                                    child: Text(
+                                      'Update',
+                                      style: TextStyle(color: Colors.red),
+                                    )),
                                   hintText: 'Email',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffA4A4A4),
+                                    letterSpacing: -0.3.sp,
+                                    fontSize: 13.0
+                                        .sp, // Change hint text size based on focus
+                                  ),
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),SizedBox(
+                              height: 34.h,
+                            ),
+                            Container(
+                              width: 293.w,
+                              height: 51.h,
+                              margin: EdgeInsets.only(left: 16.w, right: 17.w),
+                              padding: EdgeInsets.symmetric(horizontal: 16.0.h),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xffD9D9D9)
+                                  // Change border color based on focus
+                                ),
+                                borderRadius: BorderRadius.circular(8.0.r),
+                              ),
+                              child: phoneEdit == false
+                                  ? Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 16.w,
+                                      top: 13.h,
+                                      bottom: 11.h,
+                                    ),
+                                    child: SizedBox(
+                                        width: 216.w,
+                                        height: 27.h,
+                                        child: Text(
+                                          widget.phone,
+                                          style: GoogleFonts.poppins(
+                                            textStyle: TextStyle(
+                                              letterSpacing: -0.3.sp,
+                                              color: Color(0xFFEC1C24),
+                                              fontSize: 15.sp,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => setState(() {
+                                      phoneEdit = !phoneEdit;
+                                    }),
+                                    child: SizedBox(
+                                      width: 19.w,
+                                      height: 19.h,
+                                      child: Image.asset('assets/edit.png'),
+                                    ),
+                                  )
+                                ],
+                              )
+                                  : TextField(
+                                autofocus: true,
+                                controller: phone,
+                                decoration: InputDecoration(suffix: GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<UpdateCreatedCustomerBloc>(context).add(
+                                          FetchUpdateCustomer(userId: widget.userId, name: widget.name, email: widget.email, credit: widget.creditLimit, mobile: phone.text));
+                                    },
+                                    child: Text(
+                                      'Update',
+                                      style: TextStyle(color: Colors.red),
+                                    )),
+                                  hintText: 'Phone',
                                   hintStyle: TextStyle(
                                     color: Color(0xffA4A4A4),
                                     letterSpacing: -0.3.sp,
@@ -383,10 +415,14 @@ class _EditCustomerState extends State<EditCustomer> {
                                   SizedBox(
                                     width: 54.w,
                                   ),
-                                  SizedBox(
-                                    width: 19.w,
-                                    height: 19.h,
-                                    child: Image.asset('assets/edit.png'),
+                                  GestureDetector(onTap: () => setState(() {
+                                    creditLimitEdit = !creditLimitEdit;
+                                  }),
+                                    child: SizedBox(
+                                      width: 19.w,
+                                      height: 19.h,
+                                      child: Image.asset('assets/edit.png'),
+                                    ),
                                   )
                                 ],
                               ):TextField(
@@ -395,9 +431,8 @@ class _EditCustomerState extends State<EditCustomer> {
                                 decoration: InputDecoration(
                                   suffix: GestureDetector(
                                       onTap: () {
-                                        BlocProvider.of<UpdateNameBloc>(context)
-                                            .add(FetchChangeName(
-                                            name: userName.text));
+                                        BlocProvider.of<UpdateCreatedCustomerBloc>(context).add(
+                                            FetchUpdateCustomer(userId: widget.userId, name: widget.name, email: widget.email, credit: credit.text, mobile:widget.phone));
                                       },
                                       child: Text(
                                         'Update',
@@ -477,6 +512,7 @@ class _EditCustomerState extends State<EditCustomer> {
                               ),
                             )
                           ]))
-                    ]))));
+                    ]),
+))));
   }
 }

@@ -17,6 +17,7 @@ class Customers extends StatefulWidget {
 
 bool move = true;
 int page=1;
+int totalPage=0;
 late Getallcustomers customers;
 TextEditingController search = TextEditingController();
 class _CustomersState extends State<Customers> {
@@ -297,6 +298,7 @@ class _CustomersState extends State<Customers> {
                         customers =
                             BlocProvider.of<GetAllCustomersBloc>(context)
                                 .getallcustomers;
+                        totalPage=customers.customers!.total!;
                         if(customers.customers!.data!.isEmpty){
                           return Container( width: 326.w,
                               height: 407.5.h,child: Center(child: Text("No Data"),));
@@ -391,18 +393,23 @@ class _CustomersState extends State<Customers> {
                                   )
                                 ],
                               );}else{
-                                return Row(
-                                  children: [SizedBox(width: 10.w,),
-                                    TextButton(onPressed: (){
-                                      if(page>=1){
-                                      page=page-1;
-                                      BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));}
-                                    }, child: Text("Previous")),SizedBox(width: 150.w,),
-                                    TextButton(onPressed: (){
-                                      page=page+1;
-                                      BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));
-                                    }, child: Text("Next")),
-                                  ],
+                                return Visibility(visible: search.text.isEmpty?true:false,
+                                  child: Row(
+                                    children: [SizedBox(width: 10.w,),
+                                      Visibility(visible:page!=1?true:false,
+                                        child: TextButton(onPressed: (){
+                                          if(page>=1){
+                                          page=page-1;
+                                          BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));}
+                                        }, child: Text("Previous")),
+                                      ),SizedBox(width: 150.w,),
+                                      TextButton(onPressed: (){
+                                        if(page<=totalPage){
+                                        page=page+1;
+                                        BlocProvider.of<GetAllCustomersBloc>(context).add(FetchGetAllCustomers(searchKey: '', page: page.toString()));}
+                                      }, child: Text("Next")),
+                                    ],
+                                  ),
                                 );
                               }
                             },

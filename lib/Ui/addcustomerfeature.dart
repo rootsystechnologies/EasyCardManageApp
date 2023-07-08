@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Bloc/GetAllPermission/get_all_permission_bloc.dart';
+import '../Repository/modelclass/CreateCustomerModel.dart';
 import '../Repository/modelclass/GetAllPermission.dart';
 import 'Widget/toastmessage.dart';
 import 'aftersavecustomerdetails.dart';
@@ -33,12 +34,12 @@ class AddCustomerFeature extends StatefulWidget {
   @override
   State<AddCustomerFeature> createState() => _AddCustomerFeatureState();
 }
-
+int userId=1;
 List<bool> values = [];
 bool allowall = false;
 List<String> allowedPerms = [];
 late GetAllPermission permisson;
-
+late CreateCustomerModel customer;
 class _AddCustomerFeatureState extends State<AddCustomerFeature> {
   @override
   void initState() {
@@ -333,6 +334,8 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                       CreateCustomerState>(
                                     listener: (context, state) {
                                       if (state is createCustomerblocLoaded) {
+                                        customer=BlocProvider.of<CreateCustomerBloc>(context).createCustomerModel;
+                                            userId=customer.user!.id!;
                                         Navigator.of(context).pop();
                                         ToastMessage().toastmessage(message: "New Customer Created SuccessFully");
                                         Navigator.of(context).push(
@@ -350,7 +353,7 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                                           .passwordConfirmation,
                                                       name: widget.name,
                                                       allowedPerms:
-                                                          allowedPerms, place: widget.place,
+                                                          allowedPerms, place: widget.place, userId: userId.toString(),
                                                     )));
                                       }
                                       if (state is createCustomerblocLoading) {
