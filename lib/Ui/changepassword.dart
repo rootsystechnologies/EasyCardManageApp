@@ -53,7 +53,9 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    oldPassword.clear();
+    newPassword.clear();
+    confirmPassword.clear();
     super.dispose();
     _focusNode1.dispose();
     _focusNode2.dispose();
@@ -164,8 +166,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         SizedBox(
                           height: 36.h,
                         ),
-                        FocusScope(
-                          child: Container(
+                        Container(
                             margin: EdgeInsets.only(left: 16.w, right: 17.w),
                             padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                             decoration: BoxDecoration(
@@ -177,7 +178,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextFormField(textInputAction: TextInputAction.next,
                               controller: oldPassword,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(
@@ -196,12 +197,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                             ),
                           ),
-                        ),
                         SizedBox(
                           height: 26.h,
                         ),
-                        FocusScope(
-                          child: Container(
+                       Container(
                             margin: EdgeInsets.only(left: 16.w, right: 17.w),
                             padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                             decoration: BoxDecoration(
@@ -213,7 +212,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextFormField(textInputAction: TextInputAction.next,
                               controller: newPassword,
                               focusNode: _focusNode2,
                               decoration: InputDecoration(
@@ -232,12 +231,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                             ),
                           ),
-                        ),
                         SizedBox(
                           height: 26.h,
                         ),
-                        FocusScope(
-                          child: Container(
+      Container(
                             margin: EdgeInsets.only(left: 16.w, right: 17.w),
                             padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                             decoration: BoxDecoration(
@@ -268,7 +265,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                             ),
                           ),
-                        ),
                       ]))),
                   Positioned(
                     top: 328.h,
@@ -294,9 +290,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                             ChangePasswordState>(
                           listener: (context, state) {
                             if (state is ChangePasswordblocLoaded) {
+
                               Navigator.of(context).pop();
+                              oldPassword.clear();
+                              newPassword.clear();
+                              confirmPassword.clear();
                               ToastMessage().toastmessage(
                                   message: 'Password Changed SuccessFully');
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Profile()));
                             }
                             if (state is ChangePasswordblocLoading) {
                               showDialog(
@@ -310,8 +312,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                           },
                           child: GestureDetector(
                             onTap: () {
+                              if(newPassword.text==confirmPassword.text){
                               BlocProvider.of<ChangePasswordBloc>(context).add(
-                                  FetchChangePassword(password: newPassword.text));
+                                  FetchChangePassword(password: newPassword.text));}else{
+                                ToastMessage().toastmessage(
+                                    message: 'Password Not Matching');
+                              }
                             },
                             child: Container(
                               width: 82.w,

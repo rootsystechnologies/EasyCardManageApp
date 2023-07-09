@@ -460,7 +460,17 @@ class _AmountCollectionState extends State<AmountCollection> {
                                       builder: (context, state) {
                                         if (state
                                             is GetAllCollectionblocLoading) {
-                                          return CircularProgressIndicator();
+                                          return  Container(
+                                            height: 318.h,
+                                            width: 337.w,
+                                            child: Center(
+                                              child: SizedBox(
+                                                height: 30.h,
+                                                width: 30.w,
+                                                child: CircularProgressIndicator(),
+                                              ),
+                                            ),
+                                          );
                                         }
                                         if (state
                                             is GetAllCollectionblocError) {

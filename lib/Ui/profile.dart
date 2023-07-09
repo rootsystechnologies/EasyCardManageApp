@@ -39,9 +39,10 @@ class _ProfileState extends State<Profile> {
       email1 = preferences.getString('Email').toString();
     });
   }
-
   @override
   void dispose() {
+    userName.clear();
+    email.clear();
     // TODO: implement dispose
     super.dispose();
   }
@@ -89,7 +90,7 @@ class _ProfileState extends State<Profile> {
               Container(
                   margin: EdgeInsets.only(left: 21.w, right: 21.w),
                   width: 326.w,
-                  height: 558.h,
+                  height: 484.h,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(25.r),
@@ -207,9 +208,11 @@ class _ProfileState extends State<Profile> {
                                     UpdateNameState>(
                                   listener: (context, state) {
                                     if (state is ChangeNameblocLoaded) {
+
                                       Navigator.of(context).pop();
                                       setState(() {
                                         usernameEdit = false;
+                                        userName1=userName.text;
                                       });
                                       ToastMessage().toastmessage(
                                           message:
@@ -251,54 +254,54 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: 25.h,
                     ),
-                    Container(
-                      width: 293.w,
-                      height: 51.h,
-                      margin: EdgeInsets.only(left: 16.w, right: 17.w),
-                      padding: EdgeInsets.symmetric(horizontal: 16.0.h),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xffD9D9D9)
-                            // Change border color based on focus
-                            ),
-                        borderRadius: BorderRadius.circular(8.0.r),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 16.w,
-                              top: 13.h,
-                              bottom: 11.h,
-                            ),
-                            child: SizedBox(
-                                width: 127.w,
-                                height: 27.h,
-                                child: Text(
-                                  '789 369 4556',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      letterSpacing: -0.3.sp,
-                                      color: Color(0xFFEC1C24),
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                )),
-                          ),
-                          SizedBox(
-                            width: 90.w,
-                          ),
-                          SizedBox(
-                            width: 19.w,
-                            height: 19.h,
-                            child: Image.asset('assets/edit.png'),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25.h,
-                    ),
+                    // Container(
+                    //   width: 293.w,
+                    //   height: 51.h,
+                    //   margin: EdgeInsets.only(left: 16.w, right: 17.w),
+                    //   padding: EdgeInsets.symmetric(horizontal: 16.0.h),
+                    //   decoration: BoxDecoration(
+                    //     border: Border.all(color: Color(0xffD9D9D9)
+                    //         // Change border color based on focus
+                    //         ),
+                    //     borderRadius: BorderRadius.circular(8.0.r),
+                    //   ),
+                    //   child: Row(
+                    //     children: [
+                    //       Padding(
+                    //         padding: EdgeInsets.only(
+                    //           left: 16.w,
+                    //           top: 13.h,
+                    //           bottom: 11.h,
+                    //         ),
+                    //         child: SizedBox(
+                    //             width: 127.w,
+                    //             height: 27.h,
+                    //             child: Text(
+                    //               '789 369 4556',
+                    //               style: GoogleFonts.poppins(
+                    //                 textStyle: TextStyle(
+                    //                   letterSpacing: -0.3.sp,
+                    //                   color: Color(0xFFEC1C24),
+                    //                   fontSize: 15.sp,
+                    //                   fontWeight: FontWeight.w400,
+                    //                 ),
+                    //               ),
+                    //             )),
+                    //       ),
+                    //       SizedBox(
+                    //         width: 90.w,
+                    //       ),
+                    //       SizedBox(
+                    //         width: 19.w,
+                    //         height: 19.h,
+                    //         child: Image.asset('assets/edit.png'),
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 25.h,
+                    // ),
                     Container(
                       width: 293.w,
                       height: 51.h,
@@ -356,6 +359,7 @@ class _ProfileState extends State<Profile> {
                                     Navigator.of(context).pop();
                                     setState(() {
                                       emailEdit = false;
+                                      email1=email.text;
                                     });
                                     ToastMessage().toastmessage(
                                         message:

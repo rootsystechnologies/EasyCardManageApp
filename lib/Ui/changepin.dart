@@ -1,4 +1,5 @@
 import 'package:easymanage/Bloc/ChangePin/change_pin_bloc.dart';
+import 'package:easymanage/Ui/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +52,8 @@ class _ChangePinState extends State<ChangePin> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    oldPin.clear();
+    newPin.clear();confirmPin.clear();
     super.dispose();
     _focusNode1.dispose();
     _focusNode2.dispose();
@@ -162,8 +164,7 @@ class _ChangePinState extends State<ChangePin> {
                         SizedBox(
                           height: 36.h,
                         ),
-                        FocusScope(
-                          child: Container(
+                        Container(
                             margin: EdgeInsets.only(left: 16.w, right: 17.w),
                             padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                             decoration: BoxDecoration(
@@ -175,7 +176,7 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(keyboardType: TextInputType.number,
+                            child: TextFormField(keyboardType: TextInputType.number,textInputAction: TextInputAction.next,
                               controller: oldPin,
                               focusNode: _focusNode1,
                               decoration: InputDecoration(
@@ -194,12 +195,11 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                             ),
                           ),
-                        ),
+
                         SizedBox(
                           height: 26.h,
                         ),
-                        FocusScope(
-                          child: Container(
+                       Container(
                             margin: EdgeInsets.only(left: 16.w, right: 17.w),
                             padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                             decoration: BoxDecoration(
@@ -211,7 +211,7 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(keyboardType: TextInputType.number,
+                            child: TextFormField(keyboardType: TextInputType.number,textInputAction: TextInputAction.next,
                               controller: newPin,
                               focusNode: _focusNode2,
                               decoration: InputDecoration(
@@ -230,12 +230,10 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                             ),
                           ),
-                        ),
                         SizedBox(
                           height: 26.h,
                         ),
-                        FocusScope(
-                          child: Container(
+                       Container(
                             margin: EdgeInsets.only(left: 16.w, right: 17.w),
                             padding: EdgeInsets.symmetric(horizontal: 16.0.h),
                             decoration: BoxDecoration(
@@ -266,7 +264,7 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                             ),
                           ),
-                        ),
+
                       ]))),
                   Positioned(
                     top: 328.h,
@@ -291,9 +289,15 @@ class _ChangePinState extends State<ChangePin> {
                         child: BlocListener<ChangePinBloc, ChangePinState>(
                           listener: (context, state) {
                             if (state is ChangePinblocLoaded) {
+
                               Navigator.of(context).pop();
+                              oldPin.clear();
+                              newPin.clear();
+                              confirmPin.clear();
                               ToastMessage().toastmessage(
                                   message: 'Pin Changed SuccessFully');
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Profile()));
                             }
                             if (state is ChangePinblocLoading) {
                               showDialog(
@@ -307,10 +311,14 @@ class _ChangePinState extends State<ChangePin> {
                           },
                           child: GestureDetector(
                             onTap: () {
+                              if(newPin.text==confirmPin.text){
                               BlocProvider.of<ChangePinBloc>(context).add(
                                   FetchChangePin(
                                       newPin: newPin.text,
-                                      oldPin: oldPin.text));
+                                      oldPin: oldPin.text));}else{
+                                ToastMessage().toastmessage(
+                                    message: 'Pin Mismatch');
+                              }
                             },
                             child: Container(
                               width: 82.w,
