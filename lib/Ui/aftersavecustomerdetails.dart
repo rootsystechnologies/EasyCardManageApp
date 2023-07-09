@@ -16,6 +16,7 @@ class AfterSaveCustomer extends StatefulWidget {
   final List<String> allowedPerms;
   final String place;
   final String userId;
+
   const AfterSaveCustomer(
       {super.key,
       required this.password,
@@ -24,8 +25,10 @@ class AfterSaveCustomer extends StatefulWidget {
       required this.opbalance,
       required this.creditLimit,
       required this.passwordConfirmation,
-      required this.name,required this.userId,
-      required this.allowedPerms,required this.place});
+      required this.name,
+      required this.userId,
+      required this.allowedPerms,
+      required this.place});
 
   @override
   State<AfterSaveCustomer> createState() => _AfterSaveCustomerState();
@@ -76,7 +79,7 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                       Container(
                           margin: EdgeInsets.only(left: 17.w, right: 17.w),
                           width: 326.w,
-                          height: 469.h,
+                          height: 519.h,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(25.r),
@@ -169,6 +172,56 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   height: 20.h,
                                   child: Text(
                                     widget.name,
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: Color(0xFFA3A3A3),
+                                        fontSize: 13.sp,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(left: 11.w, right: 12.93.w),
+                              child: Divider(
+                                color: Color(0xffE5E5E5),
+                                thickness: 1.5.sp,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 13.h,
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                                SizedBox(
+                                  width: 133.w,
+                                  height: 18.h,
+                                  child: Text(
+                                    'Place                        :',
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: Color(0xFFFF0000),
+                                        fontSize: 14.sp,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 84.w,
+                                  height: 20.h,
+                                  child: Text(
+                                    widget.place,
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         color: Color(0xFFA3A3A3),
@@ -532,10 +585,17 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                       bottomRight: Radius.circular(25.r))),
                               child: Center(
                                 child: GestureDetector(
-                                  onTap: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (_) => EditCustomer(name: widget.name, email: widget.email, creditLimit: widget.creditLimit, phone: widget.mobile, userId: widget.userId
-                                            ,))),
+                                  onTap: () => Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                          builder: (_) => EditCustomer(
+                                                name: widget.name,
+                                                email: widget.email,
+                                                creditLimit: widget.creditLimit,
+                                                phone: widget.mobile,
+                                                userId: widget.userId,
+                                                openingBalance:
+                                                    widget.opbalance, place: widget.place,
+                                              ))),
                                   child: Container(
                                     margin: EdgeInsets.only(
                                         top: 20.h, bottom: 20.h, right: 20.w),

@@ -155,7 +155,17 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                 GetAllPermissionState>(
                               builder: (context, state) {
                                 if (state is GetAllPermissionblocLoading) {
-                                  return CircularProgressIndicator();
+                                  return  Container(
+                                    width: 326.w,
+                                    height: 519.h,
+                                    child: Center(
+                                      child: SizedBox(
+                                        height: 30.h,
+                                        width: 30.w,
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  );
                                 }
                                 if (state is GetAllPermissionblocError) {
                                   return RefreshIndicator(
@@ -292,20 +302,28 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                     width: 31.w,
                                   ),
                                   GestureDetector(
-                                      onTap: () => setState(() {
+                                      onTap: () { setState(() {
                                             allowall = !allowall;
                                             if (allowall == true) {
                                               values = List<bool>.generate(
                                                   permisson.perms!.length,
                                                   (index) => true);
+                                              allowedPerms=List<String>.generate(permisson.perms!.length, (index) => permisson
+                                                  .perms![index].id
+                                                  .toString());
 
-                                            } else {
+
+                                            } if(allowall==false){
                                               values = List<bool>.generate(
                                                   permisson.perms!.length,
                                                   (index) => false);
+                                              allowedPerms.clear();
                                             }
                                             ;
-                                          }),
+                                          });
+                                        print(values);
+                                        print(allowedPerms);
+                                        },
                                       child: SizedBox(
                                         width: 24.w,
                                         height: 24.w,
@@ -317,7 +335,7 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                     width: 11.w,
                                   ),
                                   Text(
-                                    'Allow all',
+                                    'Allow All',
                                     style: GoogleFonts.poppins(
                                       textStyle: TextStyle(
                                         letterSpacing: -0.3.sp,
@@ -369,7 +387,9 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                       }
                                     },
                                     child: GestureDetector(
-                                      onTap: () => BlocProvider.of<
+                                      onTap: () {
+                                        if(allowedPerms.isNotEmpty){
+                                        BlocProvider.of<
                                               CreateCustomerBloc>(context)
                                           .add(FecthCreateCustomer(
                                               passwordConfirmation:
@@ -380,7 +400,10 @@ class _AddCustomerFeatureState extends State<AddCustomerFeature> {
                                               email: widget.email,
                                               name: widget.name,
                                               allowedPerms: allowedPerms,
-                                              opbalance: widget.opbalance, place:widget.place)),
+                                              opbalance: widget.opbalance, place:widget.place));}else{
+                                          ToastMessage().toastmessage(message: 'Please Select Permission');
+                                        }
+                                      },
                                       child: Container(
                                         width: 82.w,
                                         height: 35.13.h,

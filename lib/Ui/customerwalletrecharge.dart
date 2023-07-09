@@ -342,6 +342,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                                               if (state
                                               is RechargeblocLoaded) {
                                                 pin.clear();
+                                                amount.clear();
                                                 Navigator.of(
                                                     context)
                                                     .pop();
@@ -349,12 +350,9 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                                                     .toastmessage(
                                                     message:
                                                     "Recharge Successfully Completed");
-                                                Navigator.of(context).pushAndRemoveUntil(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                        const Customers()),
-                                                        (route) =>
-                                                    false);
+                                                Navigator.of(context).popUntil((route) => route.isFirst);
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Customers()));
+
                                               }
                                               if (state
                                               is RechargeblocLoading) {

@@ -323,11 +323,9 @@ class _CustomerCollectAmountState extends State<CustomerCollectAmount> {
 
                                       Navigator.of(context).pop();
                                       ToastMessage().toastmessage(message:"Amount Collected Successfully");
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              const Customers()),
-                                              (route) => false);
+                                      Navigator.of(context).popUntil((route) => route.isFirst);
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Customers()));
+
                                     }
                                     if (state is CollectblocLoading) {
                                       showDialog(
