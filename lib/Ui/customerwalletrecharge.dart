@@ -1,6 +1,7 @@
 
 
 import 'package:easymanage/Bloc/Recharge/recharge_bloc.dart';
+import 'package:easymanage/Ui/customers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -351,7 +352,7 @@ class _CustomerWalletRechargeState extends State<CustomerWalletRecharge> {
                                                 Navigator.of(context).pushAndRemoveUntil(
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                        const OptionScreen()),
+                                                        const Customers()),
                                                         (route) =>
                                                     false);
                                               }
