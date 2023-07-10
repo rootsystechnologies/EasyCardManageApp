@@ -28,13 +28,17 @@ TextEditingController search = TextEditingController();
 late GetAllCollectionModel collections;
 final DateFormat formatter = DateFormat('yyyy-MM-dd');
 String userName = '';
-String error='';
+String error = '';
+
 String convertISODate(String isoDate) {
   DateTime date = DateTime.parse(isoDate);
   String formattedDate = DateFormat('dd-MM-yyyy').format(date);
   return formattedDate;
 }
-int userId=0;
+
+int userId = 0;
+int totalPage = 0;
+
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
   bool isExpanded1 = false;
@@ -44,8 +48,8 @@ class _AmountCollectionState extends State<AmountCollection> {
 
   @override
   void initState() {
-    BlocProvider.of<GetAllCollectionBloc>(context)
-        .add(FetchGetAllCollection(userId: 0, toDate: '', fromDate: '', forAll: true));
+    BlocProvider.of<GetAllCollectionBloc>(context).add(FetchGetAllCollection(
+        userId: 0, toDate: '', fromDate: '', forAll: true));
     BlocProvider.of<GetAllCustomersBloc>(context).add(
         FetchGetAllCustomers(searchKey: search.text, page: page.toString()));
     super.initState();
@@ -273,8 +277,8 @@ class _AmountCollectionState extends State<AmountCollection> {
                                           padding: EdgeInsets.all(8.h),
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            border: Border.all(
-                                                color: Colors.grey),
+                                            border:
+                                                Border.all(color: Colors.grey),
                                           ),
                                           child: Center(
                                             child: Text(
@@ -361,12 +365,12 @@ class _AmountCollectionState extends State<AmountCollection> {
                                           padding: EdgeInsets.all(8.h),
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            border: Border.all(
-                                                color: Colors.grey),
+                                            border:
+                                                Border.all(color: Colors.grey),
                                           ),
                                           child: Center(
-                                            child: Text(
-                                                formatter.format(toDate)),
+                                            child:
+                                                Text(formatter.format(toDate)),
                                           ),
                                         ),
                                     ],
@@ -455,12 +459,10 @@ class _AmountCollectionState extends State<AmountCollection> {
                                       color: Color(0xffEC1C24),
                                       thickness: 1.3.sp,
                                     ),
-                                    BlocBuilder<GetAllCollectionBloc,
-                                        GetAllCollectionState>(
+                                    BlocBuilder<GetAllCollectionBloc, GetAllCollectionState>(
                                       builder: (context, state) {
-                                        if (state
-                                            is GetAllCollectionblocLoading) {
-                                          return  Container(
+                                        if (state is GetAllCollectionblocLoading) {
+                                          return Container(
                                             height: 318.h,
                                             width: 337.w,
                                             child: Center(
@@ -472,219 +474,228 @@ class _AmountCollectionState extends State<AmountCollection> {
                                             ),
                                           );
                                         }
-                                        if (state
-                                            is GetAllCollectionblocError) {
+                                        if (state is GetAllCollectionblocError) {
                                           if (error == 'Unauthenticated.') {
                                             return Dialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(
-                                                      5.0), // Set the desired border radius
-                                                ),
-                                                child: Container(
-                                                    padding: EdgeInsets.all(16.0),
-                                                    child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: [
-                                                          SizedBox(
-                                                            height: 15.h,
-                                                          ),
-                                                          Text(
-                                                            'Token Expired',
-                                                            style: TextStyle(
-                                                                color: Colors.black,
-                                                                fontWeight:
-                                                                FontWeight.w500),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 30.h,
-                                                          ),
-                                                          TextButton(onPressed: ()async{
-                                                            final preferences = await SharedPreferences.getInstance();
-                                                            preferences.clear();
-                                                            Navigator.of(context).pushAndRemoveUntil(
-                                                                MaterialPageRoute(
-                                                                    builder: (BuildContext a) => LoginPage()),
-                                                                    (route) => false);
-                                                          },
-                                                            child: Container(
-                                                              width: 80.w,
-                                                              height: 30.h,
-                                                              decoration: BoxDecoration(
-                                                                  color: Colors.red,
-                                                                  borderRadius:
-                                                                  BorderRadius.circular(
-                                                                      4)),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  "Login",
-                                                                  style: TextStyle(
-                                                                      color: Colors.white,
-                                                                      fontWeight:
-                                                                      FontWeight.w500),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          )
-                                                        ])));
-                                          }else{
-                                          return RefreshIndicator(
-                                            onRefresh: () async {
-                                              return BlocProvider.of<
-                                                          GetAllCollectionBloc>(
-                                                      context)
-                                                  .add(FetchGetAllCollection(
-                                                      userId: userId,
-                                                      toDate: toDate.toString(),
-                                                      fromDate:
-                                                          fromDate.toString(), forAll: true));
-                                            },
-                                            child: SingleChildScrollView(
-                                              physics:
-                                                  const BouncingScrollPhysics(),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(5.0),
+                                              ),
                                               child: Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      .9,
-                                                  // color: Colors.red,
+                                                padding: EdgeInsets.all(16.0),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 15.h,
+                                                    ),
+                                                    Text(
+                                                      'Token Expired',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 30.h,
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        final preferences = await SharedPreferences.getInstance();
+                                                        preferences.clear();
+                                                        Navigator.of(context).pushAndRemoveUntil(
+                                                          MaterialPageRoute(builder: (BuildContext a) => LoginPage()),
+                                                              (route) => false,
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 80.w,
+                                                        height: 30.h,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.circular(4),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            "Login",
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          } else {
+                                            return RefreshIndicator(
+                                              onRefresh: () async {
+                                                return BlocProvider.of<GetAllCollectionBloc>(context).add(
+                                                  FetchGetAllCollection(
+                                                    userId: userId,
+                                                    toDate: toDate.toString(),
+                                                    fromDate: fromDate.toString(),
+                                                    forAll: true,
+                                                  ),
+                                                );
+                                              },
+                                              child: SingleChildScrollView(
+                                                physics: const BouncingScrollPhysics(),
+                                                child: Container(
+                                                  height: MediaQuery.of(context).size.height * 0.9,
                                                   child: Center(
-                                                      child: Text("Error"))),
-                                            ),
-                                          );
-                                        }}
-                                        if (state
-                                            is GetAllCollectionblocLoaded) {
-                                          collections = BlocProvider.of<
-                                                  GetAllCollectionBloc>(context)
-                                              .getAllCollectionModel;
+                                                    child: Text("Error"),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                        if (state is GetAllCollectionblocLoaded) {
+                                          collections = BlocProvider.of<GetAllCollectionBloc>(context).getAllCollectionModel;
+                                          totalPage=collections.collections!.total!;
                                           return SizedBox(
                                             height: 318.h,
                                             width: 337.w,
-                                            child: collections
-                                                    .collections!.data!.isEmpty
+                                            child: collections.collections!.data!.isEmpty
                                                 ? Center(
-                                                    child: Text("No Data"),
-                                                  )
+                                              child: Text("No Data"),
+                                            )
                                                 : ListView.separated(
-                                                    itemCount: collections
-                                                        .collections!
-                                                        .data!
-                                                        .length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      String formattedDate =
-                                                          convertISODate(
-                                                              collections
-                                                                  .collections!
-                                                                  .data![index]
-                                                                  .createdAt!);
-                                                      return Row(
+                                              itemCount: collections.collections!.data!.length + 1,
+                                              itemBuilder: (BuildContext context, int index) {
+                                                if (index < collections.collections!.data!.length) {
+                                                  String formattedDate = convertISODate(collections.collections!.data![index].createdAt!);
+                                                  return Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 93.w,
+                                                        height: 21.h,
+                                                        child: Text(
+                                                          collections.collections!.data![index].user!.name.toString(),
+                                                          textAlign: TextAlign.center,
+                                                          style: GoogleFonts.poppins(
+                                                            textStyle: TextStyle(
+                                                              color: Color(0xFFA3A3A3),
+                                                              fontSize: 14.sp,
+                                                              fontWeight: FontWeight.w400,
+                                                              letterSpacing: -0.30.sp,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 24.w,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 93.w,
+                                                        height: 21.h,
+                                                        child: Text(
+                                                          formattedDate,
+                                                          textAlign: TextAlign.center,
+                                                          style: GoogleFonts.poppins(
+                                                            textStyle: TextStyle(
+                                                              color: Color(0xFFA3A3A3),
+                                                              fontSize: 14.sp,
+                                                              fontWeight: FontWeight.w400,
+                                                              letterSpacing: -0.30.sp,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 44.w,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 62.w,
+                                                        height: 21.h,
+                                                        child: Text(
+                                                          collections.collections!.data![index].collectedAmount.toString(),
+                                                          textAlign: TextAlign.center,
+                                                          style: GoogleFonts.poppins(
+                                                            textStyle: TextStyle(
+                                                              color: Color(0xFFA3A3A3),
+                                                              fontSize: 14.sp,
+                                                              fontWeight: FontWeight.w400,
+                                                              letterSpacing: -0.30.sp,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                } else {
+                                                  // Return the widget for the additional row at the end
+                                                  return Visibility(
+                                                    visible: search.text.isEmpty,
+                                                    child: Padding(
+                                                      padding: EdgeInsets.only(bottom: 30.h),
+                                                      child: Row(
                                                         children: [
                                                           SizedBox(
-                                                            width: 93.w,
-                                                            height: 21.h,
-                                                            child: Text(
-                                                                collections
-                                                                    .collections!
-                                                                    .data![
-                                                                        index]
-                                                                    .user!
-                                                                    .name
-                                                                    .toString(),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: GoogleFonts
-                                                                    .poppins(
-                                                                        textStyle:
-                                                                            TextStyle(
-                                                                  color: Color(
-                                                                      0xFFA3A3A3),
-                                                                  fontSize:
-                                                                      14.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  letterSpacing:
-                                                                      -0.30.sp,
-                                                                ))),
+                                                            width: 10.w,
+                                                          ),
+                                                          Visibility(
+                                                            visible: page != 1,
+                                                            child: TextButton(
+                                                              onPressed: () {
+                                                                if (page >= 1) {
+                                                                  page = page - 1;
+                                                                  BlocProvider.of<GetAllCollectionBloc>(context).add(
+                                                                    FetchGetAllCollection(
+                                                                      userId: 0,
+                                                                      toDate: '',
+                                                                      fromDate: '',
+                                                                      forAll: true,
+                                                                    ),
+                                                                  );
+                                                                }
+                                                              },
+                                                              child: Text("Previous"),
+                                                            ),
                                                           ),
                                                           SizedBox(
-                                                            width: 24.w,
+                                                            width: 150.w,
                                                           ),
-                                                          SizedBox(
-                                                            width: 93.w,
-                                                            height: 21.h,
-                                                            child: Text(
-                                                                formattedDate,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: GoogleFonts
-                                                                    .poppins(
-                                                                        textStyle:
-                                                                            TextStyle(
-                                                                  color: Color(
-                                                                      0xFFA3A3A3),
-                                                                  fontSize:
-                                                                      14.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  letterSpacing:
-                                                                      -0.30.sp,
-                                                                ))),
+                                                          Visibility(
+                                                            visible: page != totalPage,
+                                                            child: TextButton(
+                                                              onPressed: () {
+                                                                if (page <= totalPage) {
+                                                                  page = page + 1;
+                                                                  BlocProvider.of<GetAllCollectionBloc>(context).add(
+                                                                    FetchGetAllCollection(
+                                                                      userId: 0,
+                                                                      toDate: '',
+                                                                      fromDate: '',
+                                                                      forAll: true,
+                                                                    ),
+                                                                  );
+                                                                }
+                                                              },
+                                                              child: Text("Next"),
+                                                            ),
                                                           ),
-                                                          SizedBox(
-                                                            width: 44.w,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 62.w,
-                                                            height: 21.h,
-                                                            child: Text(
-                                                                collections
-                                                                    .collections!
-                                                                    .data![
-                                                                        index]
-                                                                    .collectedAmount
-                                                                    .toString(),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: GoogleFonts
-                                                                    .poppins(
-                                                                        textStyle:
-                                                                            TextStyle(
-                                                                  color: Color(
-                                                                      0xFFA3A3A3),
-                                                                  fontSize:
-                                                                      14.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  letterSpacing:
-                                                                      -0.30.sp,
-                                                                ))),
-                                                          )
                                                         ],
-                                                      );
-                                                    },
-                                                    separatorBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      return Divider(
-                                                        color:
-                                                            Color(0xffD9D9D9),
-                                                      );
-                                                    },
-                                                  ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              separatorBuilder: (BuildContext context, int index) {
+                                                return Divider(
+                                                  color: Color(0xffD9D9D9),
+                                                );
+                                              },
+                                            ),
                                           );
-                                        } else {
-                                          return SizedBox();
                                         }
+                                        return SizedBox();
                                       },
                                     ),
+
                                     SizedBox(
                                       height: 18.h,
                                     ),
@@ -692,7 +703,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 10.w,top: 8.h),
+                                padding: EdgeInsets.only(left: 10.w, top: 8.h),
                                 child: Container(
                                   decoration: ShapeDecoration(
                                     color: Color(0xFFEC1C24),
@@ -1006,10 +1017,11 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                             child:
                                                                 GestureDetector(
                                                               onTap: () {
-                                                                userId=customers!
+                                                                userId = customers!
                                                                     .customers!
                                                                     .data![
-                                                                index].id!;
+                                                                        index]
+                                                                    .id!;
                                                                 userName = customers!
                                                                     .customers!
                                                                     .data![
@@ -1089,7 +1101,8 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                     .toString(),
                                                 fromDate: formatter
                                                     .format(fromDate)
-                                                    .toString(), forAll: false));
+                                                    .toString(),
+                                                forAll: false));
                                       }
                                     },
                                     child: Container(
