@@ -246,7 +246,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(
+                            child: TextField(obscureText: true,
                               controller: confirmPassword,
                               focusNode: _focusNode3,
                               decoration: InputDecoration(

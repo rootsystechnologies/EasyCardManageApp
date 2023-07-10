@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easymanage/Bloc/UpdateName/update_name_bloc.dart';
+import 'package:easymanage/Ui/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,11 +25,12 @@ String userName1 = '';
 String email1 = '';
 TextEditingController userName = TextEditingController();
 TextEditingController email = TextEditingController();
-
+bool first=true;
 class _ProfileState extends State<Profile> {
   @override
   void initState() {
-    getUserDetails();
+    if(first==true){
+    getUserDetails();}
     super.initState();
   }
 
@@ -49,6 +51,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
@@ -212,6 +215,7 @@ class _ProfileState extends State<Profile> {
                                       Navigator.of(context).pop();
                                       setState(() {
                                         usernameEdit = false;
+                                        first=false;
                                         userName1=userName.text;
                                       });
                                       ToastMessage().toastmessage(
@@ -359,6 +363,7 @@ class _ProfileState extends State<Profile> {
                                     Navigator.of(context).pop();
                                     setState(() {
                                       emailEdit = false;
+                                      first=false;
                                       email1=email.text;
                                     });
                                     ToastMessage().toastmessage(
@@ -533,7 +538,39 @@ class _ProfileState extends State<Profile> {
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(25.r),
-                              bottomRight: Radius.circular(25.r))),
+                              bottomRight: Radius.circular(25.r))),child: Center(child: GestureDetector(
+                      onTap: ()async {
+                        final preferences = await SharedPreferences.getInstance();
+                        setState(() {
+                          first=true;
+                        });
+                        preferences.clear();
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (BuildContext a) => LoginPage()),
+                                (route) => false);
+                      },
+                      child: Container(
+                        width: 130.w,
+                        height: 43.h,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFFEC1C24),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                        child: Center(
+                            child: Text('Log Out',
+                                style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.30.sp,
+                                    )),
+                          ),
+                        ),
+                      ),
+                    ),),
                     )
                   ])))
             ])));

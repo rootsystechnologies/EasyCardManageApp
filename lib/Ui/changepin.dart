@@ -245,7 +245,7 @@ class _ChangePinState extends State<ChangePin> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: TextField(keyboardType: TextInputType.number,
+                            child: TextField(keyboardType: TextInputType.number,obscureText: true,
                               controller: confirmPin,
                               focusNode: _focusNode3,
                               decoration: InputDecoration(
