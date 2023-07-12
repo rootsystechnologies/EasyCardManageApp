@@ -1,3 +1,4 @@
+import 'package:easymanage/Ui/optionscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import 'Bloc/UpdateCreatedCustomer/update_created_customer_bloc.dart';
 import 'Bloc/UpdateEmail/update_email_bloc.dart';
 import 'Bloc/UpdateName/update_name_bloc.dart';
 import 'Bloc/WalletHistory/wallet_history_bloc.dart';
+import 'Ui/aftersavecustomerdetails.dart';
 import 'Ui/loginpage.dart';
 import 'Ui/splashscreen.dart';
 
@@ -65,7 +67,10 @@ class MyApp extends StatelessWidget {
               ),
 
             ],
-            child: MaterialApp(
+            child: MaterialApp(routes: {
+              '/home': (context) => OptionScreen(),
+              // Define other routes here
+            },
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: ThemeData(
