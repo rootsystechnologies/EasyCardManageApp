@@ -19,7 +19,9 @@ class Customers extends StatefulWidget {
 
 bool move = true;
 int page = 1;
-int totalPage = 0;
+int total = 0;
+int perPage=0;
+int totalPage=0;
 late Getallcustomers customers;
 TextEditingController search = TextEditingController();
 
@@ -382,7 +384,9 @@ class _CustomersState extends State<Customers> {
                           customers =
                               BlocProvider.of<GetAllCustomersBloc>(context)
                                   .getallcustomers;
-                          totalPage = customers.customers!.total!;
+                          total = customers.customers!.total!;
+                          perPage=customers.customers!.perPage!;
+                          totalPage=(total/perPage).ceil();
                           if (customers.customers!.data!.isEmpty) {
                             return Container(
                                 width: 326.w,

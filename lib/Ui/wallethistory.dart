@@ -34,6 +34,8 @@ DateTime fromDate = DateTime.now();
 DateTime toDate = DateTime.now();
 late WalletHistoryModel history;
 int userId = 0;
+int total=0;
+int perPage=0;
 int totalPage=0;
 String error = '';
 
@@ -738,7 +740,9 @@ class _WalletHistoryState extends State<WalletHistory> {
                                       }
                                       if (state is GetAllWalletblocLoaded) {
                                         history = BlocProvider.of<WalletHistoryBloc>(context).walletHistoryModel;
-                                        totalPage = history.walletTransactions!.total!;
+                                        total = history.walletTransactions!.total!;
+                                        perPage=history.walletTransactions!.perPage!;
+                                        totalPage=(total/perPage).ceil();
                                         return SizedBox(
                                           height: 318.h,
                                           width: 337.w,

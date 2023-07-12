@@ -37,7 +37,9 @@ String convertISODate(String isoDate) {
 }
 
 int userId = 0;
-int totalPage = 0;
+int total = 0;
+int perpage=0;
+num totalPage=0;
 
 class _AmountCollectionState extends State<AmountCollection> {
   bool isExpanded = false;
@@ -555,7 +557,11 @@ class _AmountCollectionState extends State<AmountCollection> {
                                         }
                                         if (state is GetAllCollectionblocLoaded) {
                                           collections = BlocProvider.of<GetAllCollectionBloc>(context).getAllCollectionModel;
-                                          totalPage=collections.collections!.total!;
+                                          total=collections.collections!.total!;
+                                          perpage=collections.collections!.perPage!;
+                                          totalPage=(total/perpage).ceil();
+
+                                          print(totalPage);
                                           return SizedBox(
                                             height: 318.h,
                                             width: 337.w,
