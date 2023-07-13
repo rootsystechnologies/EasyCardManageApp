@@ -82,8 +82,8 @@ class _CustomersState extends State<Customers> {
                 height: 26.h,
               ),
               Container(
-                margin: EdgeInsets.only(left: 21.w, right: 21.w),
-                width: 326.w,
+                margin: EdgeInsets.only(left: 8.w, right: 8.w),
+                width: 500.w,
                 height: 671.h,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -104,7 +104,7 @@ class _CustomersState extends State<Customers> {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(25.r),
                               topRight: Radius.circular(25.r))),
-                      width: 326.w,
+                      width: 500.w,
                       height: 74.h,
                       child: Row(
                         children: [
@@ -254,7 +254,7 @@ class _CustomersState extends State<Customers> {
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 7.w, right: 6.w),
-                      width: 313.w,
+                      width: 500.w,
                       height: 34.h,
                       decoration: BoxDecoration(
                           color: Color(0xffEC1C24),
@@ -264,14 +264,14 @@ class _CustomersState extends State<Customers> {
                           Padding(
                             padding: EdgeInsets.only(left: 6.w),
                             child: SizedBox(
-                                width: 127.w,
+                                width: 80.w,
                                 height: 26.h,
                                 child: Text(
                                   "Customer",
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 15.sp,
+                                        fontSize: 12.sp,
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: -0.3.sp),
                                   ),
@@ -285,11 +285,23 @@ class _CustomersState extends State<Customers> {
                                 style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 15.sp,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: -0.3.sp),
                                 ),
-                              )),
+                              )),SizedBox(
+                              width: 120.w,
+                              height: 24.h,
+                              child: Text(
+                                "Balance To Collect",
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: -0.3.sp),
+                                ),
+                              ))
                         ],
                       ),
                     ),
@@ -405,9 +417,6 @@ class _CustomersState extends State<Customers> {
                                     return Row(
                                       children: [
                                         SizedBox(
-                                          width: 11.w,
-                                        ),
-                                        SizedBox(
                                           height: 21,
                                           width: 75,
                                           child: Center(
@@ -423,7 +432,7 @@ class _CustomersState extends State<Customers> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 50.w,
+                                          width: 10.w,
                                         ),
                                         SizedBox(
                                           width: 62.w,
@@ -441,7 +450,19 @@ class _CustomersState extends State<Customers> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 29.w,
+                                          width: 15.w,
+                                        ), SizedBox(
+                                  width: 62.w,
+                                  height: 21.h,
+                                  child: Center(
+                                  child: Text(customers
+                                      .customers!
+                                      .data![index].collections?.balanceToCollect.toString()??"0", style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                          color: Color(0xffA4A4A4),
+                                          fontSize: 14.sp,
+                                          letterSpacing: -0.3.sp))))), SizedBox(
+                                          width: 15.w,
                                         ),
                                         GestureDetector(
                                           onTap: () => Navigator.of(context).push(
@@ -567,7 +588,7 @@ class _CustomersState extends State<Customers> {
                       height: 10.52.h,
                     ),
                     Container(
-                      width: 326.w,
+                      width: 500.w,
                       height: 39.h,
                       decoration: BoxDecoration(
                           boxShadow: [

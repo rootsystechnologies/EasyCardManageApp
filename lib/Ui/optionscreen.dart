@@ -47,16 +47,15 @@ class _OptionScreenState extends State<OptionScreen> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 26.w),
-                  child: TextButton(
-                      onPressed: () {
-                        exit(0);
-                      },
-                      child: SizedBox(
-                        width: 37.062.w,
-                        height: 37.062.h,
-                        child: Image.asset('assets/arrowback.png'),
-                      )),
+                  child: IconButton(
+                    onPressed: () {
+                      exit(0);
+                    },
+                    icon: Icon(Icons.exit_to_app,color: Colors.white,),
+                    iconSize: 37.062,
+                  ),
                 ),
+
                 SizedBox(
                   height: 26.h,
                 ),

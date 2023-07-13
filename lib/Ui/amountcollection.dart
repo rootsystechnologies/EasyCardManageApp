@@ -51,7 +51,7 @@ class _AmountCollectionState extends State<AmountCollection> {
   @override
   void initState() {
     BlocProvider.of<GetAllCollectionBloc>(context).add(FetchGetAllCollection(
-        userId: 0, toDate: '', fromDate: '', forAll: true));
+        userId: 0, toDate: '', fromDate: '', forAll: true, page: page));
     BlocProvider.of<GetAllCustomersBloc>(context).add(
         FetchGetAllCustomers(searchKey: search.text, page: page.toString()));
     super.initState();
@@ -92,6 +92,7 @@ class _AmountCollectionState extends State<AmountCollection> {
     move = true;
     search.clear();
     userName = '';
+    page=1;
     super.dispose();
   }
 
@@ -539,7 +540,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                     userId: userId,
                                                     toDate: toDate.toString(),
                                                     fromDate: fromDate.toString(),
-                                                    forAll: true,
+                                                    forAll: true, page: page,
                                                   ),
                                                 );
                                               },
@@ -654,7 +655,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                                       userId: 0,
                                                                       toDate: '',
                                                                       fromDate: '',
-                                                                      forAll: true,
+                                                                      forAll: true, page: page,
                                                                     ),
                                                                   );
                                                                 }
@@ -676,7 +677,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                                       userId: 0,
                                                                       toDate: '',
                                                                       fromDate: '',
-                                                                      forAll: true,
+                                                                      forAll: true, page: page,
                                                                     ),
                                                                   );
                                                                 }
@@ -1108,7 +1109,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                 fromDate: formatter
                                                     .format(fromDate)
                                                     .toString(),
-                                                forAll: false));
+                                                forAll: false, page: page));
                                       }
                                     },
                                     child: Container(

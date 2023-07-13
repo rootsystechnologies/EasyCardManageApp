@@ -20,7 +20,7 @@ class GetAllCollectionBloc extends Bloc<GetAllCollectionEvent, GetAllCollectionS
     on<FetchGetAllCollection>((event, emit)async{
       emit(GetAllCollectionblocLoading());
       try{
-        getAllCollectionModel = await getAllCollectionApi.getallCollections(event.fromDate, event.toDate, event.userId,event.forAll);
+        getAllCollectionModel = await getAllCollectionApi.getallCollections(event.fromDate, event.toDate, event.userId,event.forAll,event.page);
         emit(GetAllCollectionblocLoaded());
       } catch(e){
         error=e.toString();

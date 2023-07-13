@@ -65,7 +65,7 @@ class Customers {
   int? lastPage;
   String? lastPageUrl;
   List<Links>? links;
-  String? nextPageUrl;
+  dynamic nextPageUrl;
   String? path;
   int? perPage;
   dynamic prevPageUrl;
@@ -134,7 +134,8 @@ class Data {
       this.updatedAt, 
       this.deletedAt, 
       this.wallet, 
-      this.permissions,});
+      this.permissions, 
+      this.collections,});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -151,9 +152,10 @@ class Data {
     if (json['permissions'] != null) {
       permissions = [];
       json['permissions'].forEach((v) {
-        permissions?.add(v);
+        permissions?.add(Permissions.fromJson(v));
       });
     }
+    collections = json['collections'] != null ? Collections.fromJson(json['collections']) : null;
   }
   int? id;
   String? name;
@@ -166,7 +168,8 @@ class Data {
   String? updatedAt;
   dynamic deletedAt;
   Wallet? wallet;
-  List<dynamic>? permissions;
+  List<Permissions>? permissions;
+  Collections? collections;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -186,6 +189,114 @@ class Data {
     if (permissions != null) {
       map['permissions'] = permissions?.map((v) => v.toJson()).toList();
     }
+    if (collections != null) {
+      map['collections'] = collections?.toJson();
+    }
+    return map;
+  }
+
+}
+
+class Collections {
+  Collections({
+      this.id, 
+      this.collectedAmount, 
+      this.balanceToCollect, 
+      this.userId, 
+      this.createdAt, 
+      this.updatedAt,});
+
+  Collections.fromJson(dynamic json) {
+    id = json['id'];
+    collectedAmount = json['collectedAmount'];
+    balanceToCollect = json['balanceToCollect'];
+    userId = json['user_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+  int? id;
+  String? collectedAmount;
+  String? balanceToCollect;
+  int? userId;
+  String? createdAt;
+  String? updatedAt;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['collectedAmount'] = collectedAmount;
+    map['balanceToCollect'] = balanceToCollect;
+    map['user_id'] = userId;
+    map['created_at'] = createdAt;
+    map['updated_at'] = updatedAt;
+    return map;
+  }
+
+}
+
+class Permissions {
+  Permissions({
+      this.id, 
+      this.userId, 
+      this.permissionId, 
+      this.createdAt, 
+      this.updatedAt, 
+      this.permission,});
+
+  Permissions.fromJson(dynamic json) {
+    id = json['id'];
+    userId = json['user_id'];
+    permissionId = json['permission_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    permission = json['permission'] != null ? Permission.fromJson(json['permission']) : null;
+  }
+  int? id;
+  int? userId;
+  int? permissionId;
+  String? createdAt;
+  String? updatedAt;
+  Permission? permission;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['user_id'] = userId;
+    map['permission_id'] = permissionId;
+    map['created_at'] = createdAt;
+    map['updated_at'] = updatedAt;
+    if (permission != null) {
+      map['permission'] = permission?.toJson();
+    }
+    return map;
+  }
+
+}
+
+class Permission {
+  Permission({
+      this.id, 
+      this.code, 
+      this.createdAt, 
+      this.updatedAt,});
+
+  Permission.fromJson(dynamic json) {
+    id = json['id'];
+    code = json['code'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+  int? id;
+  String? code;
+  String? createdAt;
+  String? updatedAt;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['code'] = code;
+    map['created_at'] = createdAt;
+    map['updated_at'] = updatedAt;
     return map;
   }
 

@@ -58,7 +58,7 @@ class _WalletHistoryState extends State<WalletHistory> {
         fromDate: formatter.format(fromDate).toString(),
         particular: particular,
         forAll: true,
-        userId: userId));
+        userId: userId, page: page, pagination: false));
     super.initState();
   }
 
@@ -96,9 +96,12 @@ class _WalletHistoryState extends State<WalletHistory> {
   void dispose() {
     move = true;
     search.clear();
+    fromDate = DateTime.now();
+    toDate = DateTime.now();
     userName = '';
     particular = '';
     userId = 0;
+    page=1;
     super.dispose();
   }
 
@@ -388,174 +391,174 @@ class _WalletHistoryState extends State<WalletHistory> {
                         SizedBox(
                           height: 17.h,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 18.w, right: 20.w),
-                          child: Container(
-                            decoration: ShapeDecoration(
-                              color: Color(0xFFEC1C24),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7.r)),
-                            ),
-                            width: 299.w,
-                            // Replace with your desired width
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                SizedBox(
-                                  height: 36.h,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        isExpanded2 = !isExpanded2;
-                                      });
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 85.w,
-                                          ),
-                                          child: FittedBox(
-                                            child: Text(
-                                              particular == ''
-                                                  ? "Particular"
-                                                  : particular,
-                                              style: GoogleFonts.poppins(
-                                                textStyle: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 17.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: -0.30.sp,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 63.w, right: 9.77.w),
-                                            child: SizedBox(
-                                                height: 10.8.h,
-                                                width: 10.8.w,
-                                                child: Image.asset(isExpanded2
-                                                    ? 'assets/arrowdown.png'
-                                                    : 'assets/arrowforward.png'))),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                if (isExpanded2)
-                                  Container(
-                                    width: 299.w,
-                                    height: 174.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(color: Colors.grey),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 16.h,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              particular = 'collected';
-                                            });
-                                            if (particular.isNotEmpty) {
-                                              setState(() {
-                                                isExpanded2 = false;
-                                              });
-                                            }
-                                          },
-                                          child: SizedBox(
-                                            width: 135.w,
-                                            height: 27.h,
-                                            child: Text(
-                                              'Cash Collected',
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                color: Color(0xFF00B94A),
-                                                fontSize: 18.sp,
-                                                fontFamily: 'Poppins',
-                                                fontWeight: FontWeight.w400,
-                                                letterSpacing: -0.30.sp,
-                                              )),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 14.h,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              particular = 'cash-payed';
-                                            });
-
-                                            if (particular.isNotEmpty) {
-                                              setState(() {
-                                                isExpanded2 = false;
-                                              });
-                                            }
-                                          },
-                                          child: SizedBox(
-                                            width: 89.w,
-                                            height: 27.h,
-                                            child: Text('Cash Paid',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                  textStyle: TextStyle(
-                                                    color: Color(0xFFEC1C24),
-                                                    fontSize: 18,
-                                                    fontFamily: 'Poppins',
-                                                    fontWeight: FontWeight.w400,
-                                                    letterSpacing: -0.30,
-                                                  ),
-                                                )),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 14.h,
-                                        ),
-                                        // GestureDetector(onTap: (){
-                                        //   setState(() {
-                                        //     particular='all';
-                                        //   });
-                                        //
-                                        //   if (particular.isNotEmpty) {
-                                        //     setState(() {
-                                        //       isExpanded2 =
-                                        //       false;
-                                        //     });
-                                        //   }
-                                        // },
-                                        //   child: SizedBox(
-                                        //     width: 21.w,
-                                        //     height: 27.h,
-                                        //     child: Text('All',
-                                        //         textAlign: TextAlign.center,
-                                        //         style: GoogleFonts.poppins(
-                                        //           textStyle: TextStyle(
-                                        //             color: Colors.black,
-                                        //             fontSize: 18,
-                                        //             fontFamily: 'Poppins',
-                                        //             fontWeight: FontWeight.w400,
-                                        //             letterSpacing: -0.30,
-                                        //           ),
-                                        //         )),
-                                        //   ),
-                                        // )
-                                      ],
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(left: 18.w, right: 20.w),
+                        //   child: Container(
+                        //     decoration: ShapeDecoration(
+                        //       color: Color(0xFFEC1C24),
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(7.r)),
+                        //     ),
+                        //     width: 299.w,
+                        //     // Replace with your desired width
+                        //     child: Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.stretch,
+                        //       children: [
+                        //         SizedBox(
+                        //           height: 36.h,
+                        //           child: InkWell(
+                        //             onTap: () {
+                        //               setState(() {
+                        //                 isExpanded2 = !isExpanded2;
+                        //               });
+                        //             },
+                        //             child: Row(
+                        //               mainAxisAlignment:
+                        //                   MainAxisAlignment.spaceBetween,
+                        //               children: [
+                        //                 Padding(
+                        //                   padding: EdgeInsets.only(
+                        //                     left: 85.w,
+                        //                   ),
+                        //                   child: FittedBox(
+                        //                     child: Text(
+                        //                       particular == ''
+                        //                           ? "Particular"
+                        //                           : particular,
+                        //                       style: GoogleFonts.poppins(
+                        //                         textStyle: TextStyle(
+                        //                           color: Colors.white,
+                        //                           fontSize: 17.sp,
+                        //                           fontWeight: FontWeight.w400,
+                        //                           letterSpacing: -0.30.sp,
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //                 Padding(
+                        //                     padding: EdgeInsets.only(
+                        //                         left: 63.w, right: 9.77.w),
+                        //                     child: SizedBox(
+                        //                         height: 10.8.h,
+                        //                         width: 10.8.w,
+                        //                         child: Image.asset(isExpanded2
+                        //                             ? 'assets/arrowdown.png'
+                        //                             : 'assets/arrowforward.png'))),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         if (isExpanded2)
+                        //           Container(
+                        //             width: 299.w,
+                        //             height: 174.h,
+                        //             decoration: BoxDecoration(
+                        //               color: Colors.white,
+                        //               border: Border.all(color: Colors.grey),
+                        //             ),
+                        //             child: Column(
+                        //               children: [
+                        //                 SizedBox(
+                        //                   height: 16.h,
+                        //                 ),
+                        //                 GestureDetector(
+                        //                   onTap: () {
+                        //                     setState(() {
+                        //                       particular = 'collected';
+                        //                     });
+                        //                     if (particular.isNotEmpty) {
+                        //                       setState(() {
+                        //                         isExpanded2 = false;
+                        //                       });
+                        //                     }
+                        //                   },
+                        //                   child: SizedBox(
+                        //                     width: 135.w,
+                        //                     height: 27.h,
+                        //                     child: Text(
+                        //                       'Cash Collected',
+                        //                       textAlign: TextAlign.center,
+                        //                       style: GoogleFonts.poppins(
+                        //                           textStyle: TextStyle(
+                        //                         color: Color(0xFF00B94A),
+                        //                         fontSize: 18.sp,
+                        //                         fontFamily: 'Poppins',
+                        //                         fontWeight: FontWeight.w400,
+                        //                         letterSpacing: -0.30.sp,
+                        //                       )),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //                 SizedBox(
+                        //                   height: 14.h,
+                        //                 ),
+                        //                 GestureDetector(
+                        //                   onTap: () {
+                        //                     setState(() {
+                        //                       particular = 'cash-payed';
+                        //                     });
+                        //
+                        //                     if (particular.isNotEmpty) {
+                        //                       setState(() {
+                        //                         isExpanded2 = false;
+                        //                       });
+                        //                     }
+                        //                   },
+                        //                   child: SizedBox(
+                        //                     width: 89.w,
+                        //                     height: 27.h,
+                        //                     child: Text('Cash Paid',
+                        //                         textAlign: TextAlign.center,
+                        //                         style: GoogleFonts.poppins(
+                        //                           textStyle: TextStyle(
+                        //                             color: Color(0xFFEC1C24),
+                        //                             fontSize: 18,
+                        //                             fontFamily: 'Poppins',
+                        //                             fontWeight: FontWeight.w400,
+                        //                             letterSpacing: -0.30,
+                        //                           ),
+                        //                         )),
+                        //                   ),
+                        //                 ),
+                        //                 SizedBox(
+                        //                   height: 14.h,
+                        //                 ),
+                        //                 // GestureDetector(onTap: (){
+                        //                 //   setState(() {
+                        //                 //     particular='all';
+                        //                 //   });
+                        //                 //
+                        //                 //   if (particular.isNotEmpty) {
+                        //                 //     setState(() {
+                        //                 //       isExpanded2 =
+                        //                 //       false;
+                        //                 //     });
+                        //                 //   }
+                        //                 // },
+                        //                 //   child: SizedBox(
+                        //                 //     width: 21.w,
+                        //                 //     height: 27.h,
+                        //                 //     child: Text('All',
+                        //                 //         textAlign: TextAlign.center,
+                        //                 //         style: GoogleFonts.poppins(
+                        //                 //           textStyle: TextStyle(
+                        //                 //             color: Colors.black,
+                        //                 //             fontSize: 18,
+                        //                 //             fontFamily: 'Poppins',
+                        //                 //             fontWeight: FontWeight.w400,
+                        //                 //             letterSpacing: -0.30,
+                        //                 //           ),
+                        //                 //         )),
+                        //                 //   ),
+                        //                 // )
+                        //               ],
+                        //             ),
+                        //           ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 17.h,
                         ),
@@ -722,7 +725,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                   fromDate: formatter.format(fromDate).toString(),
                                                   particular: particular,
                                                   forAll: false,
-                                                  userId: userId,
+                                                  userId: userId, page: page, pagination: false,
                                                 ),
                                               );
                                             },
@@ -743,6 +746,9 @@ class _WalletHistoryState extends State<WalletHistory> {
                                         total = history.walletTransactions!.total!;
                                         perPage=history.walletTransactions!.perPage!;
                                         totalPage=(total/perPage).ceil();
+                                        print("totalpage"+totalPage.toString());
+                                        print("perpage"+perPage.toString());
+                                        print("total"+total.toString());
                                         return SizedBox(
                                           height: 318.h,
                                           width: 337.w,
@@ -802,9 +808,8 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                           textAlign: TextAlign.center,
                                                           style: GoogleFonts.poppins(
                                                             textStyle: TextStyle(
-                                                              color: history.walletTransactions!.data![index].type.toString() == 'cash-payed'
-                                                                  ? Color(0xffFF0000)
-                                                                  : Color(0xFF00B94A),
+                                                              color: Color(0xffFF0000),
+
                                                               fontSize: 15.sp,
                                                               fontWeight: FontWeight.w400,
                                                               letterSpacing: -0.30.sp,
@@ -854,7 +859,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                       fromDate: formatter.format(fromDate).toString(),
                                                                       particular: particular,
                                                                       forAll: true,
-                                                                      userId: userId));
+                                                                      userId: userId, page: page, pagination: true));
                                                                 }
                                                               },
                                                               child: Text("Previous")),
@@ -873,7 +878,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                       fromDate: formatter.format(fromDate).toString(),
                                                                       particular: particular,
                                                                       forAll: true,
-                                                                      userId: userId));
+                                                                      userId: userId, page: page, pagination: true));
                                                                 }
                                                               },
                                                               child: Text("Next")),
@@ -1279,13 +1284,13 @@ class _WalletHistoryState extends State<WalletHistory> {
                               padding: EdgeInsets.only(left: 190.w),
                               child: TextButton(
                                   onPressed: () {
-                                    if (particular == '' || userName == '') {
-                                      if (particular == '') {
-                                        ToastMessage().toastmessage(
-                                            message:
-                                                'Please Select A Particular');
-                                      } else {}
-                                    } else {
+                                    if ( userName == '') {
+                                      ToastMessage().toastmessage(
+                                          message:
+                                          'Please Select A User');
+                                    }
+
+                                     else {
                                       BlocProvider.of<WalletHistoryBloc>(
                                               context)
                                           .add(FetchGetAllWallet(
@@ -1296,9 +1301,9 @@ class _WalletHistoryState extends State<WalletHistory> {
                                               fromDate: formatter
                                                   .format(fromDate)
                                                   .toString(),
-                                              particular: particular,
+                                              particular: '',
                                               forAll: false,
-                                              userId: userId));
+                                              userId: userId, page: page, pagination: false));
                                     }
                                   },
                                   child: Container(

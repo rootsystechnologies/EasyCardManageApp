@@ -10,6 +10,8 @@ class FetchGetAllWallet extends WalletHistoryEvent {
   final String particular;
   final bool forAll;
   final int userId;
+  final int page;
+  final bool pagination;
 
 
   FetchGetAllWallet(
@@ -18,5 +20,5 @@ class FetchGetAllWallet extends WalletHistoryEvent {
       required this.fromDate,
       required this.particular,
       required this.forAll,
-      required this.userId});
+      required this.userId,required this.page,required this.pagination});
 }
