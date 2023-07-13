@@ -58,7 +58,7 @@ class _WalletHistoryState extends State<WalletHistory> {
         fromDate: formatter.format(fromDate).toString(),
         particular: particular,
         forAll: true,
-        userId: userId, page: page, pagination: false));
+        userId: userId, page: page, pagination: false, option: 1));
     super.initState();
   }
 
@@ -725,7 +725,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                   fromDate: formatter.format(fromDate).toString(),
                                                   particular: particular,
                                                   forAll: false,
-                                                  userId: userId, page: page, pagination: false,
+                                                  userId: userId, page: page, pagination: false, option: 1,
                                                 ),
                                               );
                                             },
@@ -859,7 +859,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                       fromDate: formatter.format(fromDate).toString(),
                                                                       particular: particular,
                                                                       forAll: true,
-                                                                      userId: userId, page: page, pagination: true));
+                                                                      userId: userId, page: page, pagination: true, option: 1));
                                                                 }
                                                               },
                                                               child: Text("Previous")),
@@ -878,7 +878,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                                       fromDate: formatter.format(fromDate).toString(),
                                                                       particular: particular,
                                                                       forAll: true,
-                                                                      userId: userId, page: page, pagination: true));
+                                                                      userId: userId, page: page, pagination: true, option: 1));
                                                                 }
                                                               },
                                                               child: Text("Next")),
@@ -1285,9 +1285,19 @@ class _WalletHistoryState extends State<WalletHistory> {
                               child: TextButton(
                                   onPressed: () {
                                     if ( userName == '') {
-                                      ToastMessage().toastmessage(
-                                          message:
-                                          'Please Select A User');
+                                      BlocProvider.of<WalletHistoryBloc>(
+                                          context)
+                                          .add(FetchGetAllWallet(
+                                          search: userName,
+                                          toDate: formatter
+                                              .format(toDate)
+                                              .toString(),
+                                          fromDate: formatter
+                                              .format(fromDate)
+                                              .toString(),
+                                          particular: '',
+                                          forAll: false,
+                                          userId: userId, page: page, pagination: false, option: 2));
                                     }
 
                                      else {
@@ -1303,7 +1313,7 @@ class _WalletHistoryState extends State<WalletHistory> {
                                                   .toString(),
                                               particular: '',
                                               forAll: false,
-                                              userId: userId, page: page, pagination: false));
+                                              userId: userId, page: page, pagination: false, option: 3));
                                     }
                                   },
                                   child: Container(

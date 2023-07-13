@@ -8,5 +8,6 @@ class FetchGetAllCollection extends GetAllCollectionEvent{
   final int userId;
   final bool forAll;
   final int page;
-  FetchGetAllCollection({required this.userId,required this.toDate,required this.fromDate,required this.forAll,required this.page});
+  final int option;
+  FetchGetAllCollection({required this.userId,required this.toDate,required this.fromDate,required this.forAll,required this.page,required this.option});
 }

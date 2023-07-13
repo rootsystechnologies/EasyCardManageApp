@@ -256,6 +256,7 @@ class _CustomersState extends State<Customers> {
                       margin: EdgeInsets.only(left: 7.w, right: 6.w),
                       width: 500.w,
                       height: 34.h,
+                      padding: EdgeInsets.only(top: 6.h),
                       decoration: BoxDecoration(
                           color: Color(0xffEC1C24),
                           borderRadius: BorderRadius.circular(7.r)),
@@ -271,33 +272,33 @@ class _CustomersState extends State<Customers> {
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 12.sp,
+                                        fontSize: 11.sp,
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: -0.3.sp),
                                   ),
                                 )),
                           ),
                           SizedBox(
-                              width: 67.w,
+                              width: 100.w,
                               height: 24.h,
                               child: Text(
-                                "Balance",
+                                "Wallet Balance",
                                 style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 12.sp,
+                                      fontSize: 11.sp,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: -0.3.sp),
                                 ),
                               )),SizedBox(
-                              width: 120.w,
+                              width: 140.w,
                               height: 24.h,
                               child: Text(
-                                "Balance To Collect",
+                                "Current Outstanding",
                                 style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 12.sp,
+                                      fontSize: 11.sp,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: -0.3.sp),
                                 ),

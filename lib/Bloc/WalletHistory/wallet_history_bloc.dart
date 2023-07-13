@@ -25,7 +25,7 @@ class WalletHistoryBloc extends Bloc<WalletHistoryEvent, WalletHistoryState> {
             event.particular,
             event.forAll,
             event.userId,
-            event.page,event.pagination);
+            event.page,event.pagination,event.option);
         emit(GetAllWalletblocLoaded());
       } catch (e) {
         error = e.toString();

@@ -51,7 +51,7 @@ class _AmountCollectionState extends State<AmountCollection> {
   @override
   void initState() {
     BlocProvider.of<GetAllCollectionBloc>(context).add(FetchGetAllCollection(
-        userId: 0, toDate: '', fromDate: '', forAll: true, page: page));
+        userId: 0, toDate: '', fromDate: '', forAll: true, page: page, option: 1));
     BlocProvider.of<GetAllCustomersBloc>(context).add(
         FetchGetAllCustomers(searchKey: search.text, page: page.toString()));
     super.initState();
@@ -540,7 +540,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                     userId: userId,
                                                     toDate: toDate.toString(),
                                                     fromDate: fromDate.toString(),
-                                                    forAll: true, page: page,
+                                                    forAll: true, page: page, option: 1,
                                                   ),
                                                 );
                                               },
@@ -655,7 +655,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                                       userId: 0,
                                                                       toDate: '',
                                                                       fromDate: '',
-                                                                      forAll: true, page: page,
+                                                                      forAll: true, page: page, option: 1,
                                                                     ),
                                                                   );
                                                                 }
@@ -677,7 +677,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                                       userId: 0,
                                                                       toDate: '',
                                                                       fromDate: '',
-                                                                      forAll: true, page: page,
+                                                                      forAll: true, page: page, option: 1,
                                                                     ),
                                                                   );
                                                                 }
@@ -1096,8 +1096,17 @@ class _AmountCollectionState extends State<AmountCollection> {
                                 child: TextButton(
                                     onPressed: () {
                                       if (userName == '') {
-                                        ToastMessage().toastmessage(
-                                            message: 'Please Select A User');
+                                        BlocProvider.of<GetAllCollectionBloc>(
+                                            context)
+                                            .add(FetchGetAllCollection(
+                                            userId: userId,
+                                            toDate: formatter
+                                                .format(toDate)
+                                                .toString(),
+                                            fromDate: formatter
+                                                .format(fromDate)
+                                                .toString(),
+                                            forAll: false, page: page, option: 2));
                                       } else {
                                         BlocProvider.of<GetAllCollectionBloc>(
                                                 context)
@@ -1109,7 +1118,7 @@ class _AmountCollectionState extends State<AmountCollection> {
                                                 fromDate: formatter
                                                     .format(fromDate)
                                                     .toString(),
-                                                forAll: false, page: page));
+                                                forAll: false, page: page, option: 3));
                                       }
                                     },
                                     child: Container(
