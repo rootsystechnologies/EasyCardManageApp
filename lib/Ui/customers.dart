@@ -135,8 +135,8 @@ class _CustomersState extends State<Customers> {
                                   child: SizedBox(
                                       width: 29.w,
                                       height: 28.h,
-                                      child:
-                                          Image.asset('assets/customerscreen.png')),
+                                      child: Image.asset(
+                                          'assets/customerscreen.png')),
                                 ),
                                 SizedBox(
                                     width: 125.082.w,
@@ -176,9 +176,10 @@ class _CustomersState extends State<Customers> {
                                       height: 51.h,
                                       decoration: BoxDecoration(
                                           color: Colors.transparent,
-                                          borderRadius: BorderRadius.circular(8.r),
-                                          border:
-                                              Border.all(color: Color(0xffD9D9D9))),
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                          border: Border.all(
+                                              color: Color(0xffD9D9D9))),
                                       child: Row(
                                         children: [
                                           SizedBox(
@@ -187,8 +188,8 @@ class _CustomersState extends State<Customers> {
                                           SizedBox(
                                               width: 20.w,
                                               height: 20.h,
-                                              child:
-                                                  Image.asset('assets/search.png')),
+                                              child: Image.asset(
+                                                  'assets/search.png')),
                                           SizedBox(
                                             height: 28.h,
                                             child: VerticalDivider(
@@ -223,9 +224,10 @@ class _CustomersState extends State<Customers> {
                                     height: 51.h,
                                     decoration: BoxDecoration(
                                         color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(8.r),
-                                        border:
-                                            Border.all(color: Color(0xffD9D9D9))),
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                        border: Border.all(
+                                            color: Color(0xffD9D9D9))),
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                         left: 20.w,
@@ -237,14 +239,16 @@ class _CustomersState extends State<Customers> {
                                           controller: search,
                                           textInputAction: TextInputAction.done,
                                           onFieldSubmitted: (value) {
-                                            BlocProvider.of<GetAllCustomersBloc>(
+                                            BlocProvider.of<
+                                                        GetAllCustomersBloc>(
                                                     context)
                                                 .add(FetchGetAllCustomers(
                                                     searchKey: search.text,
                                                     page: page.toString()));
                                           },
                                           onChanged: (value) {
-                                            BlocProvider.of<GetAllCustomersBloc>(
+                                            BlocProvider.of<
+                                                        GetAllCustomersBloc>(
                                                     context)
                                                 .add(FetchGetAllCustomers(
                                                     searchKey: search.text,
@@ -332,7 +336,8 @@ class _CustomersState extends State<Customers> {
                           SizedBox(
                             height: 15.h,
                           ),
-                          BlocBuilder<GetAllCustomersBloc, GetAllCustomersState>(
+                          BlocBuilder<GetAllCustomersBloc,
+                              GetAllCustomersState>(
                             builder: (context, state) {
                               if (state is GetAllCustomersblocLoading) {
                                 return Container(
@@ -349,7 +354,8 @@ class _CustomersState extends State<Customers> {
                               }
                               if (state is GetAllCustomersblocError) {
                                 String error =
-                                    BlocProvider.of<GetAllCustomersBloc>(context)
+                                    BlocProvider.of<GetAllCustomersBloc>(
+                                            context)
                                         .error;
                                 if (error == 'Unauthenticated.') {
                                   return Dialog(
@@ -369,7 +375,8 @@ class _CustomersState extends State<Customers> {
                                                   'Token Expired',
                                                   style: TextStyle(
                                                       color: Colors.black,
-                                                      fontWeight: FontWeight.w500),
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                                 ),
                                                 SizedBox(
                                                   height: 30.h,
@@ -383,10 +390,9 @@ class _CustomersState extends State<Customers> {
                                                     Navigator.of(context)
                                                         .pushAndRemoveUntil(
                                                             MaterialPageRoute(
-                                                                builder:
-                                                                    (BuildContext
-                                                                            a) =>
-                                                                        LoginPage()),
+                                                                builder: (BuildContext
+                                                                        a) =>
+                                                                    LoginPage()),
                                                             (route) => false);
                                                   },
                                                   child: Container(
@@ -395,15 +401,16 @@ class _CustomersState extends State<Customers> {
                                                     decoration: BoxDecoration(
                                                         color: Colors.red,
                                                         borderRadius:
-                                                            BorderRadius.circular(
-                                                                4)),
+                                                            BorderRadius
+                                                                .circular(4)),
                                                     child: Center(
                                                       child: Text(
                                                         "Login",
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontWeight:
-                                                                FontWeight.w500),
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                     ),
                                                   ),
@@ -412,8 +419,8 @@ class _CustomersState extends State<Customers> {
                                 } else {
                                   return RefreshIndicator(
                                     onRefresh: () async {
-                                      return BlocProvider.of<GetAllCustomersBloc>(
-                                              context)
+                                      return BlocProvider.of<
+                                              GetAllCustomersBloc>(context)
                                           .add(FetchGetAllCustomers(
                                               searchKey: '',
                                               page: page.toString()));
@@ -421,9 +428,10 @@ class _CustomersState extends State<Customers> {
                                     child: SingleChildScrollView(
                                       physics: const BouncingScrollPhysics(),
                                       child: Container(
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  .9,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              .9,
                                           // color: Colors.red,
                                           child: Center(child: Text("Error"))),
                                     ),
@@ -432,7 +440,8 @@ class _CustomersState extends State<Customers> {
                               }
                               if (state is GetAllCustomersblocLoaded) {
                                 customers =
-                                    BlocProvider.of<GetAllCustomersBloc>(context)
+                                    BlocProvider.of<GetAllCustomersBloc>(
+                                            context)
                                         .getallcustomers;
                                 total = customers.customers!.total!;
                                 perPage = customers.customers!.perPage!;
@@ -467,8 +476,8 @@ class _CustomersState extends State<Customers> {
                                                           .toString(),
                                                       style: GoogleFonts.poppins(
                                                           textStyle: TextStyle(
-                                                              color:
-                                                                  Color(0xffA4A4A4),
+                                                              color: Color(
+                                                                  0xffA4A4A4),
                                                               fontSize: 14.sp,
                                                               letterSpacing:
                                                                   -0.3.sp))),
@@ -490,8 +499,8 @@ class _CustomersState extends State<Customers> {
                                                           .toString(),
                                                       style: GoogleFonts.poppins(
                                                           textStyle: TextStyle(
-                                                              color:
-                                                                  Color(0xffA4A4A4),
+                                                              color: Color(
+                                                                  0xffA4A4A4),
                                                               fontSize: 14.sp,
                                                               letterSpacing:
                                                                   -0.3.sp))),
@@ -507,7 +516,8 @@ class _CustomersState extends State<Customers> {
                                                       child: Text(
                                                           customers
                                                                       .customers!
-                                                                      .data![index]
+                                                                      .data![
+                                                                          index]
                                                                       .collections ==
                                                                   null
                                                               ? customers
@@ -526,21 +536,24 @@ class _CustomersState extends State<Customers> {
                                                               textStyle: TextStyle(
                                                                   color: Color(
                                                                       0xffA4A4A4),
-                                                                  fontSize: 14.sp,
+                                                                  fontSize:
+                                                                      14.sp,
                                                                   letterSpacing:
                                                                       -0.3.sp))))),
                                               SizedBox(
                                                 width: 15.w,
                                               ),
                                               GestureDetector(
-                                                onTap: () => Navigator.of(context)
+                                                onTap: () => Navigator.of(
+                                                        context)
                                                     .push(MaterialPageRoute(
                                                         builder: (_) =>
                                                             CustomerCollectAmount(
                                                               customerName:
                                                                   customers
                                                                       .customers!
-                                                                      .data![index]
+                                                                      .data![
+                                                                          index]
                                                                       .name
                                                                       .toString(),
                                                               userId: customers
@@ -560,7 +573,8 @@ class _CustomersState extends State<Customers> {
                                                 width: 20.29.w,
                                               ),
                                               GestureDetector(
-                                                onTap: () => Navigator.of(context)
+                                                onTap: () => Navigator.of(
+                                                        context)
                                                     .push(MaterialPageRoute(
                                                         builder: (_) =>
                                                             CustomerWalletRecharge(
@@ -572,7 +586,8 @@ class _CustomersState extends State<Customers> {
                                                               customerName:
                                                                   customers
                                                                       .customers!
-                                                                      .data![index]
+                                                                      .data![
+                                                                          index]
                                                                       .name
                                                                       .toString(),
                                                             ))),
@@ -587,15 +602,17 @@ class _CustomersState extends State<Customers> {
                                           );
                                         } else {
                                           return Visibility(
-                                            visible:
-                                                search.text.isEmpty ? true : false,
+                                            visible: search.text.isEmpty
+                                                ? true
+                                                : false,
                                             child: Row(
                                               children: [
                                                 SizedBox(
                                                   width: 10.w,
                                                 ),
                                                 Visibility(
-                                                  visible: page != 1 ? true : false,
+                                                  visible:
+                                                      page != 1 ? true : false,
                                                   child: TextButton(
                                                       onPressed: () {
                                                         if (page >= 1) {
@@ -662,10 +679,11 @@ class _CustomersState extends State<Customers> {
                           SizedBox(
                             height: 10.52.h,
                           ),
-
                         ],
                       ),
-                    ),  Positioned(top:697.h,
+                    ),
+                    Positioned(
+                      top: 697.h,
                       left: 9.w,
                       right: 9.w,
                       child: Container(

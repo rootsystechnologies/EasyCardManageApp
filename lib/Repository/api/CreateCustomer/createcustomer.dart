@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../main.dart';
 import '../../modelclass/CreateCustomerModel.dart';
+import '../apiexception.dart';
 
 class CreateCustomerApi {
   String baseUrl = basePath;
@@ -48,8 +50,15 @@ class CreateCustomerApi {
         throw Exception('Invalid response body');
       }
     } else {
-      print('API request failed with status code ${response.statusCode}');
-      throw Exception('API request failed');
+      throw ApiException(_decodeBodyBytes(response), response.statusCode);
+    }
+  }
+  String _decodeBodyBytes(Response response) {
+    var contentType = response.headers['content-type'];
+    if (contentType != null && contentType.contains("application/json")) {
+      return jsonDecode(response.body)['message'];
+    } else {
+      return response.body;
     }
   }
 }
