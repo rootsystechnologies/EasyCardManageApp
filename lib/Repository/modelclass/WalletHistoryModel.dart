@@ -58,19 +58,19 @@ class WalletTransactions {
     to = json['to'];
     total = json['total'];
   }
-  int? currentPage;
+  dynamic currentPage;
   List<Data>? data;
-  String? firstPageUrl;
-  int? from;
-  int? lastPage;
-  String? lastPageUrl;
+  dynamic firstPageUrl;
+  dynamic from;
+  dynamic lastPage;
+  dynamic lastPageUrl;
   List<Links>? links;
-  String? nextPageUrl;
-  String? path;
-  int? perPage;
+  dynamic nextPageUrl;
+  dynamic path;
+  dynamic perPage;
   dynamic prevPageUrl;
-  int? to;
-  int? total;
+  dynamic to;
+  dynamic total;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -108,7 +108,7 @@ class Links {
     active = json['active'];
   }
   dynamic url;
-  String? label;
+  dynamic label;
   bool? active;
 
   Map<String, dynamic> toJson() {
@@ -140,12 +140,12 @@ class Data {
     updatedAt = json['updated_at'];
     wallet = json['wallet'] != null ? Wallet.fromJson(json['wallet']) : null;
   }
-  int? id;
-  int? userWalletId;
-  String? amount;
-  String? type;
-  String? createdAt;
-  String? updatedAt;
+  dynamic id;
+  dynamic userWalletId;
+  dynamic amount;
+  dynamic type;
+  dynamic createdAt;
+  dynamic updatedAt;
   Wallet? wallet;
 
   Map<String, dynamic> toJson() {

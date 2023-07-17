@@ -518,8 +518,7 @@ class _CustomersState extends State<Customers> {
                                                                       .customers!
                                                                       .data![
                                                                           index]
-                                                                      .collections ==
-                                                                  null
+                                                                      .collections!.isEmpty
                                                               ? customers
                                                                   .customers!
                                                                   .data![index]
@@ -530,7 +529,7 @@ class _CustomersState extends State<Customers> {
                                                                   .customers!
                                                                   .data![index]
                                                                   .collections!
-                                                                  .balanceToCollect
+                                                                  .last.balanceToCollect
                                                                   .toString(),
                                                           style: GoogleFonts.poppins(
                                                               textStyle: TextStyle(

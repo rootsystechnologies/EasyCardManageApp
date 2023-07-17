@@ -155,7 +155,12 @@ class Data {
         permissions?.add(Permissions.fromJson(v));
       });
     }
-    collections = json['collections'] != null ? Collections.fromJson(json['collections']) : null;
+    if (json['collections'] != null) {
+      collections = [];
+      json['collections'].forEach((v) {
+        collections?.add(Collections.fromJson(v));
+      });
+    }
   }
   int? id;
   String? name;
@@ -169,7 +174,7 @@ class Data {
   dynamic deletedAt;
   Wallet? wallet;
   List<Permissions>? permissions;
-  Collections? collections;
+  List<Collections>? collections;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -190,7 +195,7 @@ class Data {
       map['permissions'] = permissions?.map((v) => v.toJson()).toList();
     }
     if (collections != null) {
-      map['collections'] = collections?.toJson();
+      map['collections'] = collections?.map((v) => v.toJson()).toList();
     }
     return map;
   }
