@@ -133,9 +133,9 @@ class Data {
       this.createdAt, 
       this.updatedAt, 
       this.deletedAt, 
+      this.balanceToCollect, 
       this.wallet, 
-      this.permissions, 
-      this.collections,});
+      this.permissions,});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -148,17 +148,12 @@ class Data {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
+    balanceToCollect = json['balanceToCollect'];
     wallet = json['wallet'] != null ? Wallet.fromJson(json['wallet']) : null;
     if (json['permissions'] != null) {
       permissions = [];
       json['permissions'].forEach((v) {
         permissions?.add(Permissions.fromJson(v));
-      });
-    }
-    if (json['collections'] != null) {
-      collections = [];
-      json['collections'].forEach((v) {
-        collections?.add(Collections.fromJson(v));
       });
     }
   }
@@ -172,9 +167,9 @@ class Data {
   String? createdAt;
   String? updatedAt;
   dynamic deletedAt;
+  String? balanceToCollect;
   Wallet? wallet;
   List<Permissions>? permissions;
-  List<Collections>? collections;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -188,52 +183,13 @@ class Data {
     map['created_at'] = createdAt;
     map['updated_at'] = updatedAt;
     map['deleted_at'] = deletedAt;
+    map['balanceToCollect'] = balanceToCollect;
     if (wallet != null) {
       map['wallet'] = wallet?.toJson();
     }
     if (permissions != null) {
       map['permissions'] = permissions?.map((v) => v.toJson()).toList();
     }
-    if (collections != null) {
-      map['collections'] = collections?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
-}
-
-class Collections {
-  Collections({
-      this.id, 
-      this.collectedAmount, 
-      this.balanceToCollect, 
-      this.userId, 
-      this.createdAt, 
-      this.updatedAt,});
-
-  Collections.fromJson(dynamic json) {
-    id = json['id'];
-    collectedAmount = json['collectedAmount'];
-    balanceToCollect = json['balanceToCollect'];
-    userId = json['user_id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-  int? id;
-  String? collectedAmount;
-  String? balanceToCollect;
-  int? userId;
-  String? createdAt;
-  String? updatedAt;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['collectedAmount'] = collectedAmount;
-    map['balanceToCollect'] = balanceToCollect;
-    map['user_id'] = userId;
-    map['created_at'] = createdAt;
-    map['updated_at'] = updatedAt;
     return map;
   }
 

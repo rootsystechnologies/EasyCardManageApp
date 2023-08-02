@@ -515,22 +515,10 @@ class _CustomersState extends State<Customers> {
                                                   child: Center(
                                                       child: Text(
                                                           customers
-                                                                      .customers!
-                                                                      .data![
-                                                                          index]
-                                                                      .collections!.isEmpty
-                                                              ? customers
-                                                                  .customers!
-                                                                  .data![index]
-                                                                  .wallet!
-                                                                  .balance
-                                                                  .toString()
-                                                              : customers
-                                                                  .customers!
-                                                                  .data![index]
-                                                                  .collections!
-                                                                  .last.balanceToCollect
-                                                                  .toString(),
+                                                              .customers!
+                                                              .data![index]
+                                                              .balanceToCollect
+                                                              .toString(),
                                                           style: GoogleFonts.poppins(
                                                               textStyle: TextStyle(
                                                                   color: Color(

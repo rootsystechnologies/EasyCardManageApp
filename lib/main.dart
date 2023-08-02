@@ -20,8 +20,8 @@ import 'Ui/aftersavecustomerdetails.dart';
 import 'Ui/loginpage.dart';
 import 'Ui/splashscreen.dart';
 
-// String basePath = 'http://easycard.rootsys.in/api';
-String basePath = 'http://161.97.139.125/api';
+String basePath = 'http://easycard.rootsys.in/api';
+// String basePath = 'http://161.97.139.125/api';
 void main() {
   runApp(const MyApp());
 }
