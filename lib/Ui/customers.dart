@@ -467,8 +467,8 @@ class _CustomersState extends State<Customers> {
                                           return Row(
                                             children: [
                                               SizedBox(
-                                                height: 21,
-                                                width: 75,
+                                                height: 50.h,
+                                                width: 75.w,
                                                 child: Center(
                                                   child: Text(
                                                       customers.customers!
@@ -478,9 +478,10 @@ class _CustomersState extends State<Customers> {
                                                           textStyle: TextStyle(
                                                               color: Color(
                                                                   0xffA4A4A4),
-                                                              fontSize: 14.sp,
+                                                              fontSize: 12.sp,
                                                               letterSpacing:
-                                                                  -0.3.sp))),
+                                                                  -0.3.sp))
+                                                  ,maxLines: 2,),
                                                 ),
                                               ),
                                               SizedBox(
