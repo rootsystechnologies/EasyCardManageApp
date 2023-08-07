@@ -218,7 +218,7 @@ class _EditCustomerState extends State<EditCustomer> {
                                               bottom: 11.h,
                                             ),
                                             child: SizedBox(
-                                                width: 127.w,
+                                                width: 177.w,
                                                 height: 27.h,
                                                 child: Text(
                                                   widget.name,
@@ -230,11 +230,11 @@ class _EditCustomerState extends State<EditCustomer> {
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
-                                                  ),
+                                                  ),overflow: TextOverflow.ellipsis,
                                                 )),
                                           ),
                                           SizedBox(
-                                            width: 90.w,
+                                            width: 40.w,
                                           ),
                                           GestureDetector(
                                             onTap: () {

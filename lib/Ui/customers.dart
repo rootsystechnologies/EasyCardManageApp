@@ -481,7 +481,7 @@ class _CustomersState extends State<Customers> {
                                                               fontSize: 12.sp,
                                                               letterSpacing:
                                                                   -0.3.sp))
-                                                  ,maxLines: 2,),
+                                                  ,maxLines: 2,overflow: TextOverflow.ellipsis,),
                                                 ),
                                               ),
                                               SizedBox(

@@ -180,21 +180,17 @@ class _AfterSaveCustomerState extends State<AfterSaveCustomer> {
                                   SizedBox(
                                     width: 3.w,
                                   ),
-                                  SizedBox(
-                                    width: 73.w,
-                                    height: 20.h,
-                                    child: Text(
-                                      widget.name,
-                                      style: GoogleFonts.poppins(
-                                        textStyle: TextStyle(
-                                          color: Color(0xFFA3A3A3),
-                                          fontSize: 13.sp,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: -0.30,
-                                        ),
+                                  Text(
+                                    widget.name,
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: Color(0xFFA3A3A3),
+                                        fontSize: 13.sp,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                        letterSpacing: -0.30,
                                       ),
-                                    ),
+                                    ),overflow: TextOverflow.ellipsis,
                                   )
                                 ],
                               ),
